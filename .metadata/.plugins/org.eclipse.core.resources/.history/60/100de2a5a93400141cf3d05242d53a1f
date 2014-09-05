@@ -50,7 +50,7 @@ public class ImageEditor {
 	}
 	
 	public void grayScaleImage(Pixel[][] data, String outputFileName) {
-		System.out.println("After GrayScale Filter");
+System.out.println("After Invert Filter");
 		
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length; j++) {

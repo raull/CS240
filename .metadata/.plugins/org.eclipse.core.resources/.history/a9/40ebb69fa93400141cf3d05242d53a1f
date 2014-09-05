@@ -50,15 +50,14 @@ public class ImageEditor {
 	}
 	
 	public void grayScaleImage(Pixel[][] data, String outputFileName) {
-		System.out.println("After GrayScale Filter");
+System.out.println("After Invert Filter");
 		
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length; j++) {
 				Pixel curPixel = data[i][j];
-				int average = (curPixel.red + curPixel.green + curPixel.blue)/3;
-				curPixel.red = average;
-				curPixel.green = average;
-				curPixel.blue = average;
+				curPixel.red = -(curPixel.red - this.maxValue);
+				curPixel.green = -(curPixel.green - this.maxValue);
+				curPixel.blue = -(curPixel.blue - this.maxValue);
 				
 				System.out.println(data[i][j].toString());
 			}
