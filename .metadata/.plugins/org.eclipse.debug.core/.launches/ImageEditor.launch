@@ -8,6 +8,6 @@
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="ImageEditor"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="audio.ppm audio2.ppm grayscale"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="cs_logo.ppm cs_logo2.ppm motionblur 10"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Project_1"/>
 </launchConfiguration>

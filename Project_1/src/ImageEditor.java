@@ -6,39 +6,6 @@ public class ImageEditor {
 	public Pixel[][] imageData;
 	public int maxValue = 0;
 	
-	
-	public static void main(String[] args) {
-		
-		String inputFileName = args[0];
-		String outputFileName = args[1];
-		String imageFilterType = args[2];
-		
-		int motionBlur = 0;
-		
-		if (args.length > 3) {
-			motionBlur = Integer.parseInt(args[3]);
-		}
-		
-		ImageEditor imageEditor = new ImageEditor();
-		imageEditor.readPPMImageFile(inputFileName);
-		
-		if(imageFilterType.equals("invert")) {
-			System.out.println("You have chosen the invert filter");
-			imageEditor.invertImage(imageEditor.imageData, outputFileName);
-		}else if(imageFilterType.equals("grayscale")) {
-			System.out.println("You have chosen the grayscale filter");
-			imageEditor.grayScaleImage(imageEditor.imageData, outputFileName);
-		}else if(imageFilterType.equals("emboss")) {
-			System.out.println("You have chosen the emboss filter");
-			imageEditor.embossImage(imageEditor.imageData, outputFileName);
-		}else if(imageFilterType.equals("motionblur")) {
-			System.out.println("You have chosen the motionblur filter");
-			imageEditor.motionBlurImage(imageEditor.imageData, outputFileName, motionBlur);
-		}else {
-			System.out.println("You have chosen an invalid filter");
-		}
-	}
-	
 	public void invertImage(Pixel[][] data, String outputFileName) {
 		System.out.println("After Invert Filter");
 		
@@ -48,8 +15,6 @@ public class ImageEditor {
 				curPixel.red = -(curPixel.red - this.maxValue);
 				curPixel.green = -(curPixel.green - this.maxValue);
 				curPixel.blue = -(curPixel.blue - this.maxValue);
-				
-				System.out.println(data[i][j].toString());
 			}
 		}
 		
@@ -65,8 +30,6 @@ public class ImageEditor {
 				curPixel.red = average;
 				curPixel.green = average;
 				curPixel.blue = average;
-				
-				System.out.println(data[i][j].toString());
 			}
 		}
 	}
@@ -100,15 +63,39 @@ public class ImageEditor {
 					curPixel.red = value;
 					curPixel.green = value;
 					curPixel.blue = value;
-				}
-				
-				System.out.println(data[i][j].toString());
+				}				
 			}
 		}
 	}
 	
 	public void motionBlurImage(Pixel[][] data, String outputFileName, int motionBlur) {
+		System.out.println("After Motion Blur Filter");
 		
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				Pixel curPixel = data[i][j];
+				
+				int redSum = 0;
+				int greenSum = 0;
+				int blueSum = 0;
+				
+				int depth = motionBlur;
+				if (motionBlur > data[i].length - j) {
+					depth = data[i].length - j;
+				}
+				
+				for (int k = j; k < j+depth; k++) {
+					redSum += data[i][k].red;
+					greenSum += data[i][k].green;
+					blueSum += data[i][k].blue;
+				}
+				
+				curPixel.red = redSum/depth;
+				curPixel.green = greenSum/depth;
+				curPixel.blue = blueSum/depth;
+				
+			}
+		}
 	}
 	
 	public void readPPMImageFile(String inputFileName) {
@@ -135,9 +122,7 @@ public class ImageEditor {
 					int green = fileScanner.nextInt();
 					int blue = fileScanner.nextInt();
 					
-					Pixel newPixel = new Pixel(red, green, blue);
-					System.out.println(newPixel.toString());
-					
+					Pixel newPixel = new Pixel(red, green, blue);					
 					this.imageData[i][j] = newPixel;
 				}
 			}
@@ -148,12 +133,70 @@ public class ImageEditor {
 		
 	}
 	
+	public void writeImageFile(String outputFileName, Pixel[][] data) {
+		try {
+			File outputFile = new File(outputFileName);
+			PrintWriter fileWriter = new PrintWriter(outputFile);
+			fileWriter.println("P3");
+			fileWriter.printf("%d %d%n", data.length, data[0].length);
+			fileWriter.printf("%d%n", this.maxValue);
+			for (int i = 0; i < data.length; i++) {
+				for (int j = 0; j < data[i].length; j++) {
+					fileWriter.printf("%d%n", data[i][j].red);
+					fileWriter.printf("%d%n", data[i][j].green);
+					fileWriter.printf("%d%n", data[i][j].blue);
+				}
+			}
+			fileWriter.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("File Not Found");
+		}
+		
+	}
+	
 	private int maxDifference(int arg0, int arg1) {
 		if (Math.abs(arg0) >= Math.abs(arg1)) {
 			return arg0;
 		} else {
 			return arg1;
 		}
+	}
+	
+	public static void main(String[] args) {
+		
+		String inputFileName = args[0];
+		String outputFileName = args[1];
+		String imageFilterType = args[2];
+		
+		int motionBlur = 0;
+		
+		if (args.length > 3) {
+			motionBlur = Integer.parseInt(args[3]);
+		}
+		
+		System.out.println("Reading File");
+		ImageEditor imageEditor = new ImageEditor();
+		imageEditor.readPPMImageFile(inputFileName);
+		
+		if(imageFilterType.equals("invert")) {
+			System.out.println("You have chosen the invert filter");
+			imageEditor.invertImage(imageEditor.imageData, outputFileName);
+		}else if(imageFilterType.equals("grayscale")) {
+			System.out.println("You have chosen the grayscale filter");
+			imageEditor.grayScaleImage(imageEditor.imageData, outputFileName);
+		}else if(imageFilterType.equals("emboss")) {
+			System.out.println("You have chosen the emboss filter");
+			imageEditor.embossImage(imageEditor.imageData, outputFileName);
+		}else if(imageFilterType.equals("motionblur")) {
+			System.out.println("You have chosen the motionblur filter");
+			imageEditor.motionBlurImage(imageEditor.imageData, outputFileName, motionBlur);
+		}else {
+			System.out.println("You have chosen an invalid filter");
+			return;
+		}
+		
+		System.out.println("Writing Output File");
+		imageEditor.writeImageFile(outputFileName, imageEditor.imageData);
 	}
 
 }
