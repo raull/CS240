@@ -53,10 +53,10 @@ public class ImageEditor {
 					
 					int value = this.maxDifference(this.maxDifference(redDiff, greenDiff), blueDiff) + 128;
 					
-					if (value < 0 ) {
+					if (value <= 0 ) {
 						value = 0;
 					}
-					if (value > 255) {
+					if (value >= 255) {
 						value = 255;
 					}
 					
@@ -102,22 +102,22 @@ public class ImageEditor {
 		try {
 			File filePath = new File(inputFileName);
 			Scanner fileScanner = new Scanner(filePath);
+			fileScanner.useDelimiter("(\\s+)(#[^\\n]*\\n)?(\\r*)|(#[^\\n]*\\n)(\\s*)");
 			
-			fileScanner.nextLine();
-			fileScanner.nextLine();
+			fileScanner.next();
 			
 			//Extract the dimensions of the image
-			int width = fileScanner.nextInt();
-			int height = fileScanner.nextInt();
+			int cols = fileScanner.nextInt();
+			int rows = fileScanner.nextInt();
 			
 			//Set the dimensions of the image
-			this.imageData = new Pixel[width][height];
+			this.imageData = new Pixel[rows][cols];
 			
 			this.maxValue = fileScanner.nextInt();
 			
 			//Iterate for every pixel
-			for (int i = 0; i < width; i++) {
-				for (int j = 0; j < height; j++) {
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
 					int red = fileScanner.nextInt();
 					int green = fileScanner.nextInt();
 					int blue = fileScanner.nextInt();
@@ -138,7 +138,7 @@ public class ImageEditor {
 			File outputFile = new File(outputFileName);
 			PrintWriter fileWriter = new PrintWriter(outputFile);
 			fileWriter.println("P3");
-			fileWriter.printf("%d %d%n", data.length, data[0].length);
+			fileWriter.printf("%d %d%n", data[0].length, data.length);
 			fileWriter.printf("%d%n", this.maxValue);
 			for (int i = 0; i < data.length; i++) {
 				for (int j = 0; j < data[i].length; j++) {
