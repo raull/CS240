@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Trie&apos; to &apos;TrieDataStructure&apos;&#x0A;- Original project: &apos;Project_2&apos;&#x0A;- Original element: &apos;Trie&apos;&#x0A;- Renamed element: &apos;TrieDataStructure&apos;&#x0A;- Update references to refactored element&#x0A;- Rename similarly named elements&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Trie&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Trie.java[Trie" matchStrategy="1" name="TrieDataStructure" qualified="false" references="true" similarDeclarations="true" stamp="1410325517652" textual="false" version="1.0"/>
+</session>

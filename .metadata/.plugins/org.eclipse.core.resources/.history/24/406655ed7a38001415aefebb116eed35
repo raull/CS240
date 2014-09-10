@@ -1,0 +1,43 @@
+
+public class Trie {
+	
+	private TrieNode rootNode;
+	private int nodeCount = 0;
+	private int wordCount = 0;
+	
+	//Constructors
+	public void TrieNode() {
+		rootNode = new TrieNode();
+	}
+	
+	//Getters and Setters
+	
+	public TrieNode getRootNode() {
+		return (TrieNode)rootNode.clone();
+	}
+
+	public int getNodeCount() {
+		return nodeCount;
+	}
+
+	public int getWordCount() {
+		return wordCount;
+	}
+	
+	
+	
+	// TrieNode Inner Class
+	private class TrieNode{
+		private TrieNode leavesNodes[];
+		private int count = 0;
+		
+		public void TrieNode() {
+			
+		}
+		
+		public Object clone() throws CloneNotSupportedException{
+			return super.clone();
+		}
+		
+	}
+}

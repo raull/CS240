@@ -1,0 +1,57 @@
+
+public class Trie {
+	
+	private TrieNode rootNode;
+	private int nodeCount = 0;
+	private int wordCount = 0;
+	
+	//Constructors
+	public void TrieNode() {
+		rootNode = new TrieNode();
+	}
+	
+	public void TrieNode(String[] initialStrings) {
+		this();
+	}
+	
+	//Methods
+	
+	public void addString(String word) {
+		
+	}
+	
+	//Getters and Setters
+
+	public int getNodeCount() {
+		return nodeCount;
+	}
+
+	public int getWordCount() {
+		return wordCount;
+	}
+	
+	
+	
+	// TrieNode Inner Class
+	private class TrieNode{
+		private TrieNode[] leavesNodes;
+		private int count = 0;
+		
+		//Methods
+		
+		
+		
+		
+		//Getters and Setters
+		
+		/**
+		 * @return The count of the amount of times a word has ended in this node
+		 */
+		public int getCount() {
+			return count;
+		}
+		
+		
+		
+	}
+}

@@ -1,0 +1,48 @@
+
+public class Trie {
+	
+	private TrieNode rootNode;
+	private int nodeCount = 0;
+	private int wordCount = 0;
+	
+	//Constructors
+	public void TrieNode() {
+		rootNode = new TrieNode();
+	}
+	
+	//Getters and Setters
+
+	public int getNodeCount() {
+		return nodeCount;
+	}
+
+	public int getWordCount() {
+		return wordCount;
+	}
+	
+	
+	
+	// TrieNode Inner Class
+	private class TrieNode{
+		private TrieNode leavesNodes[];
+		private int count = 0;
+		
+		//Getters and Setters
+		
+		/**
+		 * @return The count
+		 */
+		public int getCount() {
+			return count;
+		}
+		/**
+		 * @param count the count to set
+		 */
+		public void setCount(int count) {
+			this.count = count;
+		}
+		
+		
+		
+	}
+}
