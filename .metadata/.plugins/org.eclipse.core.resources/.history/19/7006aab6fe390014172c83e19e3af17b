@@ -1,0 +1,237 @@
+
+
+public class TrieDataStructure implements Trie{
+	
+	private TrieNode rootNode;
+	private int nodeCount = 0;
+	private int wordCount = 0;
+	
+	//Constructors
+	public TrieDataStructure() {
+		rootNode = new TrieNode();
+	}
+	
+	public TrieDataStructure(String[] initialStrings) {
+		rootNode = new TrieNode();
+		for (String string : initialStrings) {
+			this.add(string);
+		}
+	}
+	
+	//*******Methods***************
+	
+	//Adding
+	public void add(String word) {
+		TrieNode curNode = this.rootNode;
+		
+		for (int i = 0; i < word.length(); i++) {
+			char curChar = word.charAt(i);
+			int charPosition = curChar - 'a';
+			
+			if (curNode.nodes[charPosition] == null) {
+				curNode.nodes[charPosition] = new TrieNode();
+				this.nodeCount++;
+			}
+			
+			curNode = curNode.nodes[charPosition];
+			curNode.character = curChar;
+			
+			if(i == word.length() - 1) {
+				curNode.word = word;
+				curNode.count++;
+				this.wordCount++;
+			}
+			else {
+				curNode.word = word.substring(0,i+1);
+			}
+		}
+		
+	}
+	
+	//Finding
+	public TrieNode find(String word) {
+		TrieNode curNode = this.rootNode;
+		
+		for (int i = 0; i < word.length(); i++) {
+			char curChar = word.charAt(i);
+			int charPosition = curChar - 'a';
+			
+			if (curNode.nodes[charPosition] == null) {
+				return null;
+			}else {
+				curNode = curNode.nodes[charPosition];
+			}
+			
+			if (i == word.length() - 1 && curNode.count > 0) {
+				if (curNode.count > 0) {
+					return curNode;
+				}
+				else {
+					return null;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	//Printing
+	
+	private String printTrie() {
+		
+		StringBuilder finalString = new StringBuilder();
+		
+		this.printTrie(this.rootNode, finalString);
+		
+		return finalString.toString();
+	}
+	
+	private void printTrie(TrieNode curNode, StringBuilder stringBuilder) {
+		//If the count is non-zero that means that words exists
+		if (curNode.count > 0) {
+			stringBuilder.append("<" + curNode.word + "> <" + curNode.count + ">\n");
+		}
+		
+		for (TrieNode node : curNode.nodes) {
+			if (node != null) {
+				this.printTrie(node, stringBuilder);
+			}
+		}
+		
+		return;
+	}
+	
+	//Comparing
+	
+	private Boolean compareTries(TrieNode root1, TrieNode root2) {
+		
+		if (root1.count != root2.count || 
+			root1.character != root2.character || 
+			!root1.word.equalsIgnoreCase(root2.word)) {
+			return false;
+		}
+		
+		for (int i = 0; i < root1.nodes.length; i++) {
+			if (root1.nodes[i] == null && root2.nodes[i] != null ||
+				root1.nodes[i] != null && root2.nodes[i] == null) {
+				return false;
+			}
+			
+			if (root1.nodes[i] != null && root2.nodes[i] != null) {
+				if(!compareTries(root1.nodes[i], root2.nodes[i])) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	//*******Getters and Setters***************
+	
+	public int getNodeCount() {
+		return nodeCount;
+	}
+
+	public int getWordCount() {
+		return wordCount;
+	}
+	
+	//**********Override Methods****************
+	
+	@Override
+	public String toString() {
+		return this.printTrie();
+	}
+	
+	@Override
+	public int hashCode() {
+		return 0;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (this == obj) {
+			return true;
+		}
+		
+		if (obj == null) {
+			return false;
+		}
+		
+		if (obj.getClass() != TrieDataStructure.class) {
+			return false;
+		}
+		
+		TrieDataStructure trie2 = (TrieDataStructure)obj;
+		
+		if (this.wordCount != trie2.wordCount || this.nodeCount != trie2.nodeCount) {
+			return false;
+		}
+		
+		if (!this.compareTries(this.rootNode,trie2.rootNode)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	/*******************
+	 * TrieNode Inner Class
+	 *******************/ 
+	
+	private class TrieNode implements Node{
+		private TrieNode[] nodes;
+		private int count;
+		private char character;
+		private String word = "";
+		
+		//*******Constructors******* 
+		
+		public TrieNode() {
+			nodes = new TrieNode[26];
+		}
+		
+		//*******Getters***********
+		
+		public int getValue() {
+			return count;
+		}
+	}
+	
+	public static void main(String[] args) {
+		TrieDataStructure trieDB = new TrieDataStructure();
+		TrieDataStructure trieDB2 = new TrieDataStructure();
+		
+		trieDB.add("raul");
+		trieDB.add("cinthia");
+		trieDB.add("raul");
+		trieDB.add("fred");
+		trieDB.add("freddy");
+		
+		trieDB2.add("raul");
+		trieDB2.add("cinthia");
+		//trieDB2.add("raul");
+		trieDB2.add("fred");
+		trieDB2.add("freddy");
+		
+		System.out.println("Existing Words:\n" + trieDB);
+		
+		if (trieDB.find("raul") != null) {
+			System.out.println("Found the word!");
+		}
+		else {
+			System.out.println("Did not found the word :(");
+		}
+		
+		if (trieDB.equals(trieDB2)) {
+			System.out.println("The same trie! :)");
+		}
+		else {
+			System.out.println("Not the same trie :(");
+		}
+		
+	}
+}
