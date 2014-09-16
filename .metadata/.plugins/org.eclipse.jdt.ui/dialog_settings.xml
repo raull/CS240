@@ -50,4 +50,7 @@
 		<item value="false" key="RemoveFinal"/>
 		<item value="false" key="SortOrdering"/>
 	</section>
+	<section name="NewPackageWizardPage">
+		<item value="false" key="create_package_info_java"/>
+	</section>
 </section>

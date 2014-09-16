@@ -1,0 +1,23 @@
+import java.util.ArrayList;
+
+
+public class StringTransformation {
+
+	//Delete Transformation
+		public static ArrayList<String> deletionTransformationsFromString(String word) {
+			ArrayList<String> stringArrayList = new ArrayList<String>();
+			
+			for (int i = 0; i < word.length(); i++) {
+				stringArrayList.add(StringTransformation.deleteTransformation(word, i));
+			}
+			return stringArrayList;
+		}
+		
+		public static String deleteTransformation(String word, int index) {
+			StringBuilder builder = new StringBuilder(word);
+			
+			return builder.deleteCharAt(index).toString();
+		}
+		
+	//Insertion Transformation
+}

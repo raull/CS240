@@ -1,0 +1,84 @@
+import java.util.ArrayList;
+
+
+public class StringTransformation {
+
+	//Delete Transformation
+		public static ArrayList<String> deletionTransformationsFromString(String word) {
+			ArrayList<String> stringArrayList = new ArrayList<String>();
+			
+			for (int i = 0; i < word.length(); i++) {
+				stringArrayList.add(StringTransformation.deleteCharAt(word, i));
+			}
+			return stringArrayList;
+		}
+		
+		public static String deleteCharAt(String word, int index) {
+			StringBuilder builder = new StringBuilder(word);
+			
+			return builder.deleteCharAt(index).toString();
+		}
+		
+	//Insertion Transformation
+		
+		public static ArrayList<String> insertionTransformationsFromString(String word) {
+			ArrayList<String> stringArrayList = new ArrayList<String>();
+			
+			for (int i = 0; i <= word.length(); i++) {
+				stringArrayList.addAll(StringTransformation.insertionTransformation(word, i));
+			}
+			
+			return stringArrayList;
+		}
+		
+		public static ArrayList<String> insertionTransformation(String word, int index) {
+			ArrayList<String> stringArrayList = new ArrayList<String>();
+			int aCharIndex = (int)'a';
+			
+			for (int i = aCharIndex; i < aCharIndex+26; i++) {
+				char curChar = (char)i;
+				stringArrayList.add(StringTransformation.insertCharAt(word, index, curChar));
+			}
+			
+			return stringArrayList;
+		}
+		
+		public static String insertCharAt(String word, int index, char charToInsert) {
+			StringBuilder builder = new StringBuilder(word);
+			return builder.insert(index,charToInsert).toString();
+		}
+		
+		//Transposition Transformation
+		
+		public static ArrayList<String> transpositionTransformations(String word) {
+			ArrayList<String> stringArrayList = new ArrayList<String>();
+			
+			for (int i = 0; i < word.length(); i++) {
+				if (i != word.length() - 1) {
+					stringArrayList.add(StringTransformation.swapCharsAt(word, i, i+1));
+				}
+			}
+			
+			return stringArrayList;
+		}
+		
+		public static String swapCharsAt(String word, int index1, int index2) {
+			StringBuilder builder = new StringBuilder("word");
+			
+			char firstChar = word.charAt(index1);
+			builder.deleteCharAt(index1);
+			builder.insert(index2, firstChar);
+			
+			return builder.toString();
+		}
+		
+		
+		//Main for Tetsing
+		
+		public static void main(String[] args) {
+			
+			System.out.println("Deletion Transformation: \n" + StringTransformation.deletionTransformationsFromString("Raul"));
+			System.out.println("Insertion Transformation: \n" + StringTransformation.insertionTransformationsFromString("Raul"));
+			System.out.println("Transposition Transformation: \n" + StringTransformation.transpositionTransformations("Raul"));
+		}
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 5 elements to &apos;Project_2/src/spell&apos;&#x0A;- Original project: &apos;Project_2&apos;&#x0A;- Destination element: &apos;Project_2/src/spell&apos;&#x0A;- Original elements:&#x0A;     TrieDataStructure.java&#x0A;     Trie.java&#x0A;     SpellCorrector.java&#x0A;     StringTransformation.java&#x0A;     SpellingCorrector.java&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;spell" element1="/src&lt;{TrieDataStructure.java" element2="/src&lt;{Trie.java" element3="/src&lt;{SpellCorrector.java" element4="/src&lt;{StringTransformation.java" element5="/src&lt;{SpellingCorrector.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1410822204082" units="5" version="1.0"/>
+</session>
