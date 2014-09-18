@@ -1,0 +1,38 @@
+package listem;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FileProcessor {
+	
+	private boolean recursion;
+	
+	protected void File() {
+		
+	}
+	
+	public List<File> search(File directory, String fileSelectionPattern, boolean recursive) {
+		ArrayList<File> foundFiles = new ArrayList<File>();
+		File[] filesInDirectoryFiles = directory.listFiles();
+		
+		for (File file : filesInDirectoryFiles) {
+			System.out.println(file.getAbsolutePath());
+			if (file.isDirectory() && recursive) {
+				foundFiles.addAll(search(file, fileSelectionPattern, recursive));
+			}
+			else {
+				if (file.getName().matches(fileSelectionPattern)) {
+					foundFiles.add(file);
+				}
+			}
+		}
+		return foundFiles;
+	}
+	
+	public static void main(String[] args) {
+		FileProcessor fileProcessor = new FileProcessor();
+		File directory = new File("/Users/raull/Documents/CS240/Project_3/src/listem");
+		fileProcessor.search(directory, "", false);
+	}
+}

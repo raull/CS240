@@ -1,0 +1,23 @@
+package listem;
+
+import java.io.File;
+import java.util.List;
+
+public class FileSearcher {
+	
+	public List<File> search(File directory, String fileSelectionPattern, boolean recursive) {
+		
+		File[] filesInDirectoryFiles = directory.listFiles();
+		
+		for (File file : filesInDirectoryFiles) {
+			System.out.println(file.getAbsolutePath());
+		}
+		return null;
+	}
+	
+	public static void main(String[] args) {
+		FileSearcher fileSearcher = new FileSearcher();
+		File directory = new File("/Users/raull/Documents/CS240/Project_3/src/listem");
+		fileSearcher.search(directory, "", false);
+	}
+}
