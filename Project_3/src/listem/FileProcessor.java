@@ -1,23 +1,15 @@
 package listem;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-public class FileProcessor {
+public abstract class FileProcessor {
 	
-	private boolean _recursion = false;
-	private File _directory;
-	private String _fileNamePattern = "";
-	
-	
-	protected FileProcessor(File directory, String fileNamePattern, boolean recursive) {
-		_recursion = recursive;
-		_directory = directory;
-		_fileNamePattern = fileNamePattern;
-	}
-	
-	protected FileProcessor() {
-		
-	}
+	protected boolean recursion = false;
+	protected File directory;
+	protected String fileNamePattern = "";
+	protected File curFile;
 	
 	protected final void processDirectory(File directory) {
 		if (!directory.isDirectory()) {
@@ -32,18 +24,16 @@ public class FileProcessor {
 		File[] filesInDirectoryFiles = directory.listFiles();
 		
 		for (File file : filesInDirectoryFiles) {
-			System.out.println(file.getAbsolutePath());
-			if (file.isDirectory() && _recursion) {
+			if (file.isDirectory() && recursion) {
 				processDirectory(file);
 			}
 			else {
-				if (file.getName().matches(_fileNamePattern)) {
+				if (file.getName().matches(fileNamePattern)) {
 					fileMatched(file);
 					processFile(file);
 				}
 			}
 		}
-		
 		return;
 	}
 	
@@ -51,8 +41,29 @@ public class FileProcessor {
 		if (!file.isFile()) {
 			notFile(file);
 		}
+		try {
+			Scanner scanner = new Scanner(file);
+			
+			curFile = file;
+
+			while (scanner.hasNext()) {
+				String line = scanner.nextLine();
+				gotNewLine(line);
+			}
+			
+			fileClosed(file);
+			scanner.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		} 
+	}
+	
+	protected void run(File baseDirectory, String fileNamePattern, boolean recursive) {
+		this.recursion = recursive;
+		this.fileNamePattern = fileNamePattern;
+		this.directory = baseDirectory;
 		
-		
+		processDirectory(baseDirectory);
 	}
 	
 	//Call backs to Subclasses
@@ -73,13 +84,22 @@ public class FileProcessor {
 	}
 	
 	protected void fileMatched(File file) {
-		System.out.println(file.getAbsolutePath() + " found");
+		curFile = file;
+	}
+	
+	protected void fileClosed(File file) {
+		curFile = null;
+	}
+	
+	protected void gotNewLine(String line) {
 	}
 	
 	// main Method
 	public static void main(String[] args) {
-		FileProcessor fileProcessor = new FileProcessor();
-		File directory = new File("/Users/raull/Documents/CS240/Project_3/src/listem");
-		fileProcessor.processDirectory(directory);
+		GrepCommand fileProcessor = new GrepCommand();
+		LineCounterCommand lineCounter = new LineCounterCommand();
+		File directory = new File("/Users/raull/Documents");
+		System.out.println(fileProcessor.grep(directory, ".*Command.*\\.java", "class", true));
+		System.out.println(lineCounter.countLines(directory, ".*Command.*\\.java", true));
 	}
 }

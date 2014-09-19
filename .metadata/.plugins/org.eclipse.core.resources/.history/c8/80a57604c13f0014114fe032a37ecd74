@@ -1,0 +1,41 @@
+package listem;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+public class LineCounterCommand extends FileProcessor implements LineCounter {
+	
+	private HashMap<File, Integer> filesFound;
+	private int curFileLineCount;
+	
+	@Override
+	public Map<File, Integer> countLines(File directory,
+			String fileSelectionPattern, boolean recursive) {
+		
+		filesFound.clear();
+		curFileLineCount = 0;
+		run(directory, fileSelectionPattern, recursive);
+		
+		return filesFound;
+	}
+	
+	@Override
+	protected void fileMatched(File file) {
+		super.fileMatched(file);
+		curFileLineCount = 0;
+	}
+	
+	@Override
+	protected void fileClosed(File file) {
+		filesFound.put(curFile, new Integer(curFileLineCount));
+		super.fileClosed(file);
+	}
+	
+	@Override
+	protected void gotNewLine(String line) {
+		curFileLineCount++;
+	}
+
+
+}
