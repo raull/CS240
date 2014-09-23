@@ -35,7 +35,7 @@ public class LineCounterCommand extends FileProcessor implements LineCounter {
 	
 	@Override
 	protected void gotNewLine(String line) {
-		++curFileLineCount;
+		curFileLineCount++;
 	}
 
 

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GrepCommand extends FileProcessor implements Grep {
 	
@@ -38,9 +36,7 @@ public class GrepCommand extends FileProcessor implements Grep {
 	
 	@Override
 	protected void fileClosed(File file) {
-		if (linesFoundForFile.size() > 0) {
-			filesFound.put(curFile, linesFoundForFile);
-		}
+		filesFound.put(curFile, linesFoundForFile);
 		linesFoundForFile = null;
 		
 		super.fileClosed(file);
@@ -48,10 +44,7 @@ public class GrepCommand extends FileProcessor implements Grep {
 	
 	@Override
 	protected void gotNewLine(String line) {
-		Pattern pattern = Pattern.compile(substringPattern);
-		Matcher matcher = pattern.matcher(line);
-		
-		if (matcher.find()) {
+		if (line.contains(substringPattern)) {
 			linesFoundForFile.add(line);
 		}
 	}

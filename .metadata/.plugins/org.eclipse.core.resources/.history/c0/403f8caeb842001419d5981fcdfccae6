@@ -26,16 +26,14 @@ public class LineCounterCommand extends FileProcessor implements LineCounter {
 	
 	@Override
 	protected void fileClosed(File file) {
-		if (curFileLineCount > 0) {
-			filesFound.put(curFile, new Integer(curFileLineCount));
-		}
+		filesFound.put(curFile, new Integer(curFileLineCount));
 		curFileLineCount = 0;
 		super.fileClosed(file);
 	}
 	
 	@Override
 	protected void gotNewLine(String line) {
-		++curFileLineCount;
+		curFileLineCount++;
 	}
 
 

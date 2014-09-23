@@ -38,9 +38,7 @@ public class GrepCommand extends FileProcessor implements Grep {
 	
 	@Override
 	protected void fileClosed(File file) {
-		if (linesFoundForFile.size() > 0) {
-			filesFound.put(curFile, linesFoundForFile);
-		}
+		filesFound.put(curFile, linesFoundForFile);
 		linesFoundForFile = null;
 		
 		super.fileClosed(file);

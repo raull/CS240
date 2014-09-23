@@ -47,12 +47,12 @@ public abstract class FileProcessor {
 		}
 		try {
 			Scanner scanner = new Scanner(file);
-						
-			while (scanner.hasNextLine()) {
-				
+			
+			curFile = file;
+
+			while (scanner.hasNext()) {
 				String line = scanner.nextLine();
 				gotNewLine(line);
-				
 			}
 			
 			fileClosed(file);
@@ -102,8 +102,8 @@ public abstract class FileProcessor {
 	public static void main(String[] args) {
 		GrepCommand fileProcessor = new GrepCommand();
 		LineCounterCommand lineCounter = new LineCounterCommand();
-		File directory = new File("/Users/raull/Documents/CS240");
-		System.out.println(fileProcessor.grep(directory, ".*\\.(java|txt)", "c.*s", true));
-		System.out.println(lineCounter.countLines(directory, ".*\\.java", true));
+		File directory = new File("/Users/raull/Documents");
+		System.out.println(fileProcessor.grep(directory, ".*Command.*\\.java", "c*s", true));
+		System.out.println(lineCounter.countLines(directory, ".*Command.*\\.java", true));
 	}
 }

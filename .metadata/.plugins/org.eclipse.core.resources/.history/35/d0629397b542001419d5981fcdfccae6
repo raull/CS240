@@ -38,9 +38,7 @@ public class GrepCommand extends FileProcessor implements Grep {
 	
 	@Override
 	protected void fileClosed(File file) {
-		if (linesFoundForFile.size() > 0) {
-			filesFound.put(curFile, linesFoundForFile);
-		}
+		filesFound.put(curFile, linesFoundForFile);
 		linesFoundForFile = null;
 		
 		super.fileClosed(file);
@@ -51,7 +49,7 @@ public class GrepCommand extends FileProcessor implements Grep {
 		Pattern pattern = Pattern.compile(substringPattern);
 		Matcher matcher = pattern.matcher(line);
 		
-		if (matcher.find()) {
+		if (matcher.matches()) {
 			linesFoundForFile.add(line);
 		}
 	}
