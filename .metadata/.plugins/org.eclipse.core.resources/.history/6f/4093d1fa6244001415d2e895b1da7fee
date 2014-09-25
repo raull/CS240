@@ -1,0 +1,75 @@
+package hangman;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Set;
+
+public class EvilHangman implements EvilHangmanGame {
+	private int wordLength;
+	private int numberOfGuesses;
+	private ArrayList<String> wordList;
+	private ArrayList<Character> charsGuessed;
+	
+	public EvilHangman() {
+		wordLength = 0;
+		numberOfGuesses = 0;
+		wordList = new ArrayList<String>();
+		charsGuessed = new ArrayList<Character>();
+	}
+	
+	@Override
+	public void startGame(File dictionary, int wordLength) {
+		this.wordLength = wordLength;
+		try {
+			Scanner dictionaryScanner = new Scanner(dictionary);
+			while(dictionaryScanner.hasNext()) {
+				String newWord = dictionaryScanner.next();
+				if (newWord.length() == this.wordLength) {
+					this.wordList.add(newWord);
+				}
+			}
+			
+			dictionaryScanner.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		} catch (Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+		
+	}
+
+	@Override
+	public Set<String> makeGuess(char guess) throws GuessAlreadyMadeException {
+		// TODO Auto-generated method stub
+		
+		System.out.print("You have " + this.numberOfGuesses + " guesses  left\nUsed letters: ");
+		
+		StringBuilder charUsedStringBuilder = new StringBuilder();
+		for (Character curCharacter : this.charsGuessed) {
+			charUsedStringBuilder.append(curCharacter.charValue() + " ");
+		}
+		charUsedStringBuilder.deleteCharAt(charUsedStringBuilder.length() - 1);
+		System.out.println(charUsedStringBuilder.toString());
+		return null;
+	}
+	
+	//Getters and Setters
+	
+	public void setNumberOfGuesses(int numberOfGuesses) {
+		this.numberOfGuesses = numberOfGuesses;
+	}
+	
+	public static void main(String[] args) {
+		if (args.length == 3) {
+			File dictionaryFile = new File(args[0]);
+			EvilHangman game = new EvilHangman();
+			int wordLength = Integer.parseInt(args[1]);
+			int numberOfGuesses = Integer.parseInt(args[2]);
+			game.setNumberOfGuesses(numberOfGuesses);
+			game.startGame(dictionaryFile, wordLength);
+		}
+	}
+
+}

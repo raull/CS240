@@ -1,0 +1,47 @@
+package hangman;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Set;
+
+public class EvilHangman implements EvilHangmanGame {
+	private int wordLength;
+	private int numberOfGuesses;
+	private ArrayList<String> wordList;
+	
+	public EvilHangman() {
+		wordLength = 0;
+		numberOfGuesses = 0;
+		wordList = new ArrayList<String>();
+	}
+	
+	@Override
+	public void startGame(File dictionary, int wordLength) {
+		this.wordLength = wordLength;
+		try {
+			Scanner dictionaryScanner = new Scanner(dictionary);
+			while(dictionaryScanner.hasNext()) {
+				String newWord = dictionaryScanner.next();
+				if (newWord.length() == this.wordLength) {
+					this.wordList.add(newWord);
+				}
+			}
+			
+			dictionaryScanner.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+	@Override
+	public Set<String> makeGuess(char guess) throws GuessAlreadyMadeException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
