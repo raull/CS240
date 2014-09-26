@@ -113,14 +113,13 @@ public class EvilHangman implements EvilHangmanGame {
 		
 		System.out.println(map.toString());
 		
-		return getTopSet(map);
+		return null;
 	}
 	
 	private HashSet<String> getTopSet(HashMap<String, HashSet<String>> map) {
-		//Sort them according to requisites
+		//Sort them according to requesites
 		ArrayList<HashSet<String>> values = new ArrayList<>(map.values());
 		
-		//Create a comparator object
 		Collections.sort(values, new Comparator<HashSet<String>>() {
 			@Override
 			public int compare(HashSet<String> set1, HashSet<String> set2) {
