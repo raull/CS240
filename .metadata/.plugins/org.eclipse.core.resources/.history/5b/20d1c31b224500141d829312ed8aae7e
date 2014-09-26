@@ -1,0 +1,32 @@
+package hangman;
+
+import java.util.ArrayList;
+
+public class HangmanKeyPattern {
+	private int wordLength;
+	private String key;
+	private int rightmostLetter;
+	private ArrayList<Integer> charPositions;
+	
+	
+	public static String getPatternFromWord(String word, char character) {
+		StringBuilder patternBuilder = new StringBuilder();
+		
+		for (int i = 0; i < word.length(); i++) {
+			char curChar = word.charAt(i);
+			
+			if (curChar == character) {
+				patternBuilder.append(character);
+			}
+			else {
+				patternBuilder.append('-');
+			}
+		}
+		
+		return patternBuilder.toString();
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(HangmanKeyPattern.getPatternFromWord("Cinthia", 'i'));
+	}
+}

@@ -3,7 +3,6 @@ package hangman;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -13,7 +12,6 @@ public class EvilHangman implements EvilHangmanGame {
 	private ArrayList<String> wordList;
 	private ArrayList<Character> charsGuessed;
 	private StringBuilder userWord;
-	private HashMap<String, ArrayList<String>> map;
 	
 	public EvilHangman() {
 		wordLength = 0;
