@@ -74,15 +74,31 @@ public class HangmanKeyPattern implements Comparable<HangmanKeyPattern> {
 		if (this == key) {
 			return 0;
 		}
-		
+		//First compare tem by the amount of words
 		if (this.numberOfWords > key.numberOfWords) {
 			return 1;
-		}
-		else if (this.numberOfWords < key.numberOfWords) {
+		}else if (this.numberOfWords < key.numberOfWords) {
 			return -1;
-		}
-		else { // Another compare criteria
-			
+		}else { // If not, compare them by amount of ocurrences
+			if (this.characterOcurrences.size() == 0 && key.characterOcurrences.size() > 0) {
+				return 1;
+			}else if (key.characterOcurrences.size() == 0 && this.characterOcurrences.size() > 0) {
+				return - 1;
+			} else if (this.characterOcurrences.size() < key.characterOcurrences.size()) {
+				// compare them to see the less occurrences of the characte
+				return 1;
+			} else if (this.characterOcurrences.size() > key.characterOcurrences.size()) {
+				return -1;
+			} else { // Then go trough all the ocurrences and see which one has the rightmost occurrence
+				for (int i = this.characterOcurrences.size() - 1; i >= 0; i--) {
+					if (this.characterOcurrences.get(i).intValue() > key.characterOcurrences.get(i).intValue()) {
+						return 1;
+					}
+					else if(this.characterOcurrences.get(i).intValue() < key.characterOcurrences.get(i).intValue()){
+						return -1;
+					}
+				}
+			}
 		}
 		
 		return 0;
@@ -112,6 +128,11 @@ public class HangmanKeyPattern implements Comparable<HangmanKeyPattern> {
 	
 	// Main Method
 	public static void main(String[] args) {
-		System.out.println(HangmanKeyPattern.getKeyFromWord("Cinthia", 'i'));
+		System.out.println(HangmanKeyPattern.getKeyFromWord("Cinthia", 'c'));
+		HangmanKeyPattern keyPattern1 = new HangmanKeyPattern("aaua", 'a', 4);
+		HangmanKeyPattern keyPattern2 = new HangmanKeyPattern("Saaa", 'a', 4);
+		
+		System.out.println(keyPattern1.compareTo(keyPattern2));
+		
 	}
 }
