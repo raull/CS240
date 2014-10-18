@@ -1,0 +1,10 @@
+package client.communication;
+
+/**
+ * Project Client Communication class that contains methods to integrate with the server
+ * @author Raul Lopez Villalpando
+ *
+ */
+public class ProjectCommunicator {
+
+}

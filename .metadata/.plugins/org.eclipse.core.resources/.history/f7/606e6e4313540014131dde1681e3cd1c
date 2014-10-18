@@ -1,0 +1,22 @@
+package client.communication;
+
+import shared.communication.DownloadBatch_Response;
+import shared.communication.User_Project_Parameter;
+
+/**
+ * Batch Client Communication class that contains methods to integrate with the server
+ * @author Raul Lopez Villalpando
+ *
+ */
+public class BatchCommunicator {
+	
+	/**
+	 * Request the server for an available Batch from a Project
+	 * @param input describing the user and project
+	 * @return The available batch for the user
+	 */
+	public static DownloadBatch_Response downloadBatch(User_Project_Parameter input) {
+		return null;
+	}
+	
+}

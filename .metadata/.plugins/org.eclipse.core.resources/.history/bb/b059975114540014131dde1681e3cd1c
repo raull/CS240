@@ -1,0 +1,12 @@
+package shared.communication;
+
+import java.util.List;
+
+import shared.modal.Field;
+
+public class GetFields_Response {
+	
+	
+	private List<Field> fields;
+	private String errorMessage;
+}

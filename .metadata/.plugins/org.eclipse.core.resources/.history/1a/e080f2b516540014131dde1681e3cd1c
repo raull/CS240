@@ -1,0 +1,16 @@
+package shared.communication;
+
+import java.util.List;
+
+/**
+ * Search response 
+ * @author Raul Lopez Villalpando
+ *
+ */
+public class Search_Response {
+	
+	
+	private List<String> tuples;
+	private String errorMessage;
+
+}

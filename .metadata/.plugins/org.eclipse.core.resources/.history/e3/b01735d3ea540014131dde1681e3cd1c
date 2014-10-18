@@ -1,0 +1,6 @@
+package server;
+
+@SuppressWarnings("serial")
+public class DatabaseException extends Exception{
+
+}

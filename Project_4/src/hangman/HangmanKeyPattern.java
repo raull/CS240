@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class HangmanKeyPattern implements Comparable<HangmanKeyPattern> {
 	private int wordLength = 0;
 	private int numberOfWords = 0;
-	private char character = '-';
-	private String key = "";
+	private char character;
+	private String key = " ";
 	private ArrayList<Integer> characterOcurrences = new ArrayList<Integer>();	
 	
 	public HangmanKeyPattern(String word, char character, int numberOfWords) {
@@ -23,7 +23,10 @@ public class HangmanKeyPattern implements Comparable<HangmanKeyPattern> {
 		this.wordLength = key.length();
 		this.numberOfWords = numberOfWords;
 		this.character = getCharFromKey(key);
-		this.characterOcurrences = HangmanKeyPattern.getOccurencesFromString(key, this.character);
+		//Check is the key has or not ocurrences
+		if (this.character != ' ') {
+			this.characterOcurrences = HangmanKeyPattern.getOccurencesFromString(key, this.character);
+		}
 	}
 	
 	public static String getKeyFromWord(String word, char character) {
@@ -51,7 +54,7 @@ public class HangmanKeyPattern implements Comparable<HangmanKeyPattern> {
 			}
 		}
 		
-		return '-';
+		return ' ';
 	}
 	
 	public static ArrayList<Integer> getOccurencesFromString(String word, char character) {
@@ -74,7 +77,7 @@ public class HangmanKeyPattern implements Comparable<HangmanKeyPattern> {
 		if (this == key) {
 			return 0;
 		}
-		//First compare tem by the amount of words
+		//First compare them by the amount of words
 		if (this.numberOfWords > key.numberOfWords) {
 			return 1;
 		}else if (this.numberOfWords < key.numberOfWords) {
@@ -126,13 +129,13 @@ public class HangmanKeyPattern implements Comparable<HangmanKeyPattern> {
 		return this.numberOfWords;
 	}
 	
-	// Main Method
-	public static void main(String[] args) {
-		System.out.println(HangmanKeyPattern.getKeyFromWord("Cinthia", 'c'));
-		HangmanKeyPattern keyPattern1 = new HangmanKeyPattern("aaua", 'a', 4);
-		HangmanKeyPattern keyPattern2 = new HangmanKeyPattern("Saaa", 'a', 4);
-		
-		System.out.println(keyPattern1.compareTo(keyPattern2));
-		
-	}
+//	// Main Method
+//	public static void main(String[] args) {
+//		System.out.println(HangmanKeyPattern.getKeyFromWord("Cinthia", 'c'));
+//		HangmanKeyPattern keyPattern1 = new HangmanKeyPattern("rrur", 'a', 4);
+//		HangmanKeyPattern keyPattern2 = new HangmanKeyPattern("Saaa", 'a', 4);
+//		
+//		System.out.println(keyPattern1.compareTo(keyPattern2));
+//		
+//	}
 }

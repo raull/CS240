@@ -1,0 +1,8 @@
+package shared.modal;
+
+public class Value {
+	
+	private int id;
+	private String content;
+	private int rowNumber;
+}

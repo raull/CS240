@@ -1,0 +1,11 @@
+package shared.communication;
+
+import java.util.List;
+import shared.modal.*;
+
+public class SubmitBatch_Parameter {
+	
+	private List<Value> values;
+	private String username;
+	private String password;
+}

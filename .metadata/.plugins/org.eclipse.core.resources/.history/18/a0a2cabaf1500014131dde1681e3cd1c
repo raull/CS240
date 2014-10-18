@@ -1,0 +1,77 @@
+package shared.modal;
+/**
+ * The project class which represents a set of batches
+ * @author Raul Lopez Villalpando
+ *
+ */
+public class Project {
+	/** The id representing the project in the database*/
+	private int id;
+	/** The title of the project*/
+	private String title;
+	/** The number of records(rows) per batches*/
+	private int recordsPerBatch;
+	/** The first y-coordinate of the project*/
+	private int firstYCood;
+	/** The height of each record in the project*/
+	private int recordHeight;
+	
+	// Getters and Setters
+	
+	
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	/**
+	 * @return the recordsPerBatch
+	 */
+	public int getRecordsPerBatch() {
+		return recordsPerBatch;
+	}
+	/**
+	 * @param recordsPerBatch the recordsPerBatch to set
+	 */
+	public void setRecordsPerBatch(int recordsPerBatch) {
+		this.recordsPerBatch = recordsPerBatch;
+	}
+	/**
+	 * @return the firstYCood
+	 */
+	public int getFirstYCood() {
+		return firstYCood;
+	}
+	/**
+	 * @param firstYCood the firstYCood to set
+	 */
+	public void setFirstYCood(int firstYCood) {
+		this.firstYCood = firstYCood;
+	}
+	/**
+	 * @return the recordHeight
+	 */
+	public int getRecordHeight() {
+		return recordHeight;
+	}
+	/**
+	 * @param recordHeight the recordHeight to set
+	 */
+	public void setRecordHeight(int recordHeight) {
+		this.recordHeight = recordHeight;
+	}
+	
+}

@@ -1,0 +1,74 @@
+package shared.modal;
+
+public class Field {
+	
+	/** The id of the Field represented in the Database*/
+	private int id;
+	/** The title of the field*/
+	private String title;
+	/** The x-coordinate of the field where it starts on the batch*/
+	private int xCoord;
+	/** The column number in the batch*/
+	private int colNumber;
+	/** The width in pixels of the field*/
+	private int width;
+	/** The */
+	private String helpHtml;
+	private String knownData;
+	
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+	/**
+	 * @return the xCoord
+	 */
+	public int getxCoord() {
+		return xCoord;
+	}
+	/**
+	 * @return the colNumber
+	 */
+	public int getColNumber() {
+		return colNumber;
+	}
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+	/**
+	 * @return the helpHtml
+	 */
+	public String getHelpHtml() {
+		return helpHtml;
+	}
+	/**
+	 * @param helpHtml the helpHtml to set
+	 */
+	public void setHelpHtml(String helpHtml) {
+		this.helpHtml = helpHtml;
+	}
+	/**
+	 * @return the knownData
+	 */
+	public String getKnownData() {
+		return knownData;
+	}
+	/**
+	 * @param knownData the knownData to set
+	 */
+	public void setKnownData(String knownData) {
+		this.knownData = knownData;
+	}
+	
+}

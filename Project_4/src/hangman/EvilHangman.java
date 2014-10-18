@@ -9,17 +9,18 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class EvilHangman implements EvilHangmanGame {
 	private int wordLength;
 	private HashSet<String> wordList;
-	private ArrayList<Character> charsGuessed;
+	private TreeSet<Character> charsGuessed;
 	private StringBuilder userWord;
 	
 	public EvilHangman() {
 		wordLength = 0;
 		wordList = new HashSet<String>();
-		charsGuessed = new ArrayList<Character>();
+		charsGuessed = new TreeSet<Character>();
 		userWord = new StringBuilder();
 	}
 	
@@ -54,12 +55,8 @@ public class EvilHangman implements EvilHangmanGame {
 	public Set<String> makeGuess(char guess) throws GuessAlreadyMadeException {		
 		//Check if it has already been used
 		
-		for (int i = 0; i < this.charsGuessed.size(); i++) {
-			char char1 = this.charsGuessed.get(i).charValue();
-			char char2 = Character.toLowerCase(guess);
-			if (char1 == char2) {
-				throw new GuessAlreadyMadeException();
-			}
+		if (this.charsGuessed.contains(Character.toLowerCase(guess))) {
+			throw new GuessAlreadyMadeException();
 		}
 		
 		//Get new Set of words
@@ -180,9 +177,10 @@ public class EvilHangman implements EvilHangmanGame {
 				
 				do {
 					System.out.print("Enter guess: ");
-					guess = userInputScanner.next().charAt(0);
+					String inputString = userInputScanner.next();
+					guess = inputString.charAt(0);
 					//Check if it is a letter
-					if (!Character.isLetter(guess)) {
+					if (!Character.isLetter(guess) || inputString.length() != 1) {
 						System.out.println("Invalid input");
 						isLetter = false;
 					} else {
@@ -190,11 +188,14 @@ public class EvilHangman implements EvilHangmanGame {
 					}
 				} while(!isLetter);
 				
+				String oldUserWord = game.userWord.toString();
+				
 				try {
 					wordOptions = game.makeGuess(guess);
-					Character newCharacter = new Character(guess);
-					game.charsGuessed.add(newCharacter);
-					numberOfGuesses--;
+					game.charsGuessed.add(Character.toLowerCase(guess));
+					if (game.userWord.toString().equalsIgnoreCase(oldUserWord)) {
+						numberOfGuesses--;
+					}
 				} catch (GuessAlreadyMadeException e) {
 					System.out.println("You already used that letter\n");
 				}

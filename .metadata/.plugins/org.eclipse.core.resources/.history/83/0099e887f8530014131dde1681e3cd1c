@@ -1,0 +1,12 @@
+package shared.communication;
+
+/**
+ * Get Sample Image Response object so the client and server can communicate
+ * @author Raul Lopez Villalpando
+ *
+ */
+public class GetSampleImage_Response {
+
+	private String imageURL;
+	private String errorMessage;
+}

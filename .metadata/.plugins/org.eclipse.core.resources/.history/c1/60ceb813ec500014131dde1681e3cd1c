@@ -1,0 +1,68 @@
+package shared.modal;
+
+public class Field {
+
+	private int id;
+	private String title;
+	private int xCoord;
+	private int colNumber;
+	private int width;
+	private String helpHtml;
+	private String knownData;
+	
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+	/**
+	 * @return the xCoord
+	 */
+	public int getxCoord() {
+		return xCoord;
+	}
+	/**
+	 * @return the colNumber
+	 */
+	public int getColNumber() {
+		return colNumber;
+	}
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+	/**
+	 * @return the helpHtml
+	 */
+	public String getHelpHtml() {
+		return helpHtml;
+	}
+	/**
+	 * @param helpHtml the helpHtml to set
+	 */
+	public void setHelpHtml(String helpHtml) {
+		this.helpHtml = helpHtml;
+	}
+	/**
+	 * @return the knownData
+	 */
+	public String getKnownData() {
+		return knownData;
+	}
+	/**
+	 * @param knownData the knownData to set
+	 */
+	public void setKnownData(String knownData) {
+		this.knownData = knownData;
+	}
+	
+}

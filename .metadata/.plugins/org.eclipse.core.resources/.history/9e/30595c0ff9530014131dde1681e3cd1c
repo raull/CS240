@@ -1,0 +1,32 @@
+package client.communication;
+
+import shared.communication.GetSampleImage_Parameter;
+import shared.communication.GetSampleImage_Response;
+import shared.communication.Get_Projects_Response;
+import shared.communication.Validate_User_Parameter;
+
+/**
+ * Project Client Communication class that contains methods to integrate with the server
+ * @author Raul Lopez Villalpando
+ *
+ */
+public class ProjectCommunicator {
+	
+	/**
+	 * Requests the server for a list of projects related to the user provided
+	 * @param input to validate and get projects
+	 * @return A list of projects encapsulated on an object
+	 */
+	public static Get_Projects_Response getProjects(Validate_User_Parameter input) {
+		return null;
+	}
+	
+	/**
+	 * Requets the server to return an image from the specified project
+	 * @param input object representing the project and user
+	 * @return A URL encapsulated on an object
+	 */
+	public static GetSampleImage_Response getSampleImage(GetSampleImage_Parameter input) {
+		return null;
+	}
+}

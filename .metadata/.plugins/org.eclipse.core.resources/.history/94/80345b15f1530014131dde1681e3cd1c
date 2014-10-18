@@ -1,0 +1,15 @@
+package shared.communication;
+
+/**
+ * Validate User response object for the client and server to communicate
+ * @author Raul Lopez Villalpando
+ *
+ */
+public class Validate_User_Response {
+	
+	
+	private boolean validUser;
+	private String message;
+	
+	
+}

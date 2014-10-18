@@ -1,0 +1,5 @@
+package client.communication;
+
+public class UserCommunicator {
+
+}

@@ -1,0 +1,14 @@
+package shared.modal;
+
+/**
+ * Value class represents a value on and specific row and column on a batch
+ * */
+public class Value {
+	
+	/**
+	 * The id of the 
+	 * */
+	private int id;
+	private String content;
+	private int rowNumber;
+}

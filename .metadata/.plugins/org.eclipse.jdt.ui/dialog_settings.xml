@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item value="/Users/raull/Documents/CS240/record-indexer/lib" key="org.eclipse.jdt.ui.lastextjar"/>
 	<item value="JavaSE-1.7" key="org.eclipse.jdt.ui.last.selected.execution.enviroment"/>
 	<section name="OptionalMessageDialog.hide.">
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
@@ -24,12 +25,45 @@
 		<item value="false" key="SynchronizedModifier"/>
 		<item value="false" key="FinalModifier"/>
 	</section>
+	<section name="javadoc">
+		<item value="false" key="nodeprecatedlist"/>
+		<item value="false" key="notree"/>
+		<item value="true" key="splitindex"/>
+		<item value="/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home/bin/javadoc" key="javadoc_command_history"/>
+		<item value="true" key="use"/>
+		<item value="false" key="nonavbar"/>
+		<item value="public" key="access"/>
+		<item value="true" key="version"/>
+		<item value="false" key="nodeprecated"/>
+		<item value="/Users/raull/Documents/CS240/Record_Indexer/doc" key="destdir"/>
+		<item value="true" key="author"/>
+		<item value="" key="docletname"/>
+		<item value="1.7" key="source"/>
+		<item value="false" key="openinbrowser"/>
+		<item value="false" key="noindex"/>
+		<item value="" key="docletpath"/>
+		<item value="/Users/raull/Documents/CS240/Record_Indexer/javadoc.xml" key="antpath"/>
+		<item value="true" key="fromStandard"/>
+		<section name="projects">
+		</section>
+	</section>
 	<section name="org.eclipse.jdt.internal.ui.dialogs.OpenTypeSelectionDialog2">
 		<item value="true" key="ShowStatusLine"/>
 		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History/&gt;" key="History"/>
 	</section>
 	<section name="NewPackageWizardPage">
 		<item value="false" key="create_package_info_java"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.dialogs.FilteredTypesSelectionDialog">
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History/&gt;" key="History"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="0" key="DIALOG_Y_ORIGIN"/>
+			<item value="-32" key="DIALOG_X_ORIGIN"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
+		</section>
 	</section>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item value="true" key="group_libraries"/>
@@ -56,6 +90,8 @@
 	<section name="RenameInformationPopup">
 	</section>
 	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="*" key="patterns"/>
+		<item value="false" key="updateQualifiedNames"/>
 		<item value="1" key="updateSimilarElementsMatchStrategy"/>
 		<item value="false" key="updateTextualMatches"/>
 		<item value="true" key="updateSimilarElements"/>
@@ -63,5 +99,12 @@
 	<section name="AddGetterSetterDialog">
 		<item value="false" key="RemoveFinal"/>
 		<item value="false" key="SortOrdering"/>
+	</section>
+	<section name="JavadocWizardDialog">
+		<item value="600" key="DIALOG_WIDTH"/>
+		<item value="0" key="DIALOG_Y_ORIGIN"/>
+		<item value="582" key="DIALOG_HEIGHT"/>
+		<item value="340" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 </section>
