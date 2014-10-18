@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Set"/>
-<fullyQualifiedTypeName name="javax.print.attribute.HashAttributeSet"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.util.Comparator"/>
-<fullyQualifiedTypeName name="java.lang.Comparable"/>
-<fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="java.util.Scanner"/>
 <fullyQualifiedTypeName name="hangman.EvilHangmanGame.GuessAlreadyMadeException"/>
@@ -24,7 +18,6 @@
 <fullyQualifiedTypeName name="shared.modal.Value"/>
 <fullyQualifiedTypeName name="shared.modal.Project"/>
 <fullyQualifiedTypeName name="shared.communication.Validate_User_Response"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="shared.communication.Get_Projects_Response"/>
 <fullyQualifiedTypeName name="shared.communication.Validate_User_Parameter"/>
 <fullyQualifiedTypeName name="shared.communication.GetSampleImage_Response"/>
@@ -36,7 +29,6 @@
 <fullyQualifiedTypeName name="shared.communication.GetFields_Response"/>
 <fullyQualifiedTypeName name="shared.communication.User_Project_Parameter"/>
 <fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="java.awt.List"/>
 <fullyQualifiedTypeName name="client.ClientCommunicatorException"/>
 <fullyQualifiedTypeName name="shared.communication.Search_Response"/>
 <fullyQualifiedTypeName name="shared.communication.Search_Input"/>
@@ -47,17 +39,25 @@
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.sql.Driver"/>
 <fullyQualifiedTypeName name="java.sql.DriverManager"/>
-<fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="java.beans.Statement"/>
-<fullyQualifiedTypeName name="java.sql.SQLException"/>
 <fullyQualifiedTypeName name="server.access.BatchDAO"/>
-<fullyQualifiedTypeName name="server.access.UserDAO"/>
 <fullyQualifiedTypeName name="server.access.ProjectDAO"/>
-<fullyQualifiedTypeName name="server.DatabaseException"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
-<fullyQualifiedTypeName name="server.Database"/>
-<fullyQualifiedTypeName name="shared.modal.User"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="org.junit.BeforeClass"/>
+<fullyQualifiedTypeName name="org.junit.AfterClass"/>
+<fullyQualifiedTypeName name="shared.modal.User"/>
+<fullyQualifiedTypeName name="org.junit.Before"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="server.DatabaseException"/>
+<fullyQualifiedTypeName name="org.junit.After"/>
+<fullyQualifiedTypeName name="server.access.UserDAO"/>
+<fullyQualifiedTypeName name="server.Database"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="org.junit.runner.RunWith"/>
+<fullyQualifiedTypeName name="org.junit.runners.JUnit4"/>
 </qualifiedTypeNameHistroy>

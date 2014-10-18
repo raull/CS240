@@ -47,15 +47,15 @@ public class UserDAO {
 			//Handle Response to create new User
 			while (result.next()) {
 
-				String username = result.getString(1);
-				String password = result.getString(2);
-				String firstName = result.getString(3);
-				String lastName = result.getString(4);
-				String email = result.getString(5);
-				int recordsCount = result.getInt(6);
-				int batchId = result.getInt(7);
+				String username = result.getString(2);
+				String password = result.getString(3);
+				String firstName = result.getString(4);
+				String lastName = result.getString(5);
+				String email = result.getString(6);
+				int recordsCount = result.getInt(7);
+				int batchId = result.getInt(8);
 				User newUser = new User(username, password, firstName, lastName, email);
-				newUser.setId(result.getInt(0));
+				newUser.setId(result.getInt(1));
 				newUser.setRecordCount(recordsCount);
 				newUser.setCurrentBatchId(batchId);
 				
@@ -63,7 +63,7 @@ public class UserDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error finding User", e);
+			throw new DatabaseException("Error getting all User: "+ e.getLocalizedMessage(), e);
 		} 
 				
 		return userList;
@@ -83,7 +83,7 @@ public class UserDAO {
 		
 		try {			
 			//Set up Query
-			String sql = "SELECT username, password, firstname, lastname, email FROM user WHERE id = ?";
+			String sql = "SELECT * FROM user WHERE id = ?";
 			stm = db.getConnection().prepareStatement(sql);
 			stm.setInt(1, id);
 
@@ -92,18 +92,23 @@ public class UserDAO {
 			
 			//Handle Response to create new User
 			while (result.next()) {
-				String username = result.getString(0);
-				String password = result.getString(1);
-				String firstName = result.getString(2);
-				String lastName = result.getString(3);
-				String email = result.getString(4);
+				int userId = result.getInt(1);
+				String username = result.getString(2);
+				String password = result.getString(3);
+				String firstName = result.getString(4);
+				String lastName = result.getString(5);
+				String email = result.getString(6);
+				int recordsCount = result.getInt(7);
+				int batchId = result.getInt(8);
 				
 				user = new User(username, password, firstName, lastName, email);
-				user.setId(id);
+				user.setId(userId);
+				user.setRecordCount(recordsCount);
+				user.setCurrentBatchId(batchId);
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error finding User", e);
+			throw new DatabaseException("Error finding User: " + e.getLocalizedMessage(), e);
 		} 
 				
 		return user;
@@ -122,7 +127,7 @@ public class UserDAO {
 		
 		try {
 			//Set up Query
-			String sql = "SELECT id, password, firstname, lastname, email FROM user WHERE username = ?";
+			String sql = "SELECT * FROM user WHERE username = ?";
 			stm = db.getConnection().prepareStatement(sql);
 			stm.setString(1, username);
 
@@ -131,18 +136,23 @@ public class UserDAO {
 			
 			//Handle Response to create new User
 			while (result.next()) {
-				int id = result.getInt(0);
-				String password = result.getString(1);
-				String firstName = result.getString(2);
-				String lastName = result.getString(3);
-				String email = result.getString(4);
+				int id = result.getInt(1);
+				String usernameString = result.getString(2);
+				String password = result.getString(3);
+				String firstName = result.getString(4);
+				String lastName = result.getString(5);
+				String email = result.getString(6);
+				int recordsCount = result.getInt(7);
+				int batchId = result.getInt(8);
 				
-				user = new User(username, password, firstName, lastName, email);
+				user = new User(usernameString, password, firstName, lastName, email);
 				user.setId(id);
+				user.setRecordCount(recordsCount);
+				user.setCurrentBatchId(batchId);
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error finding User", e);
+			throw new DatabaseException("Error finding User: " + e.getLocalizedMessage(), e);
 		}
 				
 		return user;
@@ -178,14 +188,14 @@ public class UserDAO {
 			}		
 						
 		} catch (SQLException e) {
-			throw new DatabaseException("Error adding User", e);
+			throw new DatabaseException("Error adding User: " + e.getLocalizedMessage(), e);
 		} 
 		
 		return true;
 	}
 	
 	/**
-	 * Update user in the Database
+	 * Update user in the Database for current batch and for records count
 	 * @param user, User object containing new information to update
 	 * @return true if the User was updated successfully, otherwise false
 	 */
@@ -195,11 +205,15 @@ public class UserDAO {
 		try {
 
 			//Set up Query
-			String sql = "UPDATE user SET current_batch = ?, records_count = ? WHERE id = ? ";
+			String sql = "UPDATE user SET firstname = ?, lastname = ?, password = ?, email = ?, current_batch = ?, records_count = ? WHERE id = ? ";
 			stm = db.getConnection().prepareStatement(sql);
-			stm.setInt(1, user.getCurrentBatchId());
-			stm.setInt(2, user.getRecordCount());
-			stm.setInt(3,user.getId());
+			stm.setString(1, user.getFirstName());
+			stm.setString(2, user.getLastName());
+			stm.setString(3, user.getPassword());
+			stm.setString(4, user.getEmail());
+			stm.setInt(5, user.getCurrentBatchId());
+			stm.setInt(6, user.getRecordCount());
+			stm.setInt(7,user.getId());
 
 			//Execute Query
 			if (stm.executeUpdate() == 1) {
@@ -209,7 +223,7 @@ public class UserDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error finding User", e);
+			throw new DatabaseException("Error updating User: " + e.getLocalizedMessage(), e);
 		} 
 	}
 	
@@ -236,36 +250,11 @@ public class UserDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error finding User", e);
+			throw new DatabaseException("Error deleting User: " + e.getLocalizedMessage(), e);
 		}
 		
 	}
 	
-	//-------------------------------
-	//Testing
-	
-	public static void main(String[] args) {
-		
-		try {
-			Database.initialize();
-		} catch (DatabaseException e) {
-			e.printStackTrace();
-		}
-		
-		Database db = new Database();
-		
-		User newUser = new User("raull91", "lopesdel91", "Raul", "Lopez", "raullopezvil@gmail.com");
-		
-		try {
-			db.getUserDAO().insertNewUser(newUser);
-			System.out.println("Added Succesfully with id " + newUser.getId() + " and username: " + newUser.getUsername());
-		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
 	
 	
 }

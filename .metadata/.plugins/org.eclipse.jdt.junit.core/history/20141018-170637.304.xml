@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Record_Indexer" project="Record_Indexer" tests="7" started="7" failures="0" errors="0" ignored="0">
+  <testsuite name="server.ServerUnitTests" time="0.001">
+    <testcase name="test_1" classname="server.ServerUnitTests" time="0.001"/>
+  </testsuite>
+  <testsuite name="server.access.UserDAOTest" time="1.188">
+    <testcase name="testGetAll" classname="server.access.UserDAOTest" time="0.868"/>
+    <testcase name="testAdd" classname="server.access.UserDAOTest" time="0.114"/>
+    <testcase name="testUpdate" classname="server.access.UserDAOTest" time="0.068"/>
+    <testcase name="deleteTest" classname="server.access.UserDAOTest" time="0.096"/>
+    <testcase name="invalidAddTest" classname="server.access.UserDAOTest" time="0.041"/>
+  </testsuite>
+  <testsuite name="client.ClientUnitTests" time="0.0">
+    <testcase name="test_1" classname="client.ClientUnitTests" time="0.0"/>
+  </testsuite>
+</testrun>

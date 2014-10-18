@@ -33,7 +33,7 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.recordCount = 0;
-		this.currentBatchId = -1;
+		this.currentBatchId = 0;
 	}
 	
 	
