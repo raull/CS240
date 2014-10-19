@@ -22,8 +22,15 @@ public class Project {
 	private ArrayList<Batch> batches;
 	/** The list of fields in each batch*/
 	private ArrayList<Field> fields;
-	/** All the values from all the batches */
-	private ArrayList<Value> values;
+	
+	//Constructors
+	
+	public Project(String title, int recordsPerBatch, int firstYCood, int recordHeight) {
+		this.title = title;
+		this.recordsPerBatch = recordsPerBatch;
+		this.firstYCood = firstYCood;
+		this.recordHeight = recordHeight;
+	}
 	
 	// Getters and Setters
 	
@@ -34,6 +41,13 @@ public class Project {
 	public int getId() {
 		return id;
 	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	/**
 	 * @return the title
 	 */
@@ -106,17 +120,6 @@ public class Project {
 	public void setFields(ArrayList<Field> fields) {
 		this.fields = fields;
 	}
-	/**
-	 * @return the values
-	 */
-	public ArrayList<Value> getValues() {
-		return values;
-	}
-	/**
-	 * @param values the values to set
-	 */
-	public void setValues(ArrayList<Value> values) {
-		this.values = values;
-	}
+
 	
 }

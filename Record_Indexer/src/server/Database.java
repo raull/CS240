@@ -15,7 +15,7 @@ public class Database {
 	private Connection connection;
 	private boolean isTest = false;
 	private UserDAO userDAO;
-	//private ProjectDAO projectDAO;
+	private ProjectDAO projectDAO;
 	//private BatchDAO batchDAO;
 	
 	//Static Methods
@@ -35,6 +35,7 @@ public class Database {
 	public Database() {
 		connection = null;
 		userDAO = new UserDAO(this);
+		projectDAO = new ProjectDAO(this);
 	}
 	
 	//Methods
@@ -106,6 +107,13 @@ public class Database {
 	 */
 	public UserDAO getUserDAO() {
 		return userDAO;
+	}
+	
+	/**
+	 * @return the userDAO
+	 */
+	public ProjectDAO getProjectDAO() {
+		return projectDAO;
 	}
 	
 	/**

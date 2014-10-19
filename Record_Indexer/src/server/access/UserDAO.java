@@ -185,13 +185,16 @@ public class UserDAO {
 				result = keyStm.executeQuery("SELECT last_insert_rowid()");
 				result.next();
 				newUser.setId(result.getInt(1));
-			}		
+				return true;
+
+			} else {
+				return false;
+			}
 						
 		} catch (SQLException e) {
 			throw new DatabaseException("Error adding User: " + e.getLocalizedMessage(), e);
 		} 
 		
-		return true;
 	}
 	
 	/**

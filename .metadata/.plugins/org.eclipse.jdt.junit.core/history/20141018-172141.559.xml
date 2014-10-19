@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="UserDAOTest" project="Record_Indexer" tests="6" started="6" failures="0" errors="0" ignored="0">
+  <testsuite name="server.access.UserDAOTest" time="14.222">
+    <testcase name="testGetAll" classname="server.access.UserDAOTest" time="0.877"/>
+    <testcase name="testAdd" classname="server.access.UserDAOTest" time="0.156"/>
+    <testcase name="testUpdate" classname="server.access.UserDAOTest" time="12.891"/>
+    <testcase name="testDelete" classname="server.access.UserDAOTest" time="0.114"/>
+    <testcase name="testInvalidAdd" classname="server.access.UserDAOTest" time="0.126"/>
+    <testcase name="testInvalidUpdate" classname="server.access.UserDAOTest" time="0.058"/>
+  </testsuite>
+</testrun>

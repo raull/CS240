@@ -38,7 +38,7 @@ public class UserDAOTest {
 	@Before
 	public void setUp() throws Exception {
 		db = new Database();
-		db.isTest();
+		db.isTest(true);
 		db.startTransaction();
 		
 		List<User> allUsers = db.getUserDAO().getAll();
@@ -52,7 +52,7 @@ public class UserDAOTest {
 		
 		//Prepare Database for test case
 		db = new Database();
-		db.isTest();
+		db.isTest(true);
 		db.startTransaction();
 		userDAO = db.getUserDAO();
 	}
