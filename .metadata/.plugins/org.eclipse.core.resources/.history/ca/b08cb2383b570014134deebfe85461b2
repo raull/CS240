@@ -16,6 +16,7 @@ import org.junit.Test;
 import server.Database;
 import server.DatabaseException;
 import server.access.UserDAO;
+import shared.modal.Project;
 import shared.modal.User;
 
 @RunWith(JUnit4.class)

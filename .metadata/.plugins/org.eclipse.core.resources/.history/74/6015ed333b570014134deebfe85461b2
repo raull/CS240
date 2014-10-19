@@ -16,6 +16,7 @@ import org.junit.Test;
 import server.Database;
 import server.DatabaseException;
 import server.access.UserDAO;
+import shared.modal.Project;
 import shared.modal.User;
 
 @RunWith(JUnit4.class)
@@ -120,11 +121,11 @@ public class UserDAOTest {
 		userDAO.insertNewUser(userTest1);
 		userDAO.insertNewUser(userTest2);
 		
-		User test1 = userDAO.findById(userTest1.getId());
-		assertTrue(areEqual(userTest1, test1, true));
+		Project test1 = projectDAO.findById(projectTest1.getId());
+		assertTrue(areEqual(projectTest1, test1, true));
 		
-		User test2 = userDAO.findById(userTest2.getId());
-		assertTrue(areEqual(userTest2, test2, true));
+		Project test2 = projectDAO.findById(projectTest2.getId());
+		assertTrue(areEqual(projectTest2, test2, true));
 		
 	}
 	

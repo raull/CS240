@@ -112,22 +112,6 @@ public class UserDAOTest {
 		
 	}
 	
-	@Test 
-	public void testGet() throws DatabaseException{
-		User userTest1 = new User("raull", "thepassword", "Raul", "Lopez", "ruffles91@gmail.com");
-		User userTest2 = new User("cinthia91", "anotherpassword", "Cinthia", "Beltran", "cinthia_latina@hotmail.com");
-		
-		userDAO.insertNewUser(userTest1);
-		userDAO.insertNewUser(userTest2);
-		
-		User test1 = userDAO.findById(userTest1.getId());
-		assertTrue(areEqual(userTest1, test1, true));
-		
-		User test2 = userDAO.findById(userTest2.getId());
-		assertTrue(areEqual(userTest2, test2, true));
-		
-	}
-	
 	@Test
 	public void testUpdate() throws DatabaseException {
 		User userTest1 = new User("raull91", "lopes", "Raul", "Lopez", "ruffles91@gmail.com");
