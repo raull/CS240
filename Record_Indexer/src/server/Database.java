@@ -16,7 +16,7 @@ public class Database {
 	private boolean isTest = false;
 	private UserDAO userDAO;
 	private ProjectDAO projectDAO;
-	//private BatchDAO batchDAO;
+	private BatchDAO batchDAO;
 	
 	//Static Methods
 	public static void initialize() throws DatabaseException{
@@ -36,6 +36,7 @@ public class Database {
 		connection = null;
 		userDAO = new UserDAO(this);
 		projectDAO = new ProjectDAO(this);
+		batchDAO = new BatchDAO(this);
 	}
 	
 	//Methods
@@ -110,10 +111,17 @@ public class Database {
 	}
 	
 	/**
-	 * @return the userDAO
+	 * @return the projectDAO
 	 */
 	public ProjectDAO getProjectDAO() {
 		return projectDAO;
+	}
+	
+	/**
+	 * @return the projectDAO
+	 */
+	public BatchDAO getBatchDAO() {
+		return batchDAO;
 	}
 	
 	/**

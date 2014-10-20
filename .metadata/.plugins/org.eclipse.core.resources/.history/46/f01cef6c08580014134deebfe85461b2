@@ -1,0 +1,70 @@
+package server.access;
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import server.Database;
+import server.DatabaseException;
+import shared.modal.Batch;
+
+public class BatchDAOTest {
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception{
+		Database.initialize();
+	}
+	
+	@AfterClass
+	public static void afterClassTeardown() throws Exception {
+		return;
+	}
+	
+	
+	private Database db;
+	private BatchDAO batchDAO;
+	
+	@Before
+	public void setUp() throws Exception {
+		db = new Database();
+		db.isTest(true);
+		db.startTransaction();
+		
+		List<Batch> allBatches = db.getBatchDAO().getAll();
+		
+		//Clear out User table
+		for (Batch batch : allBatches) {
+			db.getProjectDAO().deleteProjectWithId(batch.getId());
+		}
+		
+		db.endTransaction(true);
+		
+		//Prepare Database for test case
+		db = new Database();
+		db.isTest(true);
+		db.startTransaction();
+		batchDAO = db.getBatchDAO();
+	}
+	
+	@After
+	public void teardown() throws Exception{
+		db.endTransaction(true);
+		db = null;
+		batchDAO = null;
+	}
+
+
+	@Test
+	public void testGetAll() throws DatabaseException{
+		
+		List<Batch> allBatchList = batchDAO.getAll();
+		assertEquals(0, allBatchList.size());
+	}
+
+}

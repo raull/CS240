@@ -190,9 +190,9 @@ public class ProjectDAOTest {
 		List<Project> allProjects = projectDAO.getAll();
 		assertEquals(2, allProjects.size());
 		
-		for (Project user : allProjects) {
+		for (Project project : allProjects) {
 			//Should not find USerTest 2
-			assertFalse(user.getId() == projectTest2.getId());
+			assertFalse(project.getId() == projectTest2.getId());
 		}
 		
 		//Attempt to delete the same user and should still remain the same

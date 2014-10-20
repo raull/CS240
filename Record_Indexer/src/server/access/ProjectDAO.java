@@ -107,7 +107,7 @@ public class ProjectDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error finding User: " + e.getLocalizedMessage(), e);
+			throw new DatabaseException("Error finding Project: " + e.getLocalizedMessage(), e);
 		} 	
 		
 		return project;
@@ -146,7 +146,7 @@ public class ProjectDAO {
 			}
 						
 		} catch (SQLException e) {
-			throw new DatabaseException("Error adding User: " + e.getLocalizedMessage(), e);
+			throw new DatabaseException("Error adding Project: " + e.getLocalizedMessage(), e);
 		} 
 				
 	}
@@ -178,7 +178,7 @@ public class ProjectDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error updating User: " + e.getLocalizedMessage(), e);
+			throw new DatabaseException("Error updating Project: " + e.getLocalizedMessage(), e);
 		} 
 	}
 	
@@ -204,7 +204,7 @@ public class ProjectDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error deleting User: " + e.getLocalizedMessage(), e);
+			throw new DatabaseException("Error deleting Project: " + e.getLocalizedMessage(), e);
 		}
 	}
 }

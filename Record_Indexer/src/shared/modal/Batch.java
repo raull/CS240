@@ -20,6 +20,12 @@ public class Batch {
 	/** The values on this batch */
 	private ArrayList<Value> values;
 	
+	//Constructor
+	
+	public Batch(String filePath, int status) {
+		this.filePath = filePath;
+		this.status = status;
+	}
 	
 	
 	//Getters and Setters
@@ -29,6 +35,14 @@ public class Batch {
 	public int getId() {
 		return id;
 	}
+	
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	/**
 	 * @return the filePath
 	 */
@@ -47,5 +61,11 @@ public class Batch {
 	 * */
 	public int getStatus() {
 		return this.status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

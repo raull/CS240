@@ -8,9 +8,10 @@ DROP TABLE value IF EXISTS;
 
 CREATE TABLE user (
 id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL ,
-username VARCHAR NOT NULL ,
+username VARCHAR NOT NULL UNIQUE ,
 password VARCHAR NOT NULL ,
 firstname VARCHAR NOT NULL ,
+lastname VARCHAR NOT NULL ,
 email VARCHAR NOT NULL ,
 records_count INTEGER CHECK (records_count >= 0) NOT NULL DEFAULT 0 ,
 current_batch INTEGER ,
@@ -31,9 +32,9 @@ record_height INTEGER CHECK(record_height >= 0) NOT NULL
 
 CREATE TABLE batch (
 id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL ,
-file_path TEXT NOT NULL,
+file_path TEXT CHECK(file_path != "") NOT NULL,
 status INTEGER NOT NULL Default 0,
-project_id INTEGER NOT NULL,
+project_id INTEGER,
 FOREIGN KEY(project_id) REFERENCES project(id)
 )
 
