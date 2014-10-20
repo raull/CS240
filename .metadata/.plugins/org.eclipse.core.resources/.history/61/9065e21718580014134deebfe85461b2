@@ -1,0 +1,71 @@
+package server.access;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import server.Database;
+import server.DatabaseException;
+
+import shared.modal.*;
+
+public class FieldDAO {
+	
+	//Instance Fields
+	/**
+	 * Database object to start and end transactions
+	 */
+	private Database db;
+	
+	//-----------------------------------------------------
+	//Constructors
+	
+	public FieldDAO(Database db) {
+		this.db = db;
+	}
+	
+	//-----------------------------------------------------
+	//Methods
+	
+	/**
+	 * Find all the Field in the Database
+	 * @return A list with all the Field in the Database
+	 * */
+	public List<Field> getAll() throws DatabaseException {
+		PreparedStatement stm = null;
+		ResultSet result = null;
+				
+		ArrayList<Field> fieldList = new ArrayList<Field>();
+		try {			
+			//Set up Query
+			String sql = "SELECT * FROM field";
+			stm = db.getConnection().prepareStatement(sql);
+
+			//Execute Query
+			result = stm.executeQuery();
+			
+			//Handle Response to create new User
+			while (result.next()) {
+
+				String title = result.getString(2);
+				int xCoord = result.getInt(3);
+				int colNumber = result.getInt(4);
+				int width = result.getInt(5);
+				String helpHTML = result.getString(6);
+				String knownData = result.getString(7);
+				
+				Field newField = new Field(title, xCoord, colNumber, width, helpHTML, knownData);
+				newField.setId(result.getInt(1));
+				
+				fieldList.add(newField);
+			}
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error getting all Fields: "+ e.getLocalizedMessage(), e);
+		} 
+				
+		return fieldList;
+	}
+}

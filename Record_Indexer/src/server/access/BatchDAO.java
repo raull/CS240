@@ -110,15 +110,6 @@ public class BatchDAO {
 	}
 	
 	/**
-	 * Find all Batches by providing the Project's ID
-	 * @param id of the Project in which the Bath is contained
-	 * @return A list of Batches matching the provided Project ID
-	 */
-	public List<Batch> findAllByProjectId(int projectId) throws DatabaseException {
-		return null;
-	}
-	
-	/**
 	 * Insert a new Batch to the Database
 	 * @param newBatch, a Batch object representing the new Batch to persist
 	 * @return true if the Batch was inserted successfully, otherwise false

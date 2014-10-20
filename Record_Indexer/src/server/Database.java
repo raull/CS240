@@ -17,6 +17,7 @@ public class Database {
 	private UserDAO userDAO;
 	private ProjectDAO projectDAO;
 	private BatchDAO batchDAO;
+	private FieldDAO fieldDAO;
 	
 	//Static Methods
 	public static void initialize() throws DatabaseException{
@@ -37,6 +38,7 @@ public class Database {
 		userDAO = new UserDAO(this);
 		projectDAO = new ProjectDAO(this);
 		batchDAO = new BatchDAO(this);
+		fieldDAO = new FieldDAO(this);
 	}
 	
 	//Methods
@@ -118,10 +120,17 @@ public class Database {
 	}
 	
 	/**
-	 * @return the projectDAO
+	 * @return the batchDAO
 	 */
 	public BatchDAO getBatchDAO() {
 		return batchDAO;
+	}
+	
+	/**
+	 * @return the fieldDAO
+	 */
+	public FieldDAO getFieldDAO() {
+		return fieldDAO;
 	}
 	
 	/**
@@ -133,30 +142,6 @@ public class Database {
 	
 	public void isTest(boolean test) {
 		this.isTest = test;
-	}
-	
-	//Testing
-	
-	public static void main(String[] args) {
-		try {
-			Database.initialize();
-			System.out.println("Driver loaded succesfully!!!!");
-		} catch (Exception e) {
-			System.out.println(e.getCause().getLocalizedMessage());
-		}
-		
-		Database db = new Database();
-		db.isTest = true;
-		try {
-			db.startTransaction();
-			System.out.println("Started test transaction succesfully!!");
-			db.endTransaction(false);
-			System.out.print("Ended test transaction succesfully!!");
-		} catch (Exception e) {
-			System.out.println(e.getCause().getLocalizedMessage());
-		}
-		
-		
 	}
 
 }

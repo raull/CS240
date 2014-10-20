@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Record_Indexer" project="Record_Indexer" tests="35" started="35" failures="0" errors="1" ignored="0">
+  <testsuite name="server.ServerUnitTests" time="0.0">
+    <testcase name="test_1" classname="server.ServerUnitTests" time="0.0"/>
+  </testsuite>
+  <testsuite name="server.access.BatchDAOTest" time="1.441">
+    <testcase name="testGetAll" classname="server.access.BatchDAOTest" time="0.938"/>
+    <testcase name="testAdd" classname="server.access.BatchDAOTest" time="0.102"/>
+    <testcase name="testGet" classname="server.access.BatchDAOTest" time="0.055"/>
+    <testcase name="testUpdate" classname="server.access.BatchDAOTest" time="0.074"/>
+    <testcase name="testDelete" classname="server.access.BatchDAOTest" time="0.106"/>
+    <testcase name="testInvalidFilePathAdd" classname="server.access.BatchDAOTest" time="0.034"/>
+    <testcase name="testInvalidFilePathUpdate" classname="server.access.BatchDAOTest" time="0.046"/>
+    <testcase name="testEmptyFilePathAdd" classname="server.access.BatchDAOTest" time="0.042"/>
+    <testcase name="testEmptyFilePathUpdate" classname="server.access.BatchDAOTest" time="0.044"/>
+  </testsuite>
+  <testsuite name="server.access.FieldDAOTest" time="0.081">
+    <testcase name="testGetAll" classname="server.access.FieldDAOTest" time="0.037"/>
+    <testcase name="testAdd" classname="server.access.FieldDAOTest" time="0.044">
+      <error>server.DatabaseException: Error adding Field: [SQLITE_CONSTRAINT]  Abort due to constraint violation (field.project_id may not be NULL)
+	at server.access.FieldDAO.insertNewField(FieldDAO.java:149)
+	at server.access.FieldDAOTest.testAdd(FieldDAOTest.java:75)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: java.sql.SQLException: [SQLITE_CONSTRAINT]  Abort due to constraint violation (field.project_id may not be NULL)
+	at org.sqlite.DB.newSQLException(DB.java:383)
+	at org.sqlite.DB.newSQLException(DB.java:387)
+	at org.sqlite.DB.execute(DB.java:342)
+	at org.sqlite.DB.executeUpdate(DB.java:363)
+	at org.sqlite.PrepStmt.executeUpdate(PrepStmt.java:85)
+	at server.access.FieldDAO.insertNewField(FieldDAO.java:137)
+	... 28 more
+
+</error>
+    </testcase>
+  </testsuite>
+  <testsuite name="server.access.UserDAOTest" time="0.348">
+    <testcase name="testGetAll" classname="server.access.UserDAOTest" time="0.045"/>
+    <testcase name="testAdd" classname="server.access.UserDAOTest" time="0.05"/>
+    <testcase name="testGet" classname="server.access.UserDAOTest" time="0.042"/>
+    <testcase name="testUpdate" classname="server.access.UserDAOTest" time="0.062"/>
+    <testcase name="testDelete" classname="server.access.UserDAOTest" time="0.073"/>
+    <testcase name="testInvalidAdd" classname="server.access.UserDAOTest" time="0.034"/>
+    <testcase name="testInvalidUpdate" classname="server.access.UserDAOTest" time="0.042"/>
+  </testsuite>
+  <testsuite name="client.ClientUnitTests" time="0.008">
+    <testcase name="test_1" classname="client.ClientUnitTests" time="0.008"/>
+  </testsuite>
+  <testsuite name="server.access.ProjectDAOTest" time="0.648">
+    <testcase name="testGetAll" classname="server.access.ProjectDAOTest" time="0.047"/>
+    <testcase name="testAdd" classname="server.access.ProjectDAOTest" time="0.061"/>
+    <testcase name="testGet" classname="server.access.ProjectDAOTest" time="0.054"/>
+    <testcase name="testUpdate" classname="server.access.ProjectDAOTest" time="0.056"/>
+    <testcase name="testDelete" classname="server.access.ProjectDAOTest" time="0.046"/>
+    <testcase name="testEmptyTitleAdd" classname="server.access.ProjectDAOTest" time="0.03"/>
+    <testcase name="testInvalidTitleAdd" classname="server.access.ProjectDAOTest" time="0.032"/>
+    <testcase name="testNegativeRecordsPerBatchAdd" classname="server.access.ProjectDAOTest" time="0.041"/>
+    <testcase name="testNegativeFirstCoordinateAdd" classname="server.access.ProjectDAOTest" time="0.038"/>
+    <testcase name="testNegativeRecordHeightAdd" classname="server.access.ProjectDAOTest" time="0.033"/>
+    <testcase name="testEmptyTitleUpdate" classname="server.access.ProjectDAOTest" time="0.034"/>
+    <testcase name="testInvalidTitleUpdate" classname="server.access.ProjectDAOTest" time="0.039"/>
+    <testcase name="testNegativeRecordsPerBatchUpdate" classname="server.access.ProjectDAOTest" time="0.058"/>
+    <testcase name="testNegativeFirstCoordinateUpdate" classname="server.access.ProjectDAOTest" time="0.046"/>
+    <testcase name="testNegativeRecordHeightUpdate" classname="server.access.ProjectDAOTest" time="0.033"/>
+  </testsuite>
+</testrun>

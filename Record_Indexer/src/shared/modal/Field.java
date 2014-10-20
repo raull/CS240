@@ -18,15 +18,34 @@ public class Field {
 	/** The width in pixels of the field*/
 	private int width;
 	/** The path of the HTML link that contains info about the field*/
-	private String helpHtml;
+	private String helpHTML;
 	/** The path of the file that contains known words that could help to correct mispelled words*/
 	private String knownData;
 	
+	//Constructors
+	
+	public Field(String title, int xCoord, int colNumber, int width, String helpHTML, String knownData) {
+		this.title = title;
+		this.xCoord = xCoord;
+		this.colNumber = colNumber;
+		this.width = width;
+		this.helpHTML = helpHTML;
+		this.knownData = knownData;
+	}
+	
+	
+	//Getters and Setters
 	/**
 	 * @return the id
 	 */
 	public int getId() {
 		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 	/**
 	 * @return the title
@@ -56,13 +75,13 @@ public class Field {
 	 * @return the helpHtml
 	 */
 	public String getHelpHtml() {
-		return helpHtml;
+		return helpHTML;
 	}
 	/**
 	 * @param helpHtml the helpHtml to set
 	 */
 	public void setHelpHtml(String helpHtml) {
-		this.helpHtml = helpHtml;
+		this.helpHTML = helpHtml;
 	}
 	/**
 	 * @return the knownData

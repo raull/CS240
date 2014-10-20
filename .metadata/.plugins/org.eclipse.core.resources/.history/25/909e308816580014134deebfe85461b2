@@ -1,0 +1,22 @@
+package server.access;
+
+import server.Database;
+
+public class FieldDAO {
+	
+	//Instance Fields
+	/**
+	 * Database object to start and end transactions
+	 */
+	private Database db;
+	
+	//-----------------------------------------------------
+	//Constructors
+	
+	public FieldDAO(Database db) {
+		this.db = db;
+	}
+	
+	//-----------------------------------------------------
+	//Methods
+}

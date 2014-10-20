@@ -1,0 +1,67 @@
+package server.access;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import server.Database;
+import server.DatabaseException;
+
+import shared.modal.*;
+
+public class FieldDAO {
+	
+	//Instance Fields
+	/**
+	 * Database object to start and end transactions
+	 */
+	private Database db;
+	
+	//-----------------------------------------------------
+	//Constructors
+	
+	public FieldDAO(Database db) {
+		this.db = db;
+	}
+	
+	//-----------------------------------------------------
+	//Methods
+	
+	/**
+	 * Find all the Batches in the Database
+	 * @return A list with all the Batches in the Database
+	 * */
+	public List<Field> getAll() throws DatabaseException {
+		PreparedStatement stm = null;
+		ResultSet result = null;
+				
+		ArrayList<Batch> batchList = new ArrayList<Batch>();
+		try {			
+			//Set up Query
+			String sql = "SELECT * FROM batch";
+			stm = db.getConnection().prepareStatement(sql);
+
+			//Execute Query
+			result = stm.executeQuery();
+			
+			//Handle Response to create new User
+			while (result.next()) {
+
+				String filePath = result.getString(2);
+				int status = result.getInt(3);
+				
+				Batch newBatch = new Batch(filePath, status);
+				newBatch.setId(result.getInt(1));
+				
+				batchList.add(newBatch);
+			}
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error getting all Batches: "+ e.getLocalizedMessage(), e);
+		} 
+				
+		return batchList;
+	}
+}
