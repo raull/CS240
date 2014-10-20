@@ -8,8 +8,8 @@
 	<section name="DialogBounds_SuperInterfaceSelectionDialog">
 		<item value="356" key="DIALOG_WIDTH"/>
 		<item value="18" key="DIALOG_Y_ORIGIN"/>
-		<item value="90" key="DIALOG_X_ORIGIN"/>
 		<item value="456" key="DIALOG_HEIGHT"/>
+		<item value="90" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="RefactoringWizard.preview">
@@ -19,8 +19,8 @@
 	<section name="quick_assist_proposal_size">
 	</section>
 	<section name="SourceActionDialog.methods">
-		<item value="1" key="VisibilityModifier"/>
 		<item value="true" key="Comments"/>
+		<item value="1" key="VisibilityModifier"/>
 		<item value="1" key="InsertPosition.v2"/>
 		<item value="false" key="SynchronizedModifier"/>
 		<item value="false" key="FinalModifier"/>
@@ -60,8 +60,8 @@
 		<section name="DialogBoundsSettings">
 			<item value="269" key="DIALOG_WIDTH"/>
 			<item value="0" key="DIALOG_Y_ORIGIN"/>
-			<item value="432" key="DIALOG_HEIGHT"/>
 			<item value="-32" key="DIALOG_X_ORIGIN"/>
+			<item value="432" key="DIALOG_HEIGHT"/>
 			<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 		</section>
 	</section>
@@ -79,22 +79,22 @@
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="529" key="DIALOG_WIDTH"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
-		<item value="376" key="DIALOG_X_ORIGIN"/>
 		<item value="639" key="DIALOG_HEIGHT"/>
+		<item value="376" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
-	</section>
-	<section name="org.eclipse.ltk.ui.refactoring.settings">
-		<item value="false" key="updateQualifiedNames"/>
-		<item value="*" key="patterns"/>
-		<item value="1" key="updateSimilarElementsMatchStrategy"/>
-		<item value="false" key="updateTextualMatches"/>
-		<item value="true" key="updateSimilarElements"/>
-	</section>
-	<section name="RenameInformationPopup">
 	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
 		<item value="true" key="create_unimplemented"/>
+	</section>
+	<section name="RenameInformationPopup">
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="*" key="patterns"/>
+		<item value="false" key="updateQualifiedNames"/>
+		<item value="1" key="updateSimilarElementsMatchStrategy"/>
+		<item value="false" key="updateTextualMatches"/>
+		<item value="true" key="updateSimilarElements"/>
 	</section>
 	<section name="AddGetterSetterDialog">
 		<item value="false" key="RemoveFinal"/>
@@ -103,8 +103,8 @@
 	<section name="JavadocWizardDialog">
 		<item value="600" key="DIALOG_WIDTH"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
-		<item value="340" key="DIALOG_X_ORIGIN"/>
 		<item value="582" key="DIALOG_HEIGHT"/>
+		<item value="340" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 </section>
