@@ -48,7 +48,7 @@ column_number INTEGER NOT NULL CHECK(column_number >= 0) DEFAULT 0 ,
 width INTEGER NOT NULL CHECK(width >= 0) DEFAULT 0 ,
 help_html TEXT NOT NULL ,
 known_data TEXT ,
-project_id INTEGER NOT NULL ,
+project_id INTEGER ,
 FOREIGN KEY(project_id) REFERENCES project(id)
 )
 
@@ -58,8 +58,8 @@ CREATE TABLE value(
 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
 content TEXT ,
 row INTEGER CHECK(row >= 0) NOT NULL ,
-field_id INTEGER NOT NULL ,
-batch_id INTEGER NOT NULL ,
+field_id INTEGER ,
+batch_id INTEGER ,
 FOREIGN KEY(batch_id) REFERENCES batch(id) ,
 FOREIGN KEY(field_id) REFERENCES field(id)
 )

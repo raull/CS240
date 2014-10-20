@@ -1,0 +1,5 @@
+package server.access;
+
+public class ValueDAO {
+
+}

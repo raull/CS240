@@ -18,7 +18,6 @@ public class Database {
 	private ProjectDAO projectDAO;
 	private BatchDAO batchDAO;
 	private FieldDAO fieldDAO;
-	private ValueDAO valueDAO;
 	
 	//Static Methods
 	public static void initialize() throws DatabaseException{
@@ -40,7 +39,6 @@ public class Database {
 		projectDAO = new ProjectDAO(this);
 		batchDAO = new BatchDAO(this);
 		fieldDAO = new FieldDAO(this);
-		valueDAO = new ValueDAO(this);
 	}
 	
 	//Methods
@@ -133,13 +131,6 @@ public class Database {
 	 */
 	public FieldDAO getFieldDAO() {
 		return fieldDAO;
-	}
-	
-	/**
-	 * @return the valueDAO
-	 */
-	public ValueDAO getValueDAO() {
-		return valueDAO;
 	}
 	
 	/**

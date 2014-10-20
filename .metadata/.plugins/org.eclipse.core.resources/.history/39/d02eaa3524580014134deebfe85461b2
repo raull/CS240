@@ -29,10 +29,10 @@ public class Value {
 		return id;
 	}
 	/**
-	 * @param id the id to set
+	 * @param content the content to set
 	 */
-	public void setId(int id) {
-		this.id = id;
+	public void setId(String content) {
+		this.content = content;
 	}
 
 	/**
@@ -52,12 +52,6 @@ public class Value {
 	 */
 	public int getRowNumber() {
 		return rowNumber;
-	}
-	/**
-	 * @param rowNumber the rowNUmber to set
-	 */
-	public void setRowNumber(int rowNumber) {
-		this.rowNumber = rowNumber;
 	}
 
 	
