@@ -192,47 +192,6 @@ public class ProjectDAO {
 		
 	}
 	
-	public List<Field> getAllFieldsForProject(Project project) throws DatabaseException {
-		if (project.getId() <= 0 ) {
-			throw new DatabaseException("Inavlid ID for Project");
-		}
-		
-		PreparedStatement stm = null;
-		ResultSet result = null;
-				
-		ArrayList<Field> fieldList = new ArrayList<Field>();
-		try {			
-			//Set up Query
-			String sql = "SELECT * FROM field WHERE project_id = ?";
-			stm = db.getConnection().prepareStatement(sql);
-			stm.setInt(1, project.getId());
-
-			//Execute Query
-			result = stm.executeQuery();
-			
-			//Handle Response to create new User
-			while (result.next()) {
-
-				String title = result.getString(2);
-				int xCoord = result.getInt(3);
-				int colNumber = result.getInt(4);
-				int width = result.getInt(5);
-				String helpHTML = result.getString(6);
-				String knownData = result.getString(7);
-				
-				Field newField = new Field(title, xCoord, colNumber, width, helpHTML, knownData);
-				newField.setId(result.getInt(1));
-				
-				fieldList.add(newField);
-			}
-			
-		} catch (SQLException e) {
-			throw new DatabaseException("Error getting all Fields for Project: "+ e.getLocalizedMessage(), e);
-		} 
-				
-		return fieldList;
-	}
-	
 	/**
 	 * Update Project in the Database
 	 * @param project, Project object containing new information to update

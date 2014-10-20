@@ -127,7 +127,7 @@ public class ProjectDAOTest {
 		fieldDAO.insertNewField(fieldTest1);
 		fieldDAO.insertNewField(fieldTest2);
 		
-		//Check if it got added successfully
+		//Check if it got added succesfully
 		boolean updateCompleted = projectDAO.insertNewFieldIntoProject(fieldTest1, projectTest1);
 		assertTrue(updateCompleted);
 		

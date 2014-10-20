@@ -113,6 +113,46 @@ public class ProjectDAO {
 		return project;
 	}
 	
+	/**
+	 * Insert a new Field into the specified Project. It creates the relationship between the two on the database
+	 * @param field The Field to add into the new Project
+	 * @param project The project the new field will be added to
+	 * @return True if the field was added successfully, otherwise false
+	 * @throws DatabaseException
+	 */
+	public boolean insertNewFieldIntoProject(Field field, Project project) throws DatabaseException {
+		
+		//Check if the objects send have a valid ID
+		if (project.getId() <= 0) {
+			throw new DatabaseException("Project ID is not valid");
+		} 
+		if (field.getId() <= 0) {
+			throw new DatabaseException("Field ID is not valid");
+		}
+		
+		PreparedStatement stm = null;
+
+		try {
+
+			//Set up Query
+			String sql = "UPDATE field SET project_id = ? WHERE id = ? ";
+			stm = db.getConnection().prepareStatement(sql);
+			stm.setInt(1, project.getId());
+			stm.setInt(2, field.getId());
+
+			//Execute Query
+			if (stm.executeUpdate() == 1) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error adding new Field to Project: " + e.getLocalizedMessage(), e);
+		} 
+		
+		return false;
+	}
 	
 	/**
 	 * Insert a new Project to the Database
@@ -150,87 +190,6 @@ public class ProjectDAO {
 			throw new DatabaseException("Error adding Project: " + e.getLocalizedMessage(), e);
 		} 
 				
-	}
-	
-	/**
-	 * Insert a new Field into the specified Project. It creates the relationship between the two on the database.However does not update the Objects provided
-	 * @param field The Field to add into the new Project (ID cannot be zero or negative) 
-	 * @param project The project the new field will be added to (ID cannot be zero or negative)
-	 * @return True if the field was added successfully, otherwise false
-	 * @throws DatabaseException
-	 */
-	public boolean insertNewFieldIntoProject(Field field, Project project) throws DatabaseException {
-		
-		//Check if the objects send have a valid ID
-		if (project.getId() <= 0) {
-			throw new DatabaseException("Project ID is not valid");
-		} 
-		if (field.getId() <= 0) {
-			throw new DatabaseException("Field ID is not valid");
-		}
-		
-		PreparedStatement stm = null;
-
-		try {
-
-			//Set up Query
-			String sql = "UPDATE field SET project_id = ? WHERE id = ? ";
-			stm = db.getConnection().prepareStatement(sql);
-			stm.setInt(1, project.getId());
-			stm.setInt(2, field.getId());
-
-			//Execute Query
-			if (stm.executeUpdate() == 1) {
-				return true;
-			} else {
-				return false;
-			}
-			
-		} catch (SQLException e) {
-			throw new DatabaseException("Error adding new Field to Project: " + e.getLocalizedMessage(), e);
-		} 
-		
-	}
-	
-	public List<Field> getAllFieldsForProject(Project project) throws DatabaseException {
-		if (project.getId() <= 0 ) {
-			throw new DatabaseException("Inavlid ID for Project");
-		}
-		
-		PreparedStatement stm = null;
-		ResultSet result = null;
-				
-		ArrayList<Field> fieldList = new ArrayList<Field>();
-		try {			
-			//Set up Query
-			String sql = "SELECT * FROM field WHERE project_id = ?";
-			stm = db.getConnection().prepareStatement(sql);
-			stm.setInt(1, project.getId());
-
-			//Execute Query
-			result = stm.executeQuery();
-			
-			//Handle Response to create new User
-			while (result.next()) {
-
-				String title = result.getString(2);
-				int xCoord = result.getInt(3);
-				int colNumber = result.getInt(4);
-				int width = result.getInt(5);
-				String helpHTML = result.getString(6);
-				String knownData = result.getString(7);
-				
-				Field newField = new Field(title, xCoord, colNumber, width, helpHTML, knownData);
-				newField.setId(result.getInt(1));
-				
-				fieldList.add(newField);
-			}
-			
-		} catch (SQLException e) {
-			throw new DatabaseException("Error getting all Fields for Project: "+ e.getLocalizedMessage(), e);
-		} 
-				
-		return fieldList;
 	}
 	
 	/**

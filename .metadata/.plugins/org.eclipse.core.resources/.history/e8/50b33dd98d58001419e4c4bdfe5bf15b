@@ -127,7 +127,7 @@ public class ProjectDAOTest {
 		fieldDAO.insertNewField(fieldTest1);
 		fieldDAO.insertNewField(fieldTest2);
 		
-		//Check if it got added successfully
+		//Check if it got added succesfully
 		boolean updateCompleted = projectDAO.insertNewFieldIntoProject(fieldTest1, projectTest1);
 		assertTrue(updateCompleted);
 		
@@ -142,19 +142,12 @@ public class ProjectDAOTest {
 		//Make sure the right one got inserted
 		
 		boolean foundTest1 = false;
-		boolean foundTest2 = false;
 		
 		for (Field field : projectFields) {
-			if (!foundTest1) {
-				foundTest1 = (field.getId() == fieldTest1.getId());
-			}
-			if (!foundTest2) {
-				foundTest2 = (field.getId() == fieldTest2.getId());
-			}
-			
+			foundTest1 = (field.getId() == fieldTest1.getId());
 		}
 		
-		assertTrue(foundTest1 && foundTest2);
+		assertTrue(foundTest1);
 	}
 	
 	@Test 

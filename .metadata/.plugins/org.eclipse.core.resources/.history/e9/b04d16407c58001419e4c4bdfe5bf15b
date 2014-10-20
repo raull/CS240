@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import server.Database;
 import server.DatabaseException;
-import shared.modal.Field;
 import shared.modal.Project;
 
 public class ProjectDAOTest {
@@ -30,7 +29,6 @@ public class ProjectDAOTest {
 	
 	private Database db;
 	private ProjectDAO projectDAO;
-	private FieldDAO fieldDAO;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -39,15 +37,10 @@ public class ProjectDAOTest {
 		db.startTransaction();
 		
 		List<Project> allProjects = db.getProjectDAO().getAll();
-		List<Field> allFields = db.getFieldDAO().getAll();
 		
-		//Clear out tables
+		//Clear out User table
 		for (Project project : allProjects) {
 			db.getProjectDAO().deleteProjectWithId(project.getId());
-		}
-		
-		for (Field field : allFields) {
-			db.getFieldDAO().deleteFieldWithId(field.getId());
 		}
 		
 		db.endTransaction(true);
@@ -57,7 +50,6 @@ public class ProjectDAOTest {
 		db.isTest(true);
 		db.startTransaction();
 		projectDAO = db.getProjectDAO();
-		fieldDAO = db.getFieldDAO();
 	}
 	
 	@After
@@ -118,47 +110,14 @@ public class ProjectDAOTest {
 	@Test
 	public void testAddingField() throws DatabaseException {
 		Project projectTest1 = new Project("Project 1950", 20, 0, 50);
+		Project projectTest2 = new Project("Project 2100", 50, 10, 40);
 		
 		projectDAO.insertNewProject(projectTest1);
-		
-		Field fieldTest1 = new Field("Name", 30, 2, 70, "http://theURL.is", "thefile.txt");
-		Field fieldTest2 = new Field("Last Name", 45, 3, 70, "http://theOtherURL.is", "../thefile.txt");
-		
-		fieldDAO.insertNewField(fieldTest1);
-		fieldDAO.insertNewField(fieldTest2);
-		
-		//Check if it got added successfully
-		boolean updateCompleted = projectDAO.insertNewFieldIntoProject(fieldTest1, projectTest1);
-		assertTrue(updateCompleted);
-		
-		updateCompleted = projectDAO.insertNewFieldIntoProject(fieldTest2, projectTest1);
-		assertTrue(updateCompleted);
-		
-		//Get all field for project
-		List<Field> projectFields = projectDAO.getAllFieldsForProject(projectTest1);
-		
-		assertEquals(2, projectFields.size());
-		
-		//Make sure the right one got inserted
-		
-		boolean foundTest1 = false;
-		boolean foundTest2 = false;
-		
-		for (Field field : projectFields) {
-			if (!foundTest1) {
-				foundTest1 = (field.getId() == fieldTest1.getId());
-			}
-			if (!foundTest2) {
-				foundTest2 = (field.getId() == fieldTest2.getId());
-			}
-			
-		}
-		
-		assertTrue(foundTest1 && foundTest2);
+		projectDAO.insertNewProject(projectTest2);
 	}
 	
 	@Test 
-	public void testGet() throws DatabaseException {
+	public void testGet() throws DatabaseException{
 		Project projectTest1 = new Project("Project 1950", 20, 0, 50);
 		Project projectTest2 = new Project("Project 2100", 50, 10, 40);
 		

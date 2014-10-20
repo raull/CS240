@@ -125,36 +125,25 @@ public class ProjectDAOTest {
 		Field fieldTest2 = new Field("Last Name", 45, 3, 70, "http://theOtherURL.is", "../thefile.txt");
 		
 		fieldDAO.insertNewField(fieldTest1);
-		fieldDAO.insertNewField(fieldTest2);
 		
-		//Check if it got added successfully
 		boolean updateCompleted = projectDAO.insertNewFieldIntoProject(fieldTest1, projectTest1);
-		assertTrue(updateCompleted);
 		
-		updateCompleted = projectDAO.insertNewFieldIntoProject(fieldTest2, projectTest1);
 		assertTrue(updateCompleted);
 		
 		//Get all field for project
 		List<Field> projectFields = projectDAO.getAllFieldsForProject(projectTest1);
 		
-		assertEquals(2, projectFields.size());
+		assertEquals(1, projectFields.size());
 		
 		//Make sure the right one got inserted
 		
 		boolean foundTest1 = false;
-		boolean foundTest2 = false;
 		
 		for (Field field : projectFields) {
-			if (!foundTest1) {
-				foundTest1 = (field.getId() == fieldTest1.getId());
-			}
-			if (!foundTest2) {
-				foundTest2 = (field.getId() == fieldTest2.getId());
-			}
-			
+			foundTest1 = (field.getId() == fieldTest1.getId());
 		}
 		
-		assertTrue(foundTest1 && foundTest2);
+		assertTrue(foundTest1);
 	}
 	
 	@Test 
