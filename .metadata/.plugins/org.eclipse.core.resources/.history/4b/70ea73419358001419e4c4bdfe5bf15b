@@ -192,30 +192,6 @@ public class ProjectDAO {
 		
 	}
 	
-	
-	public boolean insertNewBatchIntoProject(Batch batch, Project project) throws DatabaseException {
-		PreparedStatement stm = null;
-		
-		try {
-
-			//Set up Query
-			String sql = "UPDATE batch project_id = ? WHERE id = ? ";
-			stm = db.getConnection().prepareStatement(sql);
-			stm.setInt(1, project.getId());
-			stm.setInt(3,batch.getId());
-
-			//Execute Query
-			if (stm.executeUpdate() == 1) {
-				return true;
-			} else {
-				return false;
-			}
-			
-		} catch (SQLException e) {
-			throw new DatabaseException("Error inserting Batch into Project: " + e.getLocalizedMessage(), e);
-		} 
-	}
-	
 	public List<Field> getAllFieldsForProject(Project project) throws DatabaseException {
 		if (project.getId() <= 0 ) {
 			throw new DatabaseException("Inavlid ID for Project");

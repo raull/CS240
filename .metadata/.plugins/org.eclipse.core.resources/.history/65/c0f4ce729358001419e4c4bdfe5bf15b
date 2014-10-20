@@ -193,15 +193,16 @@ public class ProjectDAO {
 	}
 	
 	
-	public boolean insertNewBatchIntoProject(Batch batch, Project project) throws DatabaseException {
+	public boolean insertNewBatchIntoProject(Batch batch, Project project) {
 		PreparedStatement stm = null;
 		
 		try {
 
 			//Set up Query
-			String sql = "UPDATE batch project_id = ? WHERE id = ? ";
+			String sql = "UPDATE batch SET file_path = ?, status = ? WHERE id = ? ";
 			stm = db.getConnection().prepareStatement(sql);
-			stm.setInt(1, project.getId());
+			stm.setString(1, batch.getFilePath());
+			stm.setInt(2, batch.getStatus());
 			stm.setInt(3,batch.getId());
 
 			//Execute Query
@@ -212,7 +213,7 @@ public class ProjectDAO {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Error inserting Batch into Project: " + e.getLocalizedMessage(), e);
+			throw new DatabaseException("Error updating Batch: " + e.getLocalizedMessage(), e);
 		} 
 	}
 	
