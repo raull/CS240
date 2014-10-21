@@ -1,8 +1,8 @@
-DROP TABLE user IF EXISTS;
-DROP TABLE project IF EXISTS;
-DROP TABLE batch IF EXISTS;
-DROP TABLE field IF EXISTS;
-DROP TABLE value IF EXISTS;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS project;
+DROP TABLE IF EXISTS batch;
+DROP TABLE IF EXISTS field;
+DROP TABLE IF EXISTS value;
 
 //************* User Schema *************************
 
@@ -16,9 +16,9 @@ email VARCHAR NOT NULL ,
 records_count INTEGER CHECK (records_count >= 0) NOT NULL DEFAULT 0 ,
 current_batch INTEGER ,
 FOREIGN KEY(current_batch) REFERENCES batch(id)
-)
+);
 
-//************* Project Schema ***********************
+--************* Project Schema ***********************
 
 CREATE TABLE project(
 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -26,9 +26,9 @@ title TEXT CHECK(title != "") NOT NULL,
 records_image_count INTEGER CHECK(records_image_count >= 0) NOT NULL,
 first_y_coord INTEGER CHECK(first_y_coord >= 0) NOT NULL,
 record_height INTEGER CHECK(record_height >= 0) NOT NULL
-)
+);
 
-//************* Batch Schema *************************
+--************* Batch Schema *************************
 
 CREATE TABLE batch (
 id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL ,
@@ -36,9 +36,9 @@ file_path TEXT CHECK(file_path != "") NOT NULL,
 status INTEGER NOT NULL Default 0,
 project_id INTEGER,
 FOREIGN KEY(project_id) REFERENCES project(id)
-)
+);
 
-//************* Field Schema *************************
+--************* Field Schema *************************
 
 CREATE TABLE field (
 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
@@ -50,9 +50,9 @@ help_html TEXT NOT NULL ,
 known_data TEXT ,
 project_id INTEGER ,
 FOREIGN KEY(project_id) REFERENCES project(id)
-)
+);
 
-//************* Value Schema ************************
+--************* Value Schema ************************
 
 CREATE TABLE value(
 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
@@ -62,4 +62,4 @@ field_id INTEGER ,
 batch_id INTEGER ,
 FOREIGN KEY(batch_id) REFERENCES batch(id) ,
 FOREIGN KEY(field_id) REFERENCES field(id)
-)
+);
