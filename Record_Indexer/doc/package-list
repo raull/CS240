@@ -1,5 +1,9 @@
 client
 client.communication
+server
 server.access
+servertester
+servertester.controllers
+servertester.views
 shared.communication
 shared.modal

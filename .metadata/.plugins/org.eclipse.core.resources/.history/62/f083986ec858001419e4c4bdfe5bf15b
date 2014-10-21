@@ -1,0 +1,19 @@
+package shared.communication;
+
+public class Get_Projects_Parameter {
+	
+	/**
+	 * Username
+	 */
+	private String username;
+	/**
+	 * Password
+	 */
+	private String password;
+	
+	
+	public Get_Projects_Parameter(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+}

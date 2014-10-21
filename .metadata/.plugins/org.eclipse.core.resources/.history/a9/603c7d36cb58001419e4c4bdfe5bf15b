@@ -1,0 +1,14 @@
+package shared.communication;
+
+public class SubmitBatch_Response {
+	
+	/**
+	 * Request Response
+	 */
+	private String response;
+	
+	
+	public SubmitBatch_Response(String response) {
+		this.response = response;
+	}
+}

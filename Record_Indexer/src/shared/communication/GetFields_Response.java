@@ -19,4 +19,42 @@ public class GetFields_Response {
 	 * Error message in case the request fails
 	 */
 	private String errorMessage;
+	
+	
+	public GetFields_Response(List<Field> fields, String errorMessage) {
+		this.fields = fields;
+		this.errorMessage = errorMessage;
+	}
+
+
+	/**
+	 * @return the fields
+	 */
+	public List<Field> getFields() {
+		return fields;
+	}
+
+
+	/**
+	 * @param fields the fields to set
+	 */
+	public void setFields(List<Field> fields) {
+		this.fields = fields;
+	}
+
+
+	/**
+	 * @return the errorMessage
+	 */
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+
+	/**
+	 * @param errorMessage the errorMessage to set
+	 */
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 }
