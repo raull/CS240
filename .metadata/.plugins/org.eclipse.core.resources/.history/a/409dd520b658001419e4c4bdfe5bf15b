@@ -10,7 +10,7 @@ public class ClientCommunicator {
 	 * @param input describing the user and project
 	 * @return The available batch for the user
 	 */
-	public static DownloadBatch_Response downloadBatch(DownloadBatch_Parameter input) throws ClientCommunicatorException {
+	public static DownloadBatch_Response downloadBatch(User_Project_Parameter input) throws ClientCommunicatorException {
 		return null;
 	}
 	
@@ -19,7 +19,7 @@ public class ClientCommunicator {
 	 * @param input describing the user and the values to submit
 	 * @return A string with an error message, otherwise is null
 	 */
-	public static SubmitBatch_Response submitBatch(SubmitBatch_Parameter input) throws ClientCommunicatorException{
+	public static String submitBatch(SubmitBatch_Parameter input) throws ClientCommunicatorException{
 		return null;
 	}
 	
@@ -37,7 +37,7 @@ public class ClientCommunicator {
 	 * @param input object representing the project and user
 	 * @return A URL encapsulated on an object
 	 */
-	public static GetSampleImage_Response getSampleImage(GetSampleImage_Parameter input) throws ClientCommunicatorException{
+	public static GetSampleImage_Response getSampleImage(User_Project_Parameter input) throws ClientCommunicatorException{
 		return null;
 	}
 	
@@ -46,7 +46,7 @@ public class ClientCommunicator {
 	 * @param input describing user and project
 	 * @return An object containing all the fields requested
 	 */
-	public static GetFields_Response getFields(GetFields_Parameter input) throws ClientCommunicatorException{
+	public static GetFields_Response getFields(User_Project_Parameter input) throws ClientCommunicatorException{
 		return null;
 	}
 	

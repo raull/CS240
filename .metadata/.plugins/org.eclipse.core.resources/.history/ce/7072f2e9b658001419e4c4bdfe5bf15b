@@ -1,0 +1,6 @@
+package shared.communication;
+
+public class SubmitBatch_Response {
+	
+	private String response;
+}
