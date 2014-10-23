@@ -1,5 +1,9 @@
 package shared.modal;
 
+import org.w3c.dom.Element;
+
+import shared.DataImporter;
+
 /**
  * Value class represents a value on and specific row and column on a batch
  * @author Raul Lopez Villalpando, 2014
@@ -13,12 +17,25 @@ public class Value {
 	private String content;
 	/** The row number in the batch*/
 	private int rowNumber;
+	/** The column position on the batch*/
+	private int colNumber;
 	
 	
 	//Constructors
-	public Value(String content, int rowNumber) {
+	public Value(String content, int rowNumber, int colNumber) {
 		this.content = content;
 		this.rowNumber = rowNumber;
+		this.colNumber = colNumber;
+	}
+	
+	public Value(Element valueElement) {
+		content = DataImporter.getValue(valueElement);
+	}
+	
+	//Methods
+	
+	public String toString() {
+		return "Value:\n\tContent: " + this.content + "\n\tRow: " + this.rowNumber;
 	}
 	
 	//Getters and Setters
@@ -58,6 +75,20 @@ public class Value {
 	 */
 	public void setRowNumber(int rowNumber) {
 		this.rowNumber = rowNumber;
+	}
+
+	/**
+	 * @return the colNumber
+	 */
+	public int getColNumber() {
+		return colNumber;
+	}
+
+	/**
+	 * @param colNumber the colNumber to set
+	 */
+	public void setColNumber(int colNumber) {
+		this.colNumber = colNumber;
 	}
 
 	

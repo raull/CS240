@@ -13,6 +13,9 @@ import org.junit.Test;
 import server.Database;
 import server.DatabaseException;
 import shared.modal.Batch;
+import shared.modal.Field;
+import shared.modal.Project;
+import shared.modal.Value;
 
 public class BatchDAOTest {
 
@@ -29,6 +32,7 @@ public class BatchDAOTest {
 	
 	private Database db;
 	private BatchDAO batchDAO;
+	private ValueDAO valueDAO;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -37,10 +41,14 @@ public class BatchDAOTest {
 		db.startTransaction();
 		
 		List<Batch> allBatches = db.getBatchDAO().getAll();
+		List<Value> allValues = db.getValueDAO().getAll();
 		
-		//Clear out User table
+		//Clear out tables
 		for (Batch batch : allBatches) {
 			db.getBatchDAO().deleteBatchWithId(batch.getId());
+		}
+		for (Value value : allValues) {
+			db.getValueDAO().deleteValueWithId(value.getId());
 		}
 		
 		db.endTransaction(true);
@@ -50,6 +58,7 @@ public class BatchDAOTest {
 		db.isTest(true);
 		db.startTransaction();
 		batchDAO = db.getBatchDAO();
+		valueDAO = db.getValueDAO();
 	}
 	
 	@After
@@ -106,6 +115,48 @@ public class BatchDAOTest {
 		//Test to see they actually got found
 		assertTrue(foundTest1 && foundTest2);
 		
+	}
+	
+	@Test
+	public void testAddingValue() throws DatabaseException {
+		Batch batchTest1 = new Batch("/theimageFile.png", 0);
+		
+		batchDAO.insertNewBatch(batchTest1);
+		
+		Value valueTest1 = new Value("Raul", 1, 2);
+		Value valueTest2 = new Value("Lopez", 1, 1);
+		
+		valueDAO.insertNewValue(valueTest1);
+		valueDAO.insertNewValue(valueTest2);
+		
+		//Check if it got added successfully
+		boolean updateCompleted = batchDAO.insertValueIntoBatch(valueTest1, batchTest1);
+		assertTrue(updateCompleted);
+		
+		updateCompleted = batchDAO.insertValueIntoBatch(valueTest2, batchTest1);
+		assertTrue(updateCompleted);
+		
+		//Get all field for project
+		List<Value> batchValues = batchDAO.getAllValuesForBatch(batchTest1);
+		
+		assertEquals(2, batchValues.size());
+		
+		//Make sure the right one got inserted
+		
+		boolean foundTest1 = false;
+		boolean foundTest2 = false;
+		
+		for (Value value : batchValues) {
+			if (!foundTest1) {
+				foundTest1 = (value.getId() == valueTest1.getId());
+			}
+			if (!foundTest2) {
+				foundTest2 = (value.getId() == valueTest2.getId());
+			}
+			
+		}
+		
+		assertTrue(foundTest1 && foundTest2);
 	}
 	
 	@Test 

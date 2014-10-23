@@ -1,4 +1,9 @@
 package shared.modal;
+
+import org.w3c.dom.Element;
+
+import shared.DataImporter;
+
 /**
  * User class representing users volunteering for record indexing
  * @author Raul Lopez Villalpando
@@ -34,6 +39,16 @@ public class User {
 		this.email = email;
 		this.recordCount = 0;
 		this.currentBatchId = 0;
+	}
+	
+	public User(Element userElement) {
+		username = DataImporter.getValue((Element)userElement.getElementsByTagName("username").item(0));
+		password = DataImporter.getValue((Element)userElement.getElementsByTagName("password").item(0));
+		firstName = DataImporter.getValue((Element)userElement.getElementsByTagName("firstname").item(0));
+		lastName = DataImporter.getValue((Element)userElement.getElementsByTagName("lastname").item(0));
+		email = DataImporter.getValue((Element)userElement.getElementsByTagName("email").item(0));
+		recordCount = Integer.parseInt(DataImporter.getValue((Element)userElement.getElementsByTagName("indexedrecords").item(0)));
+		currentBatchId = 0;
 	}
 	
 	

@@ -69,8 +69,8 @@ public class ValueDAOTest {
 	
 	@Test
 	public void testAdd() throws DatabaseException {
-		Value valueTest1 = new Value("Raul", 1);
-		Value valueTest2 = new Value("15", 10);
+		Value valueTest1 = new Value("Raul", 1 ,1);
+		Value valueTest2 = new Value("15", 2 ,10);
 		
 		valueDAO.insertNewValue(valueTest1);
 		valueDAO.insertNewValue(valueTest2);
@@ -110,8 +110,8 @@ public class ValueDAOTest {
 	
 	@Test 
 	public void testGet() throws DatabaseException{
-		Value valueTest1 = new Value("Raul", 1);
-		Value valueTest2 = new Value("15", 10);
+		Value valueTest1 = new Value("Raul", 1 ,1);
+		Value valueTest2 = new Value("15", 2 ,10);
 		
 		valueDAO.insertNewValue(valueTest1);
 		valueDAO.insertNewValue(valueTest2);
@@ -127,8 +127,8 @@ public class ValueDAOTest {
 	
 	@Test
 	public void testUpdate() throws DatabaseException {
-		Value valueTest1 = new Value("Raul", 1);
-		Value valueTest2 = new Value("15", 10);
+		Value valueTest1 = new Value("Raul", 1 ,1);
+		Value valueTest2 = new Value("15", 2 ,10);
 		
 		valueDAO.insertNewValue(valueTest1);
 		valueDAO.insertNewValue(valueTest2);
@@ -176,9 +176,9 @@ public class ValueDAOTest {
 	@Test
 	public void testDelete() throws DatabaseException {
 		
-		Value valueTest1 = new Value("Raul", 1);
-		Value valueTest2 = new Value("15", 10);
-		Value valueTest3 = new Value("1930", 3);
+		Value valueTest1 = new Value("Raul", 1 ,1);
+		Value valueTest2 = new Value("15", 2 ,10);
+		Value valueTest3 = new Value("1930", 3, 3);
 		
 		valueDAO.insertNewValue(valueTest1);
 		valueDAO.insertNewValue(valueTest2);
@@ -216,13 +216,13 @@ public class ValueDAOTest {
 	
 	@Test(expected = DatabaseException.class)
 	public void testNegativeRowNumberAdd() throws DatabaseException {
-		Value valueTest1 = new Value("Raul", -1);
+		Value valueTest1 = new Value("Raul", 1,-1);
 		valueDAO.insertNewValue(valueTest1);
 	}
 	
 	@Test(expected = DatabaseException.class)
 	public void testNegativeRowNumberUpdate() throws DatabaseException {
-		Value valueTest1 = new Value("Raul", 3);
+		Value valueTest1 = new Value("Raul", 1, 3);
 		valueDAO.insertNewValue(valueTest1);
 		valueTest1.setRowNumber(-1);
 		valueDAO.updateValue(valueTest1);
@@ -236,6 +236,7 @@ public class ValueDAOTest {
 			}
 		}	
 		return (safeEquals(a.getContent(), b.getContent()) &&
+				safeEquals(a.getColNumber(), b.getColNumber()) &&
 				safeEquals(a.getRowNumber(), b.getRowNumber()));
 	}
 	

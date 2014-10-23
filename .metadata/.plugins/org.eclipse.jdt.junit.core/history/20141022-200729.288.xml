@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="server.access" project="Record_Indexer" tests="50" started="50" failures="0" errors="4" ignored="0">
+  <testsuite name="server.access.BatchDAOTest" time="1.375">
+    <testcase name="testAdd" classname="server.access.BatchDAOTest" time="0.883"/>
+    <testcase name="testGet" classname="server.access.BatchDAOTest" time="0.096"/>
+    <testcase name="testUpdate" classname="server.access.BatchDAOTest" time="0.072"/>
+    <testcase name="testDelete" classname="server.access.BatchDAOTest" time="0.075"/>
+    <testcase name="testInvalidFilePathAdd" classname="server.access.BatchDAOTest" time="0.065"/>
+    <testcase name="testInvalidFilePathUpdate" classname="server.access.BatchDAOTest" time="0.055"/>
+    <testcase name="testEmptyFilePathAdd" classname="server.access.BatchDAOTest" time="0.04"/>
+    <testcase name="testEmptyFilePathUpdate" classname="server.access.BatchDAOTest" time="0.051"/>
+    <testcase name="testGetAll" classname="server.access.BatchDAOTest" time="0.038"/>
+  </testsuite>
+  <testsuite name="server.access.ValueDAOTest" time="0.262">
+    <testcase name="testAdd" classname="server.access.ValueDAOTest" time="0.043">
+      <error>server.DatabaseException: Error adding Value: [SQLITE_ERROR] SQL error or missing database (table value has no column named column_number)
+	at server.access.ValueDAO.insertNewValue(ValueDAO.java:138)
+	at server.access.ValueDAOTest.testAdd(ValueDAOTest.java:75)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (table value has no column named column_number)
+	at org.sqlite.DB.newSQLException(DB.java:383)
+	at org.sqlite.DB.newSQLException(DB.java:387)
+	at org.sqlite.DB.throwex(DB.java:374)
+	at org.sqlite.NestedDB.prepare(NestedDB.java:134)
+	at org.sqlite.DB.prepare(DB.java:123)
+	at org.sqlite.PrepStmt.&lt;init&gt;(PrepStmt.java:42)
+	at org.sqlite.Conn.prepareStatement(Conn.java:404)
+	at org.sqlite.Conn.prepareStatement(Conn.java:399)
+	at org.sqlite.Conn.prepareStatement(Conn.java:383)
+	at server.access.ValueDAO.insertNewValue(ValueDAO.java:120)
+	... 28 more
+
+</error>
+    </testcase>
+    <testcase name="testGet" classname="server.access.ValueDAOTest" time="0.034">
+      <error>server.DatabaseException: Error adding Value: [SQLITE_ERROR] SQL error or missing database (table value has no column named column_number)
+	at server.access.ValueDAO.insertNewValue(ValueDAO.java:138)
+	at server.access.ValueDAOTest.testGet(ValueDAOTest.java:116)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (table value has no column named column_number)
+	at org.sqlite.DB.newSQLException(DB.java:383)
+	at org.sqlite.DB.newSQLException(DB.java:387)
+	at org.sqlite.DB.throwex(DB.java:374)
+	at org.sqlite.NestedDB.prepare(NestedDB.java:134)
+	at org.sqlite.DB.prepare(DB.java:123)
+	at org.sqlite.PrepStmt.&lt;init&gt;(PrepStmt.java:42)
+	at org.sqlite.Conn.prepareStatement(Conn.java:404)
+	at org.sqlite.Conn.prepareStatement(Conn.java:399)
+	at org.sqlite.Conn.prepareStatement(Conn.java:383)
+	at server.access.ValueDAO.insertNewValue(ValueDAO.java:120)
+	... 28 more
+
+</error>
+    </testcase>
+    <testcase name="testUpdate" classname="server.access.ValueDAOTest" time="0.036">
+      <error>server.DatabaseException: Error adding Value: [SQLITE_ERROR] SQL error or missing database (table value has no column named column_number)
+	at server.access.ValueDAO.insertNewValue(ValueDAO.java:138)
+	at server.access.ValueDAOTest.testUpdate(ValueDAOTest.java:133)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (table value has no column named column_number)
+	at org.sqlite.DB.newSQLException(DB.java:383)
+	at org.sqlite.DB.newSQLException(DB.java:387)
+	at org.sqlite.DB.throwex(DB.java:374)
+	at org.sqlite.NestedDB.prepare(NestedDB.java:134)
+	at org.sqlite.DB.prepare(DB.java:123)
+	at org.sqlite.PrepStmt.&lt;init&gt;(PrepStmt.java:42)
+	at org.sqlite.Conn.prepareStatement(Conn.java:404)
+	at org.sqlite.Conn.prepareStatement(Conn.java:399)
+	at org.sqlite.Conn.prepareStatement(Conn.java:383)
+	at server.access.ValueDAO.insertNewValue(ValueDAO.java:120)
+	... 28 more
+
+</error>
+    </testcase>
+    <testcase name="testDelete" classname="server.access.ValueDAOTest" time="0.05">
+      <error>server.DatabaseException: Error adding Value: [SQLITE_ERROR] SQL error or missing database (table value has no column named column_number)
+	at server.access.ValueDAO.insertNewValue(ValueDAO.java:138)
+	at server.access.ValueDAOTest.testDelete(ValueDAOTest.java:183)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:44)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:41)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.BlockJUnit4ClassRunner.runNotIgnored(BlockJUnit4ClassRunner.java:79)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:71)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:49)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: java.sql.SQLException: [SQLITE_ERROR] SQL error or missing database (table value has no column named column_number)
+	at org.sqlite.DB.newSQLException(DB.java:383)
+	at org.sqlite.DB.newSQLException(DB.java:387)
+	at org.sqlite.DB.throwex(DB.java:374)
+	at org.sqlite.NestedDB.prepare(NestedDB.java:134)
+	at org.sqlite.DB.prepare(DB.java:123)
+	at org.sqlite.PrepStmt.&lt;init&gt;(PrepStmt.java:42)
+	at org.sqlite.Conn.prepareStatement(Conn.java:404)
+	at org.sqlite.Conn.prepareStatement(Conn.java:399)
+	at org.sqlite.Conn.prepareStatement(Conn.java:383)
+	at server.access.ValueDAO.insertNewValue(ValueDAO.java:120)
+	... 28 more
+
+</error>
+    </testcase>
+    <testcase name="testGetAll" classname="server.access.ValueDAOTest" time="0.029"/>
+    <testcase name="testNegativeRowNumberAdd" classname="server.access.ValueDAOTest" time="0.026"/>
+    <testcase name="testNegativeRowNumberUpdate" classname="server.access.ValueDAOTest" time="0.044"/>
+  </testsuite>
+  <testsuite name="server.access.FieldDAOTest" time="0.471">
+    <testcase name="testAdd" classname="server.access.FieldDAOTest" time="0.042"/>
+    <testcase name="testGet" classname="server.access.FieldDAOTest" time="0.045"/>
+    <testcase name="testUpdate" classname="server.access.FieldDAOTest" time="0.044"/>
+    <testcase name="testDelete" classname="server.access.FieldDAOTest" time="0.072"/>
+    <testcase name="testGetAll" classname="server.access.FieldDAOTest" time="0.043"/>
+    <testcase name="testInvalidTiTleAdd" classname="server.access.FieldDAOTest" time="0.058"/>
+    <testcase name="testNegativeXCoordAdd" classname="server.access.FieldDAOTest" time="0.04"/>
+    <testcase name="testNegativeColumnNumberAdd" classname="server.access.FieldDAOTest" time="0.057"/>
+    <testcase name="testNegativeWidthAdd" classname="server.access.FieldDAOTest" time="0.032"/>
+    <testcase name="testInvalidHelpHTMLUpdate" classname="server.access.FieldDAOTest" time="0.038"/>
+  </testsuite>
+  <testsuite name="server.access.UserDAOTest" time="0.332">
+    <testcase name="testAdd" classname="server.access.UserDAOTest" time="0.043"/>
+    <testcase name="testGet" classname="server.access.UserDAOTest" time="0.051"/>
+    <testcase name="testUpdate" classname="server.access.UserDAOTest" time="0.067"/>
+    <testcase name="testDelete" classname="server.access.UserDAOTest" time="0.069"/>
+    <testcase name="testGetAll" classname="server.access.UserDAOTest" time="0.028"/>
+    <testcase name="testInvalidAdd" classname="server.access.UserDAOTest" time="0.029"/>
+    <testcase name="testInvalidUpdate" classname="server.access.UserDAOTest" time="0.045"/>
+  </testsuite>
+  <testsuite name="server.access.ProjectDAOTest" time="0.805">
+    <testcase name="testAdd" classname="server.access.ProjectDAOTest" time="0.051"/>
+    <testcase name="testGet" classname="server.access.ProjectDAOTest" time="0.056"/>
+    <testcase name="testUpdate" classname="server.access.ProjectDAOTest" time="0.048"/>
+    <testcase name="testDelete" classname="server.access.ProjectDAOTest" time="0.053"/>
+    <testcase name="testGetAll" classname="server.access.ProjectDAOTest" time="0.029"/>
+    <testcase name="testAddingField" classname="server.access.ProjectDAOTest" time="0.048"/>
+    <testcase name="testAddingBatch" classname="server.access.ProjectDAOTest" time="0.07"/>
+    <testcase name="testEmptyTitleAdd" classname="server.access.ProjectDAOTest" time="0.048"/>
+    <testcase name="testInvalidTitleAdd" classname="server.access.ProjectDAOTest" time="0.035"/>
+    <testcase name="testNegativeRecordsPerBatchAdd" classname="server.access.ProjectDAOTest" time="0.046"/>
+    <testcase name="testNegativeFirstCoordinateAdd" classname="server.access.ProjectDAOTest" time="0.043"/>
+    <testcase name="testNegativeRecordHeightAdd" classname="server.access.ProjectDAOTest" time="0.03"/>
+    <testcase name="testEmptyTitleUpdate" classname="server.access.ProjectDAOTest" time="0.029"/>
+    <testcase name="testInvalidTitleUpdate" classname="server.access.ProjectDAOTest" time="0.052"/>
+    <testcase name="testNegativeRecordsPerBatchUpdate" classname="server.access.ProjectDAOTest" time="0.066"/>
+    <testcase name="testNegativeFirstCoordinateUpdate" classname="server.access.ProjectDAOTest" time="0.059"/>
+    <testcase name="testNegativeRecordHeightUpdate" classname="server.access.ProjectDAOTest" time="0.04"/>
+  </testsuite>
+</testrun>

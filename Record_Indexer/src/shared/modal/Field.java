@@ -1,5 +1,10 @@
 package shared.modal;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import shared.DataImporter;
+
 /**
  * Field class that represents a column in a batch
  * @author Raul Lopez Villalpando, 2014
@@ -31,6 +36,35 @@ public class Field {
 		this.width = width;
 		this.helpHTML = helpHTML;
 		this.knownData = knownData;
+	}
+	
+	public Field(Element fieldElement) {
+		title = DataImporter.getValue((Element)fieldElement.getElementsByTagName("title").item(0));
+		
+		xCoord = Integer.parseInt(DataImporter.getValue((Element)fieldElement.getElementsByTagName("xcoord").item(0)));
+		
+		width = Integer.parseInt(DataImporter.getValue((Element)fieldElement.getElementsByTagName("width").item(0)));
+		
+		helpHTML = DataImporter.getValue((Element)fieldElement.getElementsByTagName("helphtml").item(0));
+		
+		//This attribute is optional on the XML
+		
+		NodeList knownDataList = fieldElement.getElementsByTagName("knowndata");
+		
+		if (knownDataList != null) {
+			knownData = DataImporter.getValue((Element)knownDataList.item(0));
+		}
+	}
+	
+	//Methods
+	
+	public String toString() {
+		return "Field:\n\tTitle: " + title + 
+				"\n\txCoord: " + xCoord + 
+				"\n\tcolNumber: " + colNumber + 
+				"\n\tWidth: " + width + 
+				"\n\tHelp HTML: " + helpHTML + 
+				"\n\tKnown Data: " + knownData;
 	}
 	
 	
@@ -94,6 +128,13 @@ public class Field {
 	 */
 	public void setKnownData(String knownData) {
 		this.knownData = knownData;
+	}
+
+	/**
+	 * @param colNumber the colNumber to set
+	 */
+	public void setColNumber(int colNumber) {
+		this.colNumber = colNumber;
 	}
 	
 }

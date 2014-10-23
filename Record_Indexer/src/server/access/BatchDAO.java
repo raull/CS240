@@ -144,6 +144,81 @@ public class BatchDAO {
 	}
 	
 	/**
+	 * Insert a new Batch into the specified Project. It creates the relationship between the two on the database.However does not update the Objects provided
+	 * @param value The value to insert
+	 * @param batch The batch to insert the value to
+	 * @return True if the value was inserted successfully, false otherwise
+	 * @throws DatabaseException
+	 */
+	public boolean insertValueIntoBatch(Value value, Batch batch) throws DatabaseException {
+		PreparedStatement stm = null;
+		
+		try {
+
+			//Set up Query
+			String sql = "UPDATE value SET batch_id = ? WHERE id = ? ";
+			stm = db.getConnection().prepareStatement(sql);
+			stm.setInt(1, batch.getId());
+			stm.setInt(2,value.getId());
+
+			//Execute Query
+			if (stm.executeUpdate() == 1) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error inserting Value into Batch: " + e.getLocalizedMessage(), e);
+		} 
+	}
+	
+	
+	/**
+	 * Get a list of all the Values on the provided Batch
+	 * @param batch The batch that contains the Values
+	 * @return  A list of all the Batches's values.
+	 * @throws DatabaseException
+	 */
+	public List<Value> getAllValuesForBatch(Batch batch)  throws DatabaseException {
+		if (batch.getId() <= 0 ) {
+			throw new DatabaseException("Invalud ID for Batch");
+		}
+		
+		PreparedStatement stm = null;
+		ResultSet result = null;
+				
+		ArrayList<Value> valueList = new ArrayList<Value>();
+		try {			
+			//Set up Query
+			String sql = "SELECT * FROM value WHERE batch_id = ?";
+			stm = db.getConnection().prepareStatement(sql);
+			stm.setInt(1, batch.getId());
+
+			//Execute Query
+			result = stm.executeQuery();
+			
+			//Handle Response to create new User
+			while (result.next()) {
+
+				String content = result.getString(2);
+				int row = result.getInt(3);
+				int column = result.getInt(4);
+				
+				Value newValue = new Value(content, row, column);
+				newValue.setId(result.getInt(1));
+				
+				valueList.add(newValue);
+			}
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error getting all Values for Batch: "+ e.getLocalizedMessage(), e);
+		} 
+				
+		return valueList;
+	}
+	
+	/**
 	 * Update Batch in the Database
 	 * @param batch, Batch object containing new information to update
 	 * @return true if the Batch was updated successfully, otherwise false

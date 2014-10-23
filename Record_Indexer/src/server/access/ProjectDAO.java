@@ -192,17 +192,23 @@ public class ProjectDAO {
 		
 	}
 	
-	
+	/**
+	 * Insert a new Batch into the specified Project. It creates the relationship between the two on the database.However does not update the Objects provided
+	 * @param batch The batch to be inserted
+	 * @param project The project where the batch will be inserted
+	 * @return true if the batch was inserted successfully, false otherwise
+	 * @throws DatabaseException 
+	 */
 	public boolean insertNewBatchIntoProject(Batch batch, Project project) throws DatabaseException {
 		PreparedStatement stm = null;
 		
 		try {
 
 			//Set up Query
-			String sql = "UPDATE batch project_id = ? WHERE id = ? ";
+			String sql = "UPDATE batch SET project_id = ? WHERE id = ? ";
 			stm = db.getConnection().prepareStatement(sql);
 			stm.setInt(1, project.getId());
-			stm.setInt(3,batch.getId());
+			stm.setInt(2,batch.getId());
 
 			//Execute Query
 			if (stm.executeUpdate() == 1) {
@@ -216,6 +222,55 @@ public class ProjectDAO {
 		} 
 	}
 	
+	/**
+	 * Get a list of all the Batches on the provided Project
+	 * @param project The project that contains the Batches
+	 * @return  A list of all the Project's batches.
+	 * @throws DatabaseException
+	 */
+	public List<Batch> getAllBatchesForProjet(Project project)  throws DatabaseException {
+		if (project.getId() <= 0 ) {
+			throw new DatabaseException("Inavlid ID for Project");
+		}
+		
+		PreparedStatement stm = null;
+		ResultSet result = null;
+				
+		ArrayList<Batch> batchList = new ArrayList<Batch>();
+		try {			
+			//Set up Query
+			String sql = "SELECT * FROM batch WHERE project_id = ?";
+			stm = db.getConnection().prepareStatement(sql);
+			stm.setInt(1, project.getId());
+
+			//Execute Query
+			result = stm.executeQuery();
+			
+			//Handle Response to create new User
+			while (result.next()) {
+
+				String filePath = result.getString(2);
+				int status = result.getInt(3);
+				
+				Batch newBatch = new Batch(filePath, status);
+				newBatch.setId(result.getInt(1));
+				
+				batchList.add(newBatch);
+			}
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error getting all Batches for Project: "+ e.getLocalizedMessage(), e);
+		} 
+				
+		return batchList;
+	}
+	
+	/**
+	 * Get a list of all the Fields on the provided Project
+	 * @param project The project that contains the Batches
+	 * @return A list of all the Project's batches.
+	 * @throws DatabaseException
+	 */
 	public List<Field> getAllFieldsForProject(Project project) throws DatabaseException {
 		if (project.getId() <= 0 ) {
 			throw new DatabaseException("Inavlid ID for Project");

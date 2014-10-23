@@ -1,0 +1,66 @@
+package shared;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
+import shared.modal.*;
+
+public class DataImporter {
+	
+	private Element root;
+	private ArrayList<User> users;
+	private ArrayList<Project> projects;
+	
+	public DataImporter(Element root) {
+		this.root = root;
+		
+		ArrayList<Element> rootElements = DataImporter.getChildElements(root);
+		ArrayList<Element> userElements = 
+		DataImporter.getChildElements(rootElements.get(0));
+		for(Element userElement : userElements) {
+		users.add(new User(userElement));
+		}
+		ArrayList<Element> projectElements = 
+		DataImporter.getChildElements(rootElements.get(1));
+		for(Element projectElement : projectElements) {
+		projects.add(new Project(projectElement));
+		}
+
+	}	
+	
+	public static ArrayList<Element> getChildElements(Node node) {
+		return null;
+	}
+	
+	
+	public static void main(String[] args) {
+		File xmlFile = new File(args[0]);
+		try {
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(xmlFile);
+			
+			doc.getDocumentElement().normalize();
+			
+			Element root = doc.getDocumentElement();
+			
+			DataImporter importer = new DataImporter(root);
+			
+		} catch (ParserConfigurationException e) {
+			System.out.println("Error creating DocumentBuilder");
+		} catch (Exception e) {
+			System.out.println("Error with XML file");
+		}
+		
+
+	}
+
+}

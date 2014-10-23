@@ -2,6 +2,11 @@ package shared.modal;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import shared.DataImporter;
+
 /**
  * The project class which represents a set of batches
  * @author Raul Lopez Villalpando
@@ -19,9 +24,9 @@ public class Project {
 	/** The height of each record in the project*/
 	private int recordHeight;
 	/** The list of batches of the project*/
-	private ArrayList<Batch> batches;
+	private ArrayList<Batch> batches = new ArrayList<Batch>();
 	/** The list of fields in each batch*/
-	private ArrayList<Field> fields;
+	private ArrayList<Field> fields = new ArrayList<Field>();
 	
 	//Constructors
 	
@@ -30,6 +35,44 @@ public class Project {
 		this.recordsPerBatch = recordsPerBatch;
 		this.firstYCood = firstYCood;
 		this.recordHeight = recordHeight;
+	}
+	
+	public Project(Element projectElement) {
+		
+		title = DataImporter.getValue((Element)projectElement.getElementsByTagName("title").item(0));
+		
+		recordsPerBatch = Integer.parseInt(DataImporter.getValue((Element)projectElement.getElementsByTagName("recordsperimage").item(0)));
+		
+		firstYCood = Integer.parseInt(DataImporter.getValue((Element)projectElement.getElementsByTagName("firstycoord").item(0)));
+		
+		recordHeight = Integer.parseInt(DataImporter.getValue((Element)projectElement.getElementsByTagName("recordheight").item(0)));
+		
+		Element fieldsElement = (Element)projectElement.getElementsByTagName("fields").item(0);
+		NodeList fieldElements = fieldsElement.getElementsByTagName("field");
+		 
+		for(int i = 0; i < fieldElements.getLength(); i++) {
+			Field newField = new Field((Element)fieldElements.item(i));
+			newField.setColNumber(i+1);
+			fields.add(newField);
+		}
+		 
+		Element batchesElement = (Element)projectElement.getElementsByTagName("images").item(0);
+		NodeList allBatches = batchesElement.getElementsByTagName("image");
+		 
+		for(int i = 0; i < allBatches.getLength(); i++) {
+			batches.add(new Batch((Element)allBatches.item(i)));
+		}
+	}
+	
+	//Methods 
+	
+	public String toString() {
+		return "Project:\n\tTitle: " + title +
+				"\n\tRecords Per Batch: " + recordsPerBatch + 
+				"\n\tFirst Y Coord: " + firstYCood + 
+				"\n\tRecord Height: " + recordHeight +
+				"\n\tFields: \n" + fields + 
+				"\n\tBatches: \n" + batches;
 	}
 	
 	// Getters and Setters

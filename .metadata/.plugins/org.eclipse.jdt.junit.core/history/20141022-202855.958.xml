@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ValueDAOTest" project="Record_Indexer" tests="7" started="7" failures="0" errors="0" ignored="0">
+  <testsuite name="server.access.ValueDAOTest" time="1.506">
+    <testcase name="testGetAll" classname="server.access.ValueDAOTest" time="0.943"/>
+    <testcase name="testAdd" classname="server.access.ValueDAOTest" time="0.16"/>
+    <testcase name="testGet" classname="server.access.ValueDAOTest" time="0.066"/>
+    <testcase name="testUpdate" classname="server.access.ValueDAOTest" time="0.087"/>
+    <testcase name="testDelete" classname="server.access.ValueDAOTest" time="0.14"/>
+    <testcase name="testNegativeRowNumberAdd" classname="server.access.ValueDAOTest" time="0.057"/>
+    <testcase name="testNegativeRowNumberUpdate" classname="server.access.ValueDAOTest" time="0.053"/>
+  </testsuite>
+</testrun>

@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import server.Database;
 import server.DatabaseException;
+import shared.modal.Batch;
 import shared.modal.Field;
 import shared.modal.Project;
 
@@ -31,6 +32,7 @@ public class ProjectDAOTest {
 	private Database db;
 	private ProjectDAO projectDAO;
 	private FieldDAO fieldDAO;
+	private BatchDAO batchDAO;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -40,6 +42,7 @@ public class ProjectDAOTest {
 		
 		List<Project> allProjects = db.getProjectDAO().getAll();
 		List<Field> allFields = db.getFieldDAO().getAll();
+		List<Batch> allBatches = db.getBatchDAO().getAll();
 		
 		//Clear out tables
 		for (Project project : allProjects) {
@@ -50,6 +53,10 @@ public class ProjectDAOTest {
 			db.getFieldDAO().deleteFieldWithId(field.getId());
 		}
 		
+		for (Batch batch : allBatches) {
+			db.getBatchDAO().deleteBatchWithId(batch.getId());
+		}
+		
 		db.endTransaction(true);
 		
 		//Prepare Database for test case
@@ -58,6 +65,7 @@ public class ProjectDAOTest {
 		db.startTransaction();
 		projectDAO = db.getProjectDAO();
 		fieldDAO = db.getFieldDAO();
+		batchDAO = db.getBatchDAO();
 	}
 	
 	@After
@@ -150,6 +158,48 @@ public class ProjectDAOTest {
 			}
 			if (!foundTest2) {
 				foundTest2 = (field.getId() == fieldTest2.getId());
+			}
+			
+		}
+		
+		assertTrue(foundTest1 && foundTest2);
+	}
+	
+	@Test
+	public void testAddingBatch() throws DatabaseException {
+		Project projectTest1 = new Project("Project 1950", 20, 0, 50);
+		
+		projectDAO.insertNewProject(projectTest1);
+		
+		Batch batchTest1 = new Batch("/theImageFile.png", 0);
+		Batch batchTest2 = new Batch("/theImageFile2.png", 1);
+		
+		batchDAO.insertNewBatch(batchTest1);
+		batchDAO.insertNewBatch(batchTest2);
+		
+		//Check if it got added successfully
+		boolean updateCompleted = projectDAO.insertNewBatchIntoProject(batchTest1, projectTest1);
+		assertTrue(updateCompleted);
+		
+		updateCompleted = projectDAO.insertNewBatchIntoProject(batchTest2, projectTest1);
+		assertTrue(updateCompleted);
+		
+		//Get all field for project
+		List<Batch> projectBatches = projectDAO.getAllBatchesForProjet(projectTest1);
+		
+		assertEquals(2, projectBatches.size());
+		
+		//Make sure the right one got inserted
+		
+		boolean foundTest1 = false;
+		boolean foundTest2 = false;
+		
+		for (Batch batch : projectBatches) {
+			if (!foundTest1) {
+				foundTest1 = (batch.getId() == batchTest1.getId());
+			}
+			if (!foundTest2) {
+				foundTest2 = (batch.getId() == batchTest2.getId());
 			}
 			
 		}

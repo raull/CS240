@@ -48,10 +48,11 @@ public class ValueDAO {
 			//Handle Response to create new User
 			while (result.next()) {
 
-				String filePath = result.getString(2);
-				int status = result.getInt(3);
+				String content = result.getString(2);
+				int row = result.getInt(3);
+				int column = result.getInt(4);
 				
-				Value newValue = new Value(filePath, status);
+				Value newValue = new Value(content, row, column);
 				newValue.setId(result.getInt(1));
 				
 				valueList.add(newValue);
@@ -87,10 +88,11 @@ public class ValueDAO {
 			//Handle Response to create new User
 			while (result.next()) {
 				int valuetId = result.getInt(1);
-				String filePath = result.getString(2);
-				int status = result.getInt(3);
+				String content = result.getString(2);
+				int row = result.getInt(3);
+				int column = result.getInt(4);
 				
-				value = new Value(filePath, status);
+				value = new Value(content, row, column);
 				value.setId(valuetId);
 				
 			}
@@ -114,10 +116,11 @@ public class ValueDAO {
 				
 		try {
 			//Set up Query
-			String sql = "INSERT INTO value (content, row) VALUES (?,?)";
+			String sql = "INSERT INTO value (content, column_number ,row) VALUES (?,?,?)";
 			stm = db.getConnection().prepareStatement(sql);
 			stm.setString(1, newValue.getContent());
-			stm.setInt(2, newValue.getRowNumber());
+			stm.setInt(2, newValue.getColNumber());
+			stm.setInt(3, newValue.getRowNumber());
 			
 			//Execute Query and handle the response to get back the ID
 			if (stm.executeUpdate() == 1) {
@@ -147,11 +150,12 @@ public class ValueDAO {
 		try {
 
 			//Set up Query
-			String sql = "UPDATE value SET content = ?, row = ? WHERE id = ? ";
+			String sql = "UPDATE value SET content = ?, column_number = ?, row = ? WHERE id = ? ";
 			stm = db.getConnection().prepareStatement(sql);
 			stm.setString(1, value.getContent());
-			stm.setInt(2, value.getRowNumber());
-			stm.setInt(3,value.getId());
+			stm.setInt(2, value.getColNumber());
+			stm.setInt(3, value.getRowNumber());
+			stm.setInt(4,value.getId());
 
 			//Execute Query
 			if (stm.executeUpdate() == 1) {

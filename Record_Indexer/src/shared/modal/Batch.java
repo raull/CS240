@@ -2,6 +2,11 @@ package shared.modal;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import shared.DataImporter;
+
 /**
  * Batch class represents a table like image representing the records to be indexed
  * @author Raul Lopez Villalpando, 2014
@@ -16,13 +21,46 @@ public class Batch {
 	/** The status of the batch represented as an integer, -1 = not started, 0 = started, 1 = completed */
 	private int status;
 	/** The values on this batch */
-	private ArrayList<Value> values;
+	private ArrayList<Value> values = new ArrayList<Value>();
 	
 	//Constructor
 	
 	public Batch(String filePath, int status) {
 		this.filePath = filePath;
 		this.status = status;
+	}
+	
+	public Batch(Element batchElement) {
+		filePath = DataImporter.getValue((Element)batchElement.getElementsByTagName("file").item(0));
+		
+		//Records are optional so check if they exist
+		NodeList recordsElementNodeList = batchElement.getElementsByTagName("records");
+		
+		if (recordsElementNodeList.getLength() > 0) {
+			Element recordsElement = (Element)recordsElementNodeList.item(0);
+			NodeList allRecords = recordsElement.getElementsByTagName("record");
+						
+			for (int i = 0; i < allRecords.getLength(); i++) {
+				Element recordElement = (Element)allRecords.item(i);
+				
+				Element valuesElement = (Element)(recordElement.getElementsByTagName("values").item(0));
+				NodeList allValuesForRecord = valuesElement.getElementsByTagName("value");
+				
+				for (int j = 0; j < allValuesForRecord.getLength(); j++) {
+					Value newValue = new Value((Element)allValuesForRecord.item(j));
+					newValue.setRowNumber(i+1);
+					newValue.setColNumber(j+1);
+					values.add(newValue);
+				}
+			}
+		}
+	}
+	
+	//Methods
+	
+	public String toString() {
+		return "Batch:\n\tFile Path: " + filePath + 
+				"\n\tValues: \n" + values;
 	}
 	
 	
@@ -65,5 +103,19 @@ public class Batch {
 	 */
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	/**
+	 * @return the values
+	 */
+	public ArrayList<Value> getValues() {
+		return values;
+	}
+
+	/**
+	 * @param values the values to set
+	 */
+	public void setValues(ArrayList<Value> values) {
+		this.values = values;
 	}
 }
