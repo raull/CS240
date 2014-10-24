@@ -3,7 +3,7 @@ package shared.modal;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import shared.DataImporter;
+import shared.IndexerData;
 
 /**
  * Field class that represents a column in a batch
@@ -39,20 +39,20 @@ public class Field {
 	}
 	
 	public Field(Element fieldElement) {
-		title = DataImporter.getValue((Element)fieldElement.getElementsByTagName("title").item(0));
+		title = IndexerData.getValue((Element)fieldElement.getElementsByTagName("title").item(0));
 		
-		xCoord = Integer.parseInt(DataImporter.getValue((Element)fieldElement.getElementsByTagName("xcoord").item(0)));
+		xCoord = Integer.parseInt(IndexerData.getValue((Element)fieldElement.getElementsByTagName("xcoord").item(0)));
 		
-		width = Integer.parseInt(DataImporter.getValue((Element)fieldElement.getElementsByTagName("width").item(0)));
+		width = Integer.parseInt(IndexerData.getValue((Element)fieldElement.getElementsByTagName("width").item(0)));
 		
-		helpHTML = DataImporter.getValue((Element)fieldElement.getElementsByTagName("helphtml").item(0));
+		helpHTML = IndexerData.getValue((Element)fieldElement.getElementsByTagName("helphtml").item(0));
 		
 		//This attribute is optional on the XML
 		
 		NodeList knownDataList = fieldElement.getElementsByTagName("knowndata");
 		
 		if (knownDataList != null) {
-			knownData = DataImporter.getValue((Element)knownDataList.item(0));
+			knownData = IndexerData.getValue((Element)knownDataList.item(0));
 		}
 	}
 	

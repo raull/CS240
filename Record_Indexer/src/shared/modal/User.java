@@ -2,7 +2,7 @@ package shared.modal;
 
 import org.w3c.dom.Element;
 
-import shared.DataImporter;
+import shared.IndexerData;
 
 /**
  * User class representing users volunteering for record indexing
@@ -42,12 +42,12 @@ public class User {
 	}
 	
 	public User(Element userElement) {
-		username = DataImporter.getValue((Element)userElement.getElementsByTagName("username").item(0));
-		password = DataImporter.getValue((Element)userElement.getElementsByTagName("password").item(0));
-		firstName = DataImporter.getValue((Element)userElement.getElementsByTagName("firstname").item(0));
-		lastName = DataImporter.getValue((Element)userElement.getElementsByTagName("lastname").item(0));
-		email = DataImporter.getValue((Element)userElement.getElementsByTagName("email").item(0));
-		recordCount = Integer.parseInt(DataImporter.getValue((Element)userElement.getElementsByTagName("indexedrecords").item(0)));
+		username = IndexerData.getValue((Element)userElement.getElementsByTagName("username").item(0));
+		password = IndexerData.getValue((Element)userElement.getElementsByTagName("password").item(0));
+		firstName = IndexerData.getValue((Element)userElement.getElementsByTagName("firstname").item(0));
+		lastName = IndexerData.getValue((Element)userElement.getElementsByTagName("lastname").item(0));
+		email = IndexerData.getValue((Element)userElement.getElementsByTagName("email").item(0));
+		recordCount = Integer.parseInt(IndexerData.getValue((Element)userElement.getElementsByTagName("indexedrecords").item(0)));
 		currentBatchId = 0;
 	}
 	

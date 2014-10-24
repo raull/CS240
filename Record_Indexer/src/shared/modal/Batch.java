@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import shared.DataImporter;
+import shared.IndexerData;
 
 /**
  * Batch class represents a table like image representing the records to be indexed
@@ -31,7 +31,7 @@ public class Batch {
 	}
 	
 	public Batch(Element batchElement) {
-		filePath = DataImporter.getValue((Element)batchElement.getElementsByTagName("file").item(0));
+		filePath = IndexerData.getValue((Element)batchElement.getElementsByTagName("file").item(0));
 		
 		//Records are optional so check if they exist
 		NodeList recordsElementNodeList = batchElement.getElementsByTagName("records");

@@ -2,7 +2,7 @@ package shared.modal;
 
 import org.w3c.dom.Element;
 
-import shared.DataImporter;
+import shared.IndexerData;
 
 /**
  * Value class represents a value on and specific row and column on a batch
@@ -29,7 +29,7 @@ public class Value {
 	}
 	
 	public Value(Element valueElement) {
-		content = DataImporter.getValue(valueElement);
+		content = IndexerData.getValue(valueElement);
 	}
 	
 	//Methods

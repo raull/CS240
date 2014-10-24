@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import shared.DataImporter;
+import shared.IndexerData;
 
 /**
  * The project class which represents a set of batches
@@ -39,13 +39,13 @@ public class Project {
 	
 	public Project(Element projectElement) {
 		
-		title = DataImporter.getValue((Element)projectElement.getElementsByTagName("title").item(0));
+		title = IndexerData.getValue((Element)projectElement.getElementsByTagName("title").item(0));
 		
-		recordsPerBatch = Integer.parseInt(DataImporter.getValue((Element)projectElement.getElementsByTagName("recordsperimage").item(0)));
+		recordsPerBatch = Integer.parseInt(IndexerData.getValue((Element)projectElement.getElementsByTagName("recordsperimage").item(0)));
 		
-		firstYCood = Integer.parseInt(DataImporter.getValue((Element)projectElement.getElementsByTagName("firstycoord").item(0)));
+		firstYCood = Integer.parseInt(IndexerData.getValue((Element)projectElement.getElementsByTagName("firstycoord").item(0)));
 		
-		recordHeight = Integer.parseInt(DataImporter.getValue((Element)projectElement.getElementsByTagName("recordheight").item(0)));
+		recordHeight = Integer.parseInt(IndexerData.getValue((Element)projectElement.getElementsByTagName("recordheight").item(0)));
 		
 		Element fieldsElement = (Element)projectElement.getElementsByTagName("fields").item(0);
 		NodeList fieldElements = fieldsElement.getElementsByTagName("field");
