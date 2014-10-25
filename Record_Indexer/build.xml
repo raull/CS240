@@ -17,7 +17,7 @@
 	<property name="build" location="build"/>
 	
 	<!-- Directory containing database files -->
-	<property name="database" location="database"/>
+	<property name="database" location="db"/>
 
 	<!-- Directory containing demo files -->
 	<property name="demo" location="demo"/>
@@ -26,10 +26,10 @@
 	<property name="passoff" location="passoff"/>
 	
 	<!-- Database file used by the server -->
-	<property name="db-file" location="${database}/indexer_server.sqlite"/>
+	<property name="db-file" location="${database}/indexerDB.sqlite"/>
 	
 	<!-- Database file containing empty tables. -->
-	<property name="empty-db-file" location="${database}/indexer_server_empty.sqlite"/>
+	<property name="empty-db-file" location="${database}/empty/indexerDB.sqlite"/>
 	
 	<!-- File containing the report output by Checkstyle -->
 	<property name="checkstyle-report-file" location="checkstyle-report.txt"/>

@@ -9,6 +9,8 @@ import org.apache.commons.io.*;
 import org.w3c.dom.*;
 
 import server.*;
+import server.database.Database;
+import server.database.DatabaseException;
 import shared.modal.*;
 
 public class DataImporter {
@@ -25,6 +27,7 @@ public class DataImporter {
 	
 	public void importData(String filename) throws Exception
 	{
+		//DocumentBuilder to parse the XML file
 		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		File file = new File(filename);
 		File dest = new File("Records");
@@ -64,12 +67,12 @@ public class DataImporter {
 		
 		Element root = doc.getDocumentElement();
 		
-		//Parse XML
+		//Parse XML to convert it to Project objects and User objects
 		IndexerData indexer = new IndexerData(root);
 		
 		//Import data to Database
 		try {
-			importDatatoDatabaseWithIndexer(indexer);
+			importDataToDatabaseWithIndexer(indexer);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -78,16 +81,13 @@ public class DataImporter {
 	
 	//-----------------Private Methods------------------------
 	
-	private void importDatatoDatabaseWithIndexer(IndexerData indexer) throws DatabaseException {
+	private void importDataToDatabaseWithIndexer(IndexerData indexer) throws DatabaseException {
 		
 		//Start importing process
 		try {			
-			
+			//Start Transaction
 			db.startTransaction();
-			
-			//Clear Tables
-			//importer.clearAllTables();
-			
+						
 			//Add All Users
 			
 			for (User user : indexer.getUsers()) {
@@ -99,11 +99,13 @@ public class DataImporter {
 				importProject(project);
 			}
 			
-			
+			//End Transaction
 			db.endTransaction(true);
-		} catch (Exception e) {
+			
+		} catch (DatabaseException e) {
 			db.endTransaction(false);
 			System.out.println("Something went wrong while importing");
+			throw e;
 		}
 		
 	}
@@ -139,7 +141,7 @@ public class DataImporter {
 			}
 			
 		} catch (Exception e) {
-			throw new DatabaseException(e);
+			throw e;
 		}
 	}
 	
@@ -151,18 +153,20 @@ public class DataImporter {
 		try {
 			db.getUserDAO().insertNewUser(user);
 		} catch (Exception e) {
-			throw new DatabaseException(e);
+			throw e;
 		}
 	}
 	
 	//------------------------Main Method------------------------------------
 	public static void main(String[] args) {
 		try {
+			//Import the Database Controller and initialize a Database instance
 			Database.initialize();
 			Database db = new Database();
 			
+			//Create an importer
 			DataImporter importer = new DataImporter(db);
-			
+			//Import Data from file
 			importer.importData(args[0]);
 			
 		} catch (Exception e) {

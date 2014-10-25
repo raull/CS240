@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import server.Database;
-import server.DatabaseException;
+import server.database.Database;
+import server.database.DatabaseException;
 import shared.modal.*;
 
 public class FieldDAO {

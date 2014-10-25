@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
-import server.Database;
-import server.DatabaseException;
+import server.database.Database;
+import server.database.DatabaseException;
 import shared.modal.*;
 
 /**

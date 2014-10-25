@@ -13,9 +13,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import server.Database;
-import server.DatabaseException;
 import server.access.UserDAO;
+import server.database.Database;
+import server.database.DatabaseException;
 import shared.modal.User;
 
 @RunWith(JUnit4.class)

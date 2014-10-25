@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import server.Database;
-import server.DatabaseException;
+import server.database.Database;
+import server.database.DatabaseException;
 import shared.modal.Field;
 
 public class FieldDAOTest {
