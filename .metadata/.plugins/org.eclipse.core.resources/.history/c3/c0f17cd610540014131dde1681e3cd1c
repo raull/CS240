@@ -1,9 +1,0 @@
-package shared.communication;
-
-import shared.modal.Batch;
-
-public class DownloadBatch_Response {
-	
-	private Batch batch;
-	private String errorMessage;
-}

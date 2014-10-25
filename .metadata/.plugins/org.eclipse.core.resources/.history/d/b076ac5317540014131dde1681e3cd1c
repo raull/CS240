@@ -1,7 +1,0 @@
-package client;
-
-@SuppressWarnings("serial")
-public static class ClientCommunicatorException extends Exception {
-	
-	
-}
