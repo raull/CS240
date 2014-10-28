@@ -1,0 +1,47 @@
+package server;
+
+public class Server {
+	
+	private Htt server;
+	
+	private Server() {
+		return;
+	}
+	
+	private void run() {
+		
+		logger.info("Initializing Model");
+		
+		try {
+			ServerFacade.initialize();		
+		}
+		catch (ServerException e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);
+			return;
+		}
+		
+		logger.info("Initializing HTTP Server");
+		
+		try {
+			server = HttpServer.create(new InetSocketAddress(SERVER_PORT_NUMBER),
+											MAX_WAITING_CONNECTIONS);
+		} 
+		catch (IOException e) {
+			logger.log(Level.SEVERE, e.getMessage(), e);			
+			return;
+		}
+
+		server.setExecutor(null); // use the default executor
+		
+		server.createContext("/GetAllContacts", getAllContactsHandler);
+		server.createContext("/AddContact", addContactHandler);
+		server.createContext("/UpdateContact", updateContactHandler);
+		server.createContext("/DeleteContact", deleteContactHandler);
+		
+		logger.info("Starting HTTP Server");
+
+		server.start();
+	}
+	
+	
+}

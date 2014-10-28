@@ -1,0 +1,18 @@
+package client;
+
+import org.junit.*;
+
+import client.communication.ClientCommunicator;
+import static org.junit.Assert.*;
+
+public class ClientUnitTests {
+	
+	@Test
+	public void validateUserTest() {		
+		assertEquals("OK", "OK");
+		assertTrue(true);
+		assertFalse(false);
+	}
+
+}
+

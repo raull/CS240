@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ClientUnitTests" project="Record_Indexer" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="client.ClientUnitTests" time="6.869">
+    <testcase name="validateUserTest" classname="client.ClientUnitTests" time="5.878"/>
+    <testcase name="invalidUserTest" classname="client.ClientUnitTests" time="0.991"/>
+  </testsuite>
+</testrun>

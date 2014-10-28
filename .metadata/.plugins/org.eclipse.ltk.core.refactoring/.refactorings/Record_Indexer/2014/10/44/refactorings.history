@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;server.handler.DownloadBatch&apos; to &apos;DownloadBatchHandler&apos;&#x0A;- Original project: &apos;Record_Indexer&apos;&#x0A;- Original element: &apos;server.handler.DownloadBatch&apos;&#x0A;- Renamed element: &apos;server.handler.DownloadBatchHandler&apos;&#x0A;- Update references to refactored element&#x0A;- Rename similarly named elements&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;DownloadBatch&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;server.handler{DownloadBatch.java[DownloadBatch" matchStrategy="1" name="DownloadBatchHandler" qualified="false" references="true" similarDeclarations="true" stamp="1414353133089" textual="false" version="1.0"/>
+</session>

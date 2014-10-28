@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
 <typeInfo handle="=Project_4/src&lt;hangman{EvilHangmanGame.java[EvilHangmanGame" modifiers="513" timestamp="1411601639000"/>
-<typeInfo handle="=Record_Indexer/\/Library\/Java\/JavaVirtualMachines\/jdk1.7.0_67.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;java.lang(Exception.class[Exception" modifiers="33" timestamp="1406304240000"/>
 <typeInfo handle="=Record_Indexer/src&lt;server.access{UserDAO.java[UserDAO" modifiers="1" timestamp="1414129467000"/>
 <typeInfo handle="=Record_Indexer/src&lt;server.access{ProjectDAO.java[ProjectDAO" modifiers="1" timestamp="1414129467000"/>
 <typeInfo handle="=Record_Indexer/src&lt;server.access{BatchDAO.java[BatchDAO" modifiers="1" timestamp="1414129467000"/>
 <typeInfo handle="=Record_Indexer/src&lt;server.access{FieldDAO.java[FieldDAO" modifiers="1" timestamp="1414129467000"/>
 <typeInfo handle="=Record_Indexer/src&lt;server.access{ValueDAO.java[ValueDAO" modifiers="1" timestamp="1414129467000"/>
+<typeInfo handle="=Record_Indexer/\/Library\/Java\/JavaVirtualMachines\/jdk1.7.0_67.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;sun.net.www.protocol.http(HttpAuthenticator.class[HttpAuthenticator" modifiers="1050113" timestamp="1406304240000"/>
+<typeInfo handle="=Record_Indexer/\/Library\/Java\/JavaVirtualMachines\/jdk1.7.0_67.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;com.sun.net.httpserver(HttpHandler.class[HttpHandler" modifiers="1537" timestamp="1406304240000"/>
 </typeInfoHistroy>

@@ -7,18 +7,15 @@ package shared.communication;
  */
 public class Validate_User_Response {
 	
-	/**
-	 * Boolean that indicates whether the user is valid or not
-	 */
-	private boolean validUser;
+	//--------------Instance Fields------------------
 	/**
 	 * First name of the User
 	 */
-	private String firstName;
+	private String firstName = "";
 	/**
 	 * Last name of the User
 	 */
-	private String lastName;
+	private String lastName = "";
 	/**
 	 * The number of records indexed by the User
 	 */
@@ -26,33 +23,22 @@ public class Validate_User_Response {
 	/**
 	 * An message with the error cause
 	 */
-	private String errorMessage;
+	private String output = "FALSE";
 	
+	//-----------------Constructors------------------
 	
-	public Validate_User_Response(boolean validUser, String firstName, String lastName, int recordCount, String errorMessage){
-		this.validUser = validUser;
+	public Validate_User_Response(String firstName, String lastName, int recordCount, String output){
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.recordCount = recordCount;
-		this.errorMessage = errorMessage;
+		this.output = output;
 	}
 
-
-	/**
-	 * @return the validUser
-	 */
-	public boolean isValidUser() {
-		return validUser;
+	public Validate_User_Response() {
+		
 	}
-
-
-	/**
-	 * @param validUser the validUser to set
-	 */
-	public void setValidUser(boolean validUser) {
-		this.validUser = validUser;
-	}
-
+	
+	//-----------------getters and Setters-----------
 
 	/**
 	 * @return the firstName
@@ -105,18 +91,35 @@ public class Validate_User_Response {
 	/**
 	 * @return the errorMessage
 	 */
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getOutput() {
+		return output;
 	}
 
 
 	/**
 	 * @param errorMessage the errorMessage to set
 	 */
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setOutput(String output) {
+		this.output = output;
 	}
 	
+	//---------------To String---------------------
+	
+	@Override
+	public String toString() {
+		
+		StringBuilder builder = new StringBuilder();
+		if (output.equals("TRUE")) {
+			builder.append(output + "\n");
+			builder.append(firstName + "\n");
+			builder.append(lastName + "\n");
+			builder.append(recordCount + "\n");
+		} else {
+			builder.append(output + "\n");
+		}
+		
+		return builder.toString();
+	}
 	
 	
 }

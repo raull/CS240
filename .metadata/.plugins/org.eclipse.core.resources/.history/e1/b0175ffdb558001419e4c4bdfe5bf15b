@@ -1,5 +1,0 @@
-package shared.communication;
-
-public class Get_Projects_Parameter {
-
-}

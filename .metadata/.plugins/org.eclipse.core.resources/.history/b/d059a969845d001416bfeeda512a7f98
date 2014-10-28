@@ -1,0 +1,10 @@
+package server.facade;
+
+import server.ServerException;
+
+public class ServerFacade {
+
+	public static void initialize() throws ServerException{
+		
+	}
+}

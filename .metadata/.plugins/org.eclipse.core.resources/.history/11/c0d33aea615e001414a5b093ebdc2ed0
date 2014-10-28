@@ -1,0 +1,23 @@
+package client;
+
+import org.junit.*;
+
+import shared.communication.Validate_User_Parameter;
+import shared.communication.Validate_User_Response;
+import client.communication.ClientCommunicator;
+import static org.junit.Assert.*;
+
+public class ClientUnitTests {
+	
+	@Test
+	public void validateUserTest() throws ClientCommunicatorException{		
+		ClientCommunicator communicator = new ClientCommunicator();
+		Validate_User_Parameter parameter = new Validate_User_Parameter("sheila", "parker");
+		Validate_User_Response response = communicator.validateUser(parameter);
+		
+		assertEquals("She", response.getFirstName());
+		
+	}
+
+}
+

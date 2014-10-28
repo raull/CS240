@@ -18,13 +18,17 @@ public class Get_Projects_Response {
 	/**
 	 * Error Message with the reason of failure
 	 */
-	private String errorMessage;
+	private String output;
 	
 	
 	
-	public Get_Projects_Response(List<Project> projects, String errorMessage) {
+	public Get_Projects_Response(List<Project> projects, String output) {
 		this.projects = projects;
-		this.errorMessage = errorMessage;
+		this.output = output;
+	}
+
+	public Get_Projects_Response() {
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -48,19 +52,19 @@ public class Get_Projects_Response {
 
 
 	/**
-	 * @return the errorMessage
+	 * @return the output
 	 */
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getOutput() {
+		return output;
 	}
 
 
 
 	/**
-	 * @param errorMessage the errorMessage to set
+	 * @param output the output to set
 	 */
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setOutput(String output) {
+		this.output = output;
 	}
 	
 }
