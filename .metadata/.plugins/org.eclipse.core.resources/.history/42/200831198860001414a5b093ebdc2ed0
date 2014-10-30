@@ -5,7 +5,6 @@ import java.net.InetSocketAddress;
 
 import server.facade.ServerFacade;
 import server.handler.DownloadBatchHandler;
-import server.handler.DownloadFileHandler;
 import server.handler.GetFieldsHandler;
 import server.handler.GetProjectsHandler;
 import server.handler.GetSampleImageHandler;
@@ -68,7 +67,7 @@ public class Server {
 	private HttpHandler downloadBatchHandler = new DownloadBatchHandler();
 	private HttpHandler submitBatchHandler = new SubmitBatchHandler();
 	private HttpHandler getFieldsHandler = new GetFieldsHandler();
-	private HttpHandler downloadFileHandler = new DownloadFileHandler();
+	private HttpHandler downloadFileHandler = new DownloadBatchHandler();
 	
 	public static void main(String[] args) {
 		

@@ -153,14 +153,5 @@ public class ServerUnitTests {
 		assertEquals("TRUE", response.getOutput());
 	}
 	
-	@Test
-	public void downloadFileTest() throws ClientCommunicatorException {
-		ClientCommunicator communicator = new ClientCommunicator();
-		GetSampleImage_Parameter imageParameter = new GetSampleImage_Parameter("sheila", "parker", 46);
-		GetSampleImage_Response imageResponse = communicator.getSampleImage(imageParameter);
-		
-		communicator.downloadFile(imageResponse.getImageURL());
-	}
-	
 }
 
