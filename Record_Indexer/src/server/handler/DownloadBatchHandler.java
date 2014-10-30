@@ -31,7 +31,7 @@ public class DownloadBatchHandler implements HttpHandler {
 			//Validate User first
 			User user = ServerFacade.validateUser(param.getUsername(), param.getPassword());
 			
-			if (user != null) {
+			if (user != null && user.getCurrentBatchId() <= 0) {
 				//If valid user then get all the Fields for the project
 				Project project = ServerFacade.getProject(param.getProjectId());
 				List<Field> allFields = ServerFacade.getFields(project.getId());

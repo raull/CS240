@@ -17,13 +17,19 @@ public class Batch {
 	/** The id representing the Batch on the databases*/
 	private int id;
 	/** The path where the Batch is located*/
-	private String filePath;
+	private String filePath = "";
 	/** The status of the batch represented as an integer, -1 = not started, 0 = started, 1 = completed */
 	private int status;
 	/** The values on this batch */
 	private ArrayList<Value> values = new ArrayList<Value>();
+	/** The project id that the batch belongs to*/
+	private int projectId;
 	
 	//Constructor
+	public Batch() {
+		
+	}
+	
 	
 	public Batch(String filePath, int status) {
 		this.filePath = filePath;
@@ -117,5 +123,21 @@ public class Batch {
 	 */
 	public void setValues(ArrayList<Value> values) {
 		this.values = values;
+	}
+
+
+	/**
+	 * @return the projectId
+	 */
+	public int getProjectId() {
+		return projectId;
+	}
+
+
+	/**
+	 * @param projectId the projectId to set
+	 */
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 }

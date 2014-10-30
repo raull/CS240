@@ -86,7 +86,7 @@ public class Database {
 			}
 			
 		} catch (SQLException e) {
-			throw new DatabaseException("Could not end transaction", e);
+			throw new DatabaseException("Could not end transaction: " + e.getLocalizedMessage(), e);
 		} finally {
 			//No matter what happens attempt to close the connection
 			try {

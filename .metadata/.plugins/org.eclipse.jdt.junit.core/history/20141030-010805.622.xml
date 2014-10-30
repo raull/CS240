@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="Rerun Rerun ServerUnitTests (Failed Tests first)" project="Record_Indexer" tests="9" started="9" failures="0" errors="0" ignored="0">
+  <testsuite name="server.ServerUnitTests" time="9.493">
+    <testcase name="validateUserTest" classname="server.ServerUnitTests" time="0.188"/>
+    <testcase name="invalidUserTest" classname="server.ServerUnitTests" time="1.002"/>
+    <testcase name="invalidInputUserTest" classname="server.ServerUnitTests" time="0.004"/>
+    <testcase name="getProjectsTest" classname="server.ServerUnitTests" time="1.029"/>
+    <testcase name="getProjectsInvalidTest" classname="server.ServerUnitTests" time="0.009"/>
+    <testcase name="getSampleImageTest" classname="server.ServerUnitTests" time="2.047"/>
+    <testcase name="downloadBatchTest" classname="server.ServerUnitTests" time="2.112"/>
+    <testcase name="getFieldsFromProjectTest" classname="server.ServerUnitTests" time="2.057"/>
+    <testcase name="getAllFieldsTest" classname="server.ServerUnitTests" time="1.044"/>
+  </testsuite>
+</testrun>

@@ -228,14 +228,11 @@ public class ProjectDAO {
 	 * @param user user to assign the batch to
 	 * @return the available batch from the given project
 	 */
-	public Batch getBatch(Project project, User user) throws DatabaseException {
+	public Batch getBatch(Project project) throws DatabaseException {
 		if (project.getId() <= 0) {
 			throw new DatabaseException("Invalid ID for Project");
 		}
 		
-		if (user.getId() <= 0) {
-			throw new DatabaseException("Invalid ID for User");
-		}
 		
 		PreparedStatement stm = null;
 		ResultSet result = null;
@@ -243,7 +240,7 @@ public class ProjectDAO {
 		ArrayList<Batch> batchList = new ArrayList<Batch>();
 		try {			
 			//Set up Query
-			String sql = "SELECT * FROM batch WHERE id = ? AND project_id = ?";
+			String sql = "SELECT * FROM batch WHERE status = '0' AND project_id = ?";
 			stm = db.getConnection().prepareStatement(sql);
 			stm.setInt(1, project.getId());
 
@@ -255,9 +252,11 @@ public class ProjectDAO {
 
 				String filePath = result.getString(2);
 				int status = result.getInt(3);
+				int projectId = result.getInt(4);
 				
 				Batch newBatch = new Batch(filePath, status);
 				newBatch.setId(result.getInt(1));
+				newBatch.setProjectId(projectId);
 				
 				batchList.add(newBatch);
 			}
@@ -302,9 +301,11 @@ public class ProjectDAO {
 
 				String filePath = result.getString(2);
 				int status = result.getInt(3);
+				int projectId = result.getInt(4);
 				
 				Batch newBatch = new Batch(filePath, status);
 				newBatch.setId(result.getInt(1));
+				newBatch.setProjectId(projectId);
 				
 				batchList.add(newBatch);
 			}

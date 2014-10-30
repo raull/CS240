@@ -53,7 +53,7 @@ public class DataImporter {
 		}
 		catch (IOException e)
 		{
-			throw new Exception("Unable to deal with the IOException thrown", e);
+			throw new Exception("Unable to deal with the IOException thrown: " + e.getLocalizedMessage(), e);
 		}
 		/*
 		 * (**APACHE**)

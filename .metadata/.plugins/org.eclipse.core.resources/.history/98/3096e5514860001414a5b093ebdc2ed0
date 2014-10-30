@@ -1,0 +1,36 @@
+package shared.communication;
+
+public class SubmitBatch_Response {
+	
+	/**
+	 * Request output
+	 */
+	private String output;
+	
+	
+	public SubmitBatch_Response(String output) {
+		this.output = output;
+	}
+	
+	public SubmitBatch_Response() {
+		
+	}
+
+
+	/**
+	 * @return the output
+	 */
+	public String getOutput() {
+		return output;
+	}
+
+
+	/**
+	 * @param output the output to set
+	 */
+	public void setOutput(String output) {
+		this.output = output;
+	}
+	
+	
+}

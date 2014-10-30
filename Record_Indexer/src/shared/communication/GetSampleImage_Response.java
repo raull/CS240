@@ -66,7 +66,7 @@ public class GetSampleImage_Response {
 		if (output.equals("TRUE")) {
 			return imageURL;
 		} else {
-			return "FAILED";
+			return output + "\n";
 		}
 	}
 }

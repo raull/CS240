@@ -57,9 +57,11 @@ public class BatchDAO {
 
 				String filePath = result.getString(2);
 				int status = result.getInt(3);
+				int projectId = result.getInt(4);
 				
 				Batch newBatch = new Batch(filePath, status);
 				newBatch.setId(result.getInt(1));
+				newBatch.setProjectId(projectId);
 				
 				batchList.add(newBatch);
 			}
@@ -96,9 +98,11 @@ public class BatchDAO {
 				int batchtId = result.getInt(1);
 				String filePath = result.getString(2);
 				int status = result.getInt(3);
+				int projectId = result.getInt(4);
 				
 				batch = new Batch(filePath, status);
 				batch.setId(batchtId);
+				batch.setProjectId(projectId);
 				
 			}
 			

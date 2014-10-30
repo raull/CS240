@@ -13,8 +13,6 @@ import org.junit.Test;
 import server.database.Database;
 import server.database.DatabaseException;
 import shared.modal.Batch;
-import shared.modal.Field;
-import shared.modal.Project;
 import shared.modal.Value;
 
 public class BatchDAOTest {

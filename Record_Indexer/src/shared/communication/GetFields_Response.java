@@ -11,6 +11,8 @@ import shared.modal.Field;
  */
 public class GetFields_Response {
 	
+	
+	//-------------Instance Fields ------------------
 	/**
 	 * A list of fields returned by the server
 	 */
@@ -20,6 +22,7 @@ public class GetFields_Response {
 	 */
 	private String output;
 	
+	//-------------Constructors----------------------
 	
 	public GetFields_Response(List<Field> fields, String output) {
 		this.fields = fields;
@@ -30,7 +33,7 @@ public class GetFields_Response {
 		
 	}
 
-
+	//------------Getters and Setters----------------
 	/**
 	 * @return the fields
 	 */
@@ -60,5 +63,23 @@ public class GetFields_Response {
 	 */
 	public void setOutput(String output) {
 		this.output = output;
+	}
+	
+	//--------------To String --------------
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		
+		if (output.equals("TRUE")) {
+			for (Field field : fields) {
+				builder.append(field.getProject_id() + "\n");
+				builder.append(field.getId() + "\n");
+				builder.append(field.getTitle() + "\n");
+			}
+		} else {
+			builder.append(output + "\n");
+		}
+		
+		return builder.toString();
 	}
 }

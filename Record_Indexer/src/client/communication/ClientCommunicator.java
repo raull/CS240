@@ -44,7 +44,11 @@ public class ClientCommunicator {
 	 * @return A string with an error message, otherwise is null
 	 */
 	public SubmitBatch_Response submitBatch(SubmitBatch_Parameter input) throws ClientCommunicatorException{
-		return null;
+		if (input == null) {
+			throw new ClientCommunicatorException("Client Error: Input cannot be null");
+		}
+		
+		return (SubmitBatch_Response)doPost("/SubmitBatch", input);
 	}
 	
 	/**

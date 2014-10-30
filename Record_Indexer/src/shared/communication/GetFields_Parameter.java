@@ -20,6 +20,12 @@ public class GetFields_Parameter {
 	
 	//----------------------Constructors-----------------------
 	
+	public GetFields_Parameter(String username, String password, int projectId) {
+		this.username = username;
+		this.password = password;
+		this.projectId = projectId;
+	}
+	
 	public GetFields_Parameter() {
 		
 	}

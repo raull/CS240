@@ -80,7 +80,7 @@ public class Get_Projects_Response {
 				builder.append(project.getTitle() + "\n");
 			}
 		} else {
-			builder.append("FAILED");
+			builder.append(output + "\n");
 		}
 		
 		return builder.toString();

@@ -123,6 +123,8 @@ public class DownloadBatch_Response {
 					builder.append(field.getKnownData() + "");
 				}
 			}
+		} else {
+			builder.append(output + "\n");
 		}
 		
 		return builder.toString();

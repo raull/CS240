@@ -1,0 +1,18 @@
+package client;
+
+import org.junit.*;
+
+import shared.communication.GetSampleImage_Parameter;
+import shared.communication.GetSampleImage_Response;
+import shared.communication.Get_Projects_Parameter;
+import shared.communication.Get_Projects_Response;
+import shared.communication.Validate_User_Parameter;
+import shared.communication.Validate_User_Response;
+import client.communication.ClientCommunicator;
+import static org.junit.Assert.*;
+
+public class ClientUnitTests {
+	
+
+}
+

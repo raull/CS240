@@ -139,7 +139,7 @@ public class ServerFacade {
 			Project project = new Project();
 			project.setId(projectId);
 			//First get the next available batch
-			Batch batch = db.getProjectDAO().getBatch(project, user);
+			Batch batch = db.getProjectDAO().getBatch(project);
 			if (batch != null) {
 				//Change the status of the Batch
 				batch.setStatus(1);
@@ -148,6 +148,7 @@ public class ServerFacade {
 				user.setCurrentBatchId(batch.getId());
 				db.getUserDAO().updateUser(user);
 			} else {
+				db.endTransaction(false);
 				return null;
 			}
 			db.endTransaction(true);
@@ -160,7 +161,50 @@ public class ServerFacade {
 			} catch (Exception e2) {
 				throw new ServerException("Server Error: " + e2.getLocalizedMessage(), e2);
 			}
-		}
+		}	
+	}
+	
+	public static boolean submitBatch(List<Value> values, int batchId, User user) throws ServerException {
+		Database db = new Database();
 		
+		try {
+			db.startTransaction();
+			//First Get the batch
+			Batch batch = db.getBatchDAO().findById(batchId);
+			Project project = db.getProjectDAO().findById(batch.getProjectId());
+			//Insert values into the batch
+			for (Value value : values) {
+				
+				if(!db.getValueDAO().insertNewValue(value) || !db.getBatchDAO().insertValueIntoBatch(value, batch)) {
+					db.endTransaction(false);
+					return false;
+				}
+			}
+			
+			//Update User
+			user.setCurrentBatchId(0);
+			user.setRecordCount(user.getRecordCount() + project.getRecordsPerBatch());
+			if(!db.getUserDAO().updateUser(user)) {
+				db.endTransaction(false);
+				return false;
+			}
+			
+			//Update Batch
+			batch.setStatus(2);
+			if(!db.getBatchDAO().updateBatch(batch)){
+				db.endTransaction(false);
+				return false;
+			}
+
+			db.endTransaction(true);
+			return true;
+		} catch (Exception e) {
+			try {
+				db.endTransaction(false);
+				throw new ServerException("Server Error: " + e.getLocalizedMessage(), e);
+			} catch (Exception e2) {
+				throw new ServerException("Server Error: " + e2.getLocalizedMessage(), e2);
+			}
+		}	
 	}
 }
