@@ -1,0 +1,116 @@
+package shared.communication;
+
+import java.util.List;
+
+import shared.modal.Batch;
+import shared.modal.Field;
+import shared.modal.Project;
+/**
+ * Download Batch Object so the client and Server can communicate
+ * @author Raul Lopez Villalpando
+ *
+ */
+public class DownloadBatch_Response {
+	
+	//-------------------Instance Fields-------------------------
+	/**
+	 * Batch returned from the Database, containing the fields as well
+	 */
+	private Batch batch;
+	/**
+	 * Message for the request
+	 */
+	private String output = "FAILED";
+	/**
+	 * The list of fields for the same project as the batch
+	 */
+	private List<Field> fields;
+	/**
+	 * The project id where everything belongs to
+	 */
+	private Project project;
+	
+	
+	//-----------------Constructors----------------------------
+	public DownloadBatch_Response(Batch batch, String output, Project project) {
+		this.batch = batch;
+		this.output = output;
+		this.project = project;
+	}
+	
+	public DownloadBatch_Response() {
+		
+	}
+	
+	//-----------------Setters and Getters--------------------
+	/**
+	 * @return the batch
+	 */
+	public Batch getBatch() {
+		return batch;
+	}
+	/**
+	 * @param batch the batch to set
+	 */
+	public void setBatch(Batch batch) {
+		this.batch = batch;
+	}
+	/**
+	 * @return the output
+	 */
+	public String getOutput() {
+		return output;
+	}
+	/**
+	 * @param output the output to set
+	 */
+	public void setOutput(String output) {
+		this.output = output;
+	}
+
+
+	/**
+	 * @return the fields
+	 */
+	public List<Field> getFields() {
+		return fields;
+	}
+
+
+	/**
+	 * @param fields the fields to set
+	 */
+	public void setFields(List<Field> fields) {
+		this.fields = fields;
+	}
+
+	/**
+	 * @return the projectId
+	 */
+	public Project getProject() {
+		return project;
+	}
+
+	/**
+	 * @param project the project to set
+	 */
+	public void setProject(Project project) {
+		this.project = project;
+	}
+	
+	//------------------To String----------------
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		if (output.equals("TRUE")) {
+			builder.append(batch.getId() + "\n");
+			builder.append(project.getId() + "\n");
+			builder.append(batch.getFilePath() + "\n");
+			builder.append(project.getFirstYCood() + "\n");
+		}
+		
+		return builder.toString();
+	}
+	
+}

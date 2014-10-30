@@ -18,12 +18,16 @@ public class GetFields_Response {
 	/**
 	 * Error message in case the request fails
 	 */
-	private String errorMessage;
+	private String output;
 	
 	
-	public GetFields_Response(List<Field> fields, String errorMessage) {
+	public GetFields_Response(List<Field> fields, String output) {
 		this.fields = fields;
-		this.errorMessage = errorMessage;
+		this.output = output;
+	}
+	
+	public GetFields_Response() {
+		
 	}
 
 
@@ -46,15 +50,15 @@ public class GetFields_Response {
 	/**
 	 * @return the errorMessage
 	 */
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getOutput() {
+		return output;
 	}
 
 
 	/**
-	 * @param errorMessage the errorMessage to set
+	 * @param output the output to set
 	 */
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setOutput(String output) {
+		this.output = output;
 	}
 }

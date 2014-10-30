@@ -55,9 +55,11 @@ public class FieldDAO {
 				int width = result.getInt(5);
 				String helpHTML = result.getString(6);
 				String knownData = result.getString(7);
+				int project_id = result.getInt(8);
 				
 				Field newField = new Field(title, xCoord, colNumber, width, helpHTML, knownData);
 				newField.setId(result.getInt(1));
+				newField.setProject_id(project_id);
 				
 				fieldList.add(newField);
 			}
@@ -99,9 +101,11 @@ public class FieldDAO {
 				int width = result.getInt(5);
 				String helpHTML = result.getString(6);
 				String knownData = result.getString(7);
+				int projectId = result.getInt(8);
 				
 				field = new Field(title, xCoord, colNumber, width, helpHTML, knownData);
 				field.setId(fieldId);
+				field.setProject_id(projectId);
 				
 			}
 			

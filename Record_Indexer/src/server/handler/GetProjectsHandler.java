@@ -2,10 +2,12 @@ package server.handler;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.List;
 
 import server.facade.ServerFacade;
 import shared.communication.Get_Projects_Parameter;
 import shared.communication.Get_Projects_Response;
+import shared.modal.Project;
 import shared.modal.User;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -22,23 +24,33 @@ public class GetProjectsHandler implements HttpHandler {
 		// TODO Auto-generated method stub
 		
 		Get_Projects_Parameter param = (Get_Projects_Parameter)xmlStream.fromXML(exchange.getRequestBody());
-		
+		Get_Projects_Response result = new Get_Projects_Response();
 		try {
+			//First Validate user
 			User user = ServerFacade.validateUser(param.getUsername(), param.getPassword());
 			
-			Get_Projects_Response result = new Get_Projects_Response();
 			
 			if (user != null) {
+				//If user is valid then make the request
+				List<Project> allProjects = ServerFacade.getProjects();
+				result.setProjects(allProjects);
+				result.setOutput("TRUE");
 				
 			} else {
-				result.setOutput("FALSE");
+				result.setOutput("FAILED");
 			}
 			
+			//Send Headers
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+			
 		} catch (Exception e) {
-			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
-			return;
+			result.setOutput("FAILED");
+			System.out.println("Request Failed: " + e.getLocalizedMessage());
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
 		}
 		
+		xmlStream.toXML(result, exchange.getResponseBody());
+		exchange.getResponseBody().close();
 	}
 
 }

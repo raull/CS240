@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ClientUnitTests" project="Record_Indexer" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="client.ClientUnitTests" time="2.138">
+    <testcase name="invalidUserTest" classname="client.ClientUnitTests" time="0.089"/>
+    <testcase name="invalidInputUserTest" classname="client.ClientUnitTests" time="0.003"/>
+    <testcase name="getProjectsTest" classname="client.ClientUnitTests" time="1.023"/>
+    <testcase name="getProjectsInvalidTest" classname="client.ClientUnitTests" time="0.005"/>
+    <testcase name="validateUserTest" classname="client.ClientUnitTests" time="1.018"/>
+  </testsuite>
+</testrun>

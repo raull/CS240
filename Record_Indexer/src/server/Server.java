@@ -6,6 +6,7 @@ import java.net.InetSocketAddress;
 import server.facade.ServerFacade;
 import server.handler.DownloadBatchHandler;
 import server.handler.GetProjectsHandler;
+import server.handler.GetSampleImageHandler;
 import server.handler.ValidateUserHandler;
 
 import com.sun.net.httpserver.*;
@@ -46,7 +47,9 @@ public class Server {
 		
 		server.createContext("/ValidateUser", validateUserHandler);
 		server.createContext("/GetProjects", getProjectsHandler);
+		server.createContext("/GetSampleImage", getSampleImageHandler);
 		server.createContext("/DownloadBatch", downloadBatchHandler);
+		server.createContext("/GetFields", getFieldsHandler);
 
 		System.out.println("Starting HTTP Server");
 
@@ -56,8 +59,9 @@ public class Server {
 	//Handlers
 	private HttpHandler validateUserHandler = new ValidateUserHandler();
 	private HttpHandler getProjectsHandler = new GetProjectsHandler();
+	private HttpHandler getSampleImageHandler = new GetSampleImageHandler();
 	private HttpHandler downloadBatchHandler = new DownloadBatchHandler();
-	
+	private HttpHandler getFieldsHandler = new GetProjectsHandler();
 	
 	public static void main(String[] args) {
 		

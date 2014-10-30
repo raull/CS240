@@ -31,7 +31,11 @@ public class ClientCommunicator {
 	 * @return The available batch for the user
 	 */
 	public DownloadBatch_Response downloadBatch(DownloadBatch_Parameter input) throws ClientCommunicatorException {
-		return null;
+		if (input == null) {
+			throw new ClientCommunicatorException("Client Error: Input cannot be null");
+		}
+		
+		return (DownloadBatch_Response)doPost("/DownloadBatch", input);
 	}
 	
 	/**
@@ -49,7 +53,11 @@ public class ClientCommunicator {
 	 * @return A list of projects encapsulated on an object
 	 */
 	public Get_Projects_Response getProjects(Get_Projects_Parameter input) throws ClientCommunicatorException{
-		return null;
+		if (input == null) {
+			throw new ClientCommunicatorException("Client Error: Input cannot be null");
+		}
+		
+		return (Get_Projects_Response)doPost("/GetProjects", input);
 	}
 	
 	/**
@@ -58,7 +66,10 @@ public class ClientCommunicator {
 	 * @return A URL encapsulated on an object
 	 */
 	public GetSampleImage_Response getSampleImage(GetSampleImage_Parameter input) throws ClientCommunicatorException{
-		return null;
+		if (input == null) {
+			throw new ClientCommunicatorException("Client Error: Input cannot be null");
+		}
+		return (GetSampleImage_Response)doPost("/GetSampleImage", input);
 	}
 	
 	/**
@@ -67,7 +78,10 @@ public class ClientCommunicator {
 	 * @return An object containing all the fields requested
 	 */
 	public GetFields_Response getFields(GetFields_Parameter input) throws ClientCommunicatorException{
-		return null;
+		if (input == null) {
+			throw new ClientCommunicatorException("Client Error: Input cannot be null");
+		}
+		return (GetFields_Response)doPost("/GetFields", input);
 	}
 	
 	/**

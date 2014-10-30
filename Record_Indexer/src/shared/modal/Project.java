@@ -36,6 +36,9 @@ public class Project {
 		this.firstYCood = firstYCood;
 		this.recordHeight = recordHeight;
 	}
+	public Project() {
+		
+	}
 	
 	public Project(Element projectElement) {
 		

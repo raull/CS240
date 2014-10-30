@@ -37,14 +37,16 @@ public class ValidateUserHandler implements HttpHandler {
 			}
 			
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-			xmlStream.toXML(result, exchange.getResponseBody());
-			exchange.getResponseBody().close();
+			
 			
 		} catch (Exception e) {
 			result.setOutput("FAILED");
 			System.out.println("Request Failed: " + e.getLocalizedMessage());
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, -1);
 		}
+		
+		xmlStream.toXML(result, exchange.getResponseBody());
+		exchange.getResponseBody().close();
 		
 	}
 

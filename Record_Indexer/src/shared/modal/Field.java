@@ -24,8 +24,10 @@ public class Field {
 	private int width;
 	/** The path of the HTML link that contains info about the field*/
 	private String helpHTML;
-	/** The path of the file that contains known words that could help to correct mispelled words*/
+	/** The path of the file that contains known words that could help to correct misspelled words*/
 	private String knownData;
+	/** The project if where the field belongs to*/
+	private int project_id;
 	
 	//Constructors
 	
@@ -135,6 +137,20 @@ public class Field {
 	 */
 	public void setColNumber(int colNumber) {
 		this.colNumber = colNumber;
+	}
+
+	/**
+	 * @return the project_id
+	 */
+	public int getProject_id() {
+		return project_id;
+	}
+
+	/**
+	 * @param project_id the project_id to set
+	 */
+	public void setProject_id(int project_id) {
+		this.project_id = project_id;
 	}
 	
 }

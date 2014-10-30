@@ -2,6 +2,9 @@ package shared.communication;
 
 public class GetFields_Parameter {
 	
+	
+	
+	//----------------------Instance Fields-------------------
 	/**
 	 * Username
 	 */
@@ -14,10 +17,15 @@ public class GetFields_Parameter {
 	 * Project ID
 	 */
 	private int projectId;
-	/**
-	 * Empty String
-	 */
-	private String projectString;
+	
+	//----------------------Constructors-----------------------
+	
+	public GetFields_Parameter() {
+		
+	}
+	
+	
+	//-----------------------Setters and Getters----------------
 	/**
 	 * @return the username
 	 */
@@ -53,18 +61,6 @@ public class GetFields_Parameter {
 	 */
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;
-	}
-	/**
-	 * @return the projectString
-	 */
-	public String getProjectString() {
-		return projectString;
-	}
-	/**
-	 * @param projectString the projectString to set
-	 */
-	public void setProjectString(String projectString) {
-		this.projectString = projectString;
 	}
 
 }

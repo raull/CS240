@@ -223,6 +223,57 @@ public class ProjectDAO {
 	}
 	
 	/**
+	 * Get available batch from project and assign it to the user
+	 * @param project project where the batch belongs to
+	 * @param user user to assign the batch to
+	 * @return the available batch from the given project
+	 */
+	public Batch getBatch(Project project, User user) throws DatabaseException {
+		if (project.getId() <= 0) {
+			throw new DatabaseException("Invalid ID for Project");
+		}
+		
+		if (user.getId() <= 0) {
+			throw new DatabaseException("Invalid ID for User");
+		}
+		
+		PreparedStatement stm = null;
+		ResultSet result = null;
+				
+		ArrayList<Batch> batchList = new ArrayList<Batch>();
+		try {			
+			//Set up Query
+			String sql = "SELECT * FROM batch WHERE id = ? AND project_id = ?";
+			stm = db.getConnection().prepareStatement(sql);
+			stm.setInt(1, project.getId());
+
+			//Execute Query
+			result = stm.executeQuery();
+			
+			//Handle Response to get the batches
+			while (result.next()) {
+
+				String filePath = result.getString(2);
+				int status = result.getInt(3);
+				
+				Batch newBatch = new Batch(filePath, status);
+				newBatch.setId(result.getInt(1));
+				
+				batchList.add(newBatch);
+			}
+			
+			if(batchList.size() == 0) {
+				return null;
+			}			
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error getting all Batches for Project: "+ e.getLocalizedMessage(), e);
+		} 
+				
+		return batchList.get(0);
+	}
+	
+	/**
 	 * Get a list of all the Batches on the provided Project
 	 * @param project The project that contains the Batches
 	 * @return  A list of all the Project's batches.
@@ -230,7 +281,7 @@ public class ProjectDAO {
 	 */
 	public List<Batch> getAllBatchesForProjet(Project project)  throws DatabaseException {
 		if (project.getId() <= 0 ) {
-			throw new DatabaseException("Inavlid ID for Project");
+			throw new DatabaseException("Invalid ID for Project");
 		}
 		
 		PreparedStatement stm = null;
@@ -246,7 +297,7 @@ public class ProjectDAO {
 			//Execute Query
 			result = stm.executeQuery();
 			
-			//Handle Response to create new User
+			//Handle Response to get all batches
 			while (result.next()) {
 
 				String filePath = result.getString(2);
@@ -298,9 +349,11 @@ public class ProjectDAO {
 				int width = result.getInt(5);
 				String helpHTML = result.getString(6);
 				String knownData = result.getString(7);
+				int projectId = result.getInt(8);
 				
 				Field newField = new Field(title, xCoord, colNumber, width, helpHTML, knownData);
 				newField.setId(result.getInt(1));
+				newField.setProject_id(projectId);
 				
 				fieldList.add(newField);
 			}

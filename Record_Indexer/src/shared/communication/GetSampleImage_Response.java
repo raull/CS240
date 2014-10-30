@@ -7,22 +7,27 @@ package shared.communication;
  */
 public class GetSampleImage_Response {
 
+	//------------------Instance Fields-------------------------
 	/**
 	 * URL where the image is located
 	 */
-	private String imageURL;
+	private String imageURL = "";
 	/**
 	 * Error message in case it fails
 	 */
-	private String errorMessage;
+	private String output = "FAILED";
 	
-	
-	public GetSampleImage_Response(String imageURL, String errorMessage) {
+	//------------------Constructors-------------------------
+	public GetSampleImage_Response(String imageURL, String output) {
 		this.imageURL = imageURL;
-		this.errorMessage = errorMessage;
+		this.output = output;
+	}
+	
+	public GetSampleImage_Response() {
 	}
 
 
+	//------------------Getters and Setters-------------------------
 	/**
 	 * @return the imageURL
 	 */
@@ -40,17 +45,28 @@ public class GetSampleImage_Response {
 
 
 	/**
-	 * @return the errorMessage
+	 * @return the output
 	 */
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getOutput() {
+		return output;
 	}
 
 
 	/**
-	 * @param errorMessage the errorMessage to set
+	 * @param output the output to set
 	 */
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setOutput(String output) {
+		this.output = output;
+	}
+	
+	//------------------To String-------------------------
+	
+	@Override
+	public String toString() {
+		if (output.equals("TRUE")) {
+			return imageURL;
+		} else {
+			return "FAILED";
+		}
 	}
 }
