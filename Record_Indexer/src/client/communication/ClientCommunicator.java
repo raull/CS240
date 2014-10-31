@@ -1,6 +1,5 @@
 package client.communication;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,16 +12,21 @@ import client.ClientCommunicatorException;
 
 public class ClientCommunicator {
 	
-	private static final String SERVER_HOST = "localhost";
-	private static final int SERVER_PORT = 8080;
+	private static String SERVER_HOST = "localhost";
+	private static int SERVER_PORT = 8080;
 	private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
-	private static final String HTTP_GET = "GET";
 	private static final String HTTP_POST = "POST";
 
 	private XStream xmlStream;
 
 	public ClientCommunicator() {
 		xmlStream = new XStream(new DomDriver());
+	}
+	
+	public ClientCommunicator(String host, String port) {
+		xmlStream = new XStream(new DomDriver());
+		ClientCommunicator.SERVER_HOST = host;
+		ClientCommunicator.SERVER_PORT = Integer.parseInt(port);
 	}
 	
 	
@@ -94,8 +98,8 @@ public class ClientCommunicator {
 	 * @param input that describes the fields and values to search
 	 * @return An object containing an array of tuples
 	 */
-	public Search_Response search(Search_Input input) {
-		return null;
+	public Search_Response search(Search_Input input) throws ClientCommunicatorException {
+		return (Search_Response)doPost("/Search", input);
 	}
 	
 	/**
@@ -111,41 +115,7 @@ public class ClientCommunicator {
 		return (Validate_User_Response)doPost("/ValidateUser", input);
 	}
 	
-	/**
-	 * Download a File from the server
-	 * @param url url where the file is located
-	 * @return an File containing the Data
-	 * @throws ClientCommunicatorException
-	 */
-	public File downloadFile(String url) throws ClientCommunicatorException {
-		if (url == null) {
-			throw new ClientCommunicatorException("Client Error: URL cannot be null");
-		}
-		
-		return (File)doGet(url);
-	}
-	
 	//------------------------HTTP Methods---------------------
-	
-	private Object doGet(String urlPath) throws ClientCommunicatorException {
-		try {
-			URL url = new URL(URL_PREFIX + urlPath);
-			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-			connection.setRequestMethod(HTTP_GET);
-			connection.connect();
-			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				Object result = xmlStream.fromXML(connection.getInputStream());
-				return result;
-			}
-			else {
-				throw new ClientCommunicatorException(String.format("doGet failed: %s (http code %d)",
-											urlPath, connection.getResponseCode()));
-			}
-		}
-		catch (IOException e) {
-			throw new ClientCommunicatorException(String.format("doGet failed: %s", e.getMessage()), e);
-		}
-	}
 	
 	private Object doPost(String urlPath, Object postData) throws ClientCommunicatorException {
 		try {

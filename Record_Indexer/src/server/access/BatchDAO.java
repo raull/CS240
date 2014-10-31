@@ -160,13 +160,16 @@ public class BatchDAO {
 		try {
 
 			//Set up Query
-			String sql = "UPDATE value SET batch_id = ? WHERE id = ? ";
+			String sql = "UPDATE value SET batch_id = ?, project_id = ? WHERE id = ? ";
 			stm = db.getConnection().prepareStatement(sql);
 			stm.setInt(1, batch.getId());
-			stm.setInt(2,value.getId());
+			stm.setInt(2, batch.getProjectId());
+			stm.setInt(3, value.getId());
 
 			//Execute Query
 			if (stm.executeUpdate() == 1) {
+				value.setBatchId(batch.getId());
+				value.setProjectId(batch.getProjectId());
 				return true;
 			} else {
 				return false;

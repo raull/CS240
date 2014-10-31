@@ -1,5 +1,6 @@
 package shared.communication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,6 +10,8 @@ import java.util.List;
  */
 public class Search_Response {
 	
+	
+	//-----------------------Instance Fields--------------------------------
 	/**
 	 * Tuple representing the answer, (BATCH_ID, IMAGE_URL, RECORD_NUM, FIELD_ID)
 	 */
@@ -16,15 +19,19 @@ public class Search_Response {
 	/**
 	 * Error message in case the request failed
 	 */
-	private String errorMessage;
+	private String output;
 	
-	
-	public Search_Response(List<String> tuples, String errorMessage) {
+	//----------------------Instance Fields----------------------------------
+	public Search_Response(List<String> tuples, String output) {
 		this.tuples = tuples;
-		this.errorMessage = errorMessage;
+		this.output = output;
+	}
+	
+	public Search_Response() {
+		this.tuples = new ArrayList<>();
 	}
 
-
+	//----------------------Getters and Setters------------------------------
 	/**
 	 * @return the tuples
 	 */
@@ -42,18 +49,36 @@ public class Search_Response {
 
 
 	/**
-	 * @return the errorMessage
+	 * @return the output
 	 */
-	public String getErrorMessage() {
-		return errorMessage;
+	public String getOutput() {
+		return output;
 	}
 
 
 	/**
-	 * @param errorMessage the errorMessage to set
+	 * @param output the output to set
 	 */
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setOutput(String output) {
+		this.output = output;
 	}
-
+	
+	//-------------------To String--------------
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		
+		if (output.equals("TRUE")) {
+			for (String tuple : tuples) {
+				String[] params = tuple.split(",");
+				for (String string : params) {
+					builder.append(string + "\n");
+				}
+			}
+		} else {
+			builder.append(output + "\n");
+		}
+		
+		return builder.toString();
+	}
 }

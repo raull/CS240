@@ -59,6 +59,7 @@ public class Batch {
 					values.add(newValue);
 				}
 			}
+			this.status = 2;
 		}
 	}
 	

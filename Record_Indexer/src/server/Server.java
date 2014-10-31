@@ -9,6 +9,7 @@ import server.handler.DownloadFileHandler;
 import server.handler.GetFieldsHandler;
 import server.handler.GetProjectsHandler;
 import server.handler.GetSampleImageHandler;
+import server.handler.SearchHandler;
 import server.handler.SubmitBatchHandler;
 import server.handler.ValidateUserHandler;
 
@@ -16,7 +17,7 @@ import com.sun.net.httpserver.*;
 
 public class Server {
 	
-	private static final int SERVER_PORT_NUMBER = 8080;
+	private static int SERVER_PORT_NUMBER = 8080;
 	private static final int MAX_WAITING_CONNECTIONS = 10;
 	
 	private HttpServer server;
@@ -55,6 +56,7 @@ public class Server {
 		server.createContext("/SubmitBatch", submitBatchHandler);
 		server.createContext("/GetFields", getFieldsHandler);
 		server.createContext("/", downloadFileHandler);
+		server.createContext("/Search", searchHandler);
 
 		System.out.println("Starting HTTP Server");
 
@@ -69,10 +71,14 @@ public class Server {
 	private HttpHandler submitBatchHandler = new SubmitBatchHandler();
 	private HttpHandler getFieldsHandler = new GetFieldsHandler();
 	private HttpHandler downloadFileHandler = new DownloadFileHandler();
+	private HttpHandler searchHandler = new SearchHandler();
 	
 	public static void main(String[] args) {
 		
 		Server newServer = new Server();
+		if (args.length == 1) {
+			Server.SERVER_PORT_NUMBER = Integer.parseInt(args[0]);
+		}
 		newServer.run();
 	}
 }

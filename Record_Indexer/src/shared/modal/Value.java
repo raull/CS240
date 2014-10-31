@@ -19,6 +19,10 @@ public class Value {
 	private int rowNumber;
 	/** The column position on the batch*/
 	private int colNumber;
+	/** The batch where the value belongs to*/
+	private int batchId;
+	/** The project where the value belongs to*/
+	private int projectId;
 	
 	
 	//Constructors
@@ -89,6 +93,34 @@ public class Value {
 	 */
 	public void setColNumber(int colNumber) {
 		this.colNumber = colNumber;
+	}
+
+	/**
+	 * @return the batchId
+	 */
+	public int getBatchId() {
+		return batchId;
+	}
+
+	/**
+	 * @param batchId the batchId to set
+	 */
+	public void setBatchId(int batchId) {
+		this.batchId = batchId;
+	}
+
+	/**
+	 * @return the projectId
+	 */
+	public int getProjectId() {
+		return projectId;
+	}
+
+	/**
+	 * @param projectId the projectId to set
+	 */
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
 	}
 
 	

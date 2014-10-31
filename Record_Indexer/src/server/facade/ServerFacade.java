@@ -1,5 +1,6 @@
 package server.facade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import server.ServerException;
@@ -206,5 +207,28 @@ public class ServerFacade {
 				throw new ServerException("Server Error: " + e2.getLocalizedMessage(), e2);
 			}
 		}	
+	}
+	
+	public static List<String> search(int fieldId, String value) throws ServerException{
+		Database db = new Database();
+		
+		ArrayList<String> tuples = new ArrayList<String>();
+		
+		try {
+			db.startTransaction();
+			//get Field
+			Field field = db.getFieldDAO().findById(fieldId);
+			tuples = (ArrayList<String>)db.getValueDAO().getValueMatching(field, value);
+			db.endTransaction(true);
+		} catch (Exception e) {
+			try {
+				db.endTransaction(false);
+				throw new ServerException("Server Error: " + e.getLocalizedMessage(), e);
+			} catch (Exception e2) {
+				throw new ServerException("Server Error: " + e2.getLocalizedMessage(), e2);
+			}
+		}
+		
+		return tuples;
 	}
 }

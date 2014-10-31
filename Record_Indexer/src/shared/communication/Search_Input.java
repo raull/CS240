@@ -1,5 +1,6 @@
 package shared.communication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,15 +12,36 @@ public class Search_Input {
 	
 	private String username;
 	private String password;
-	private List<String> fields;
+	private List<Integer> fields;
 	private List<String> values;
 	
 	
-	public Search_Input(String username, String password, List<String> fields, List<String> values) {
+	public Search_Input(String username, String password, List<Integer> fields, List<String> values) {
 		this.username = username;
 		this.password = password;
 		this.fields = fields;
 		this.values = values;
+	}
+	
+	public Search_Input(String username, String password, String fields, String values) {
+		this.username = username;
+		this.password = password;
+		
+		String[] valueList =  values.split(",");
+		ArrayList<String> valueArrayList = new ArrayList<String>();
+		for (String string : valueList) {
+			valueArrayList.add(string);
+		}
+		
+		this.values = valueArrayList;
+		
+		String[] fieldList =  fields.split(",");
+		ArrayList<Integer> fieldArray = new ArrayList<Integer>();
+		for (String string : fieldList) {
+			fieldArray.add(Integer.parseInt(string));
+		}
+		
+		this.fields = fieldArray;
 	}
 
 
@@ -58,7 +80,7 @@ public class Search_Input {
 	/**
 	 * @return the fields
 	 */
-	public List<String> getFields() {
+	public List<Integer> getFields() {
 		return fields;
 	}
 
@@ -66,7 +88,7 @@ public class Search_Input {
 	/**
 	 * @param fields the fields to set
 	 */
-	public void setFields(List<String> fields) {
+	public void setFields(List<Integer> fields) {
 		this.fields = fields;
 	}
 

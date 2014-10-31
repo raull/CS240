@@ -9,6 +9,7 @@ import java.util.List;
 
 import server.database.Database;
 import server.database.DatabaseException;
+import shared.modal.Field;
 import shared.modal.Value;
 
 public class ValueDAO {
@@ -51,9 +52,13 @@ public class ValueDAO {
 				String content = result.getString(2);
 				int row = result.getInt(3);
 				int column = result.getInt(4);
+				int batchId = result.getInt(5);
+				int projectId = result.getInt(6);
 				
 				Value newValue = new Value(content, row, column);
 				newValue.setId(result.getInt(1));
+				newValue.setBatchId(batchId);
+				newValue.setProjectId(projectId);
 				
 				valueList.add(newValue);
 			}
@@ -91,9 +96,13 @@ public class ValueDAO {
 				String content = result.getString(2);
 				int row = result.getInt(3);
 				int column = result.getInt(4);
+				int batchId = result.getInt(5);
+				int projectId = result.getInt(6);
 				
 				value = new Value(content, row, column);
 				value.setId(valuetId);
+				value.setBatchId(batchId);
+				value.setProjectId(projectId);
 				
 			}
 			
@@ -102,6 +111,43 @@ public class ValueDAO {
 		} 	
 		
 		return value;
+	}
+	
+	
+	public List<String> getValueMatching(Field field, String value) throws DatabaseException {
+		PreparedStatement stm = null;
+		ResultSet result = null;
+		
+		ArrayList<String> tuples = new ArrayList<String>();
+		
+		try {			
+			//Set up Query
+			String sql = "SELECT batch.id, batch.file_path, value.row FROM value "
+					+ "JOIN batch ON UPPER(value.content) = UPPER(?) AND value.column_number = ? "
+					+ "AND value.project_id = ? AND value.batch_id = batch.id";
+			stm = db.getConnection().prepareStatement(sql);
+			stm.setString(1, value);
+			stm.setInt(2, field.getColNumber());
+			stm.setInt(3, field.getProject_id());
+
+			//Execute Query
+			result = stm.executeQuery();
+			
+			//Handle Response to create new User
+			while (result.next()) {
+				int batchId = result.getInt(1);
+				String filePath = result.getString(2);
+				int row = result.getInt(3);
+				
+				String tuple = batchId + "," + filePath + "," + row + "," + field.getId();
+				tuples.add(tuple);
+			}
+			
+		} catch (SQLException e) {
+			throw new DatabaseException("Error finding Value: " + e.getLocalizedMessage(), e);
+		} 	
+		
+		return tuples;
 	}
 	
 	/**

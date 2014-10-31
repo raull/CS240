@@ -12,6 +12,8 @@ import shared.communication.GetSampleImage_Parameter;
 import shared.communication.GetSampleImage_Response;
 import shared.communication.Get_Projects_Parameter;
 import shared.communication.Get_Projects_Response;
+import shared.communication.Search_Input;
+import shared.communication.Search_Response;
 import shared.communication.SubmitBatch_Parameter;
 import shared.communication.SubmitBatch_Response;
 import shared.communication.Validate_User_Parameter;
@@ -147,20 +149,28 @@ public class ServerUnitTests {
 	public void submitBatchTest() throws ClientCommunicatorException {
 		ClientCommunicator communicator = new ClientCommunicator();
 
-		SubmitBatch_Parameter parameter = new SubmitBatch_Parameter("sheila", "parker", "Lopez,Raul,Male,23;", 61);
+		SubmitBatch_Parameter parameter = new SubmitBatch_Parameter("sheila", "parker", "Lopez,Raul,Male,23;", 121);
 		SubmitBatch_Response response = communicator.submitBatch(parameter);
+		
+		assertEquals("TRUE", response.getOutput());
+		
+		parameter = new SubmitBatch_Parameter("test1", "test1", "Beltran,Cinthia,Female,23;Gutierrez,Moi,Male,27;Lopez,Raul,Male,23", 122);
+		response = communicator.submitBatch(parameter);
 		
 		assertEquals("TRUE", response.getOutput());
 	}
 	
 	@Test
-	public void downloadFileTest() throws ClientCommunicatorException {
+	public void searchTest() throws ClientCommunicatorException {
 		ClientCommunicator communicator = new ClientCommunicator();
-		GetSampleImage_Parameter imageParameter = new GetSampleImage_Parameter("sheila", "parker", 46);
-		GetSampleImage_Response imageResponse = communicator.getSampleImage(imageParameter);
+
+		Search_Input parameter = new Search_Input("sheila", "parker", "40,41", "Raul,Cinthia");
+		Search_Response response = communicator.search(parameter);
 		
-		communicator.downloadFile(imageResponse.getImageURL());
+		assertEquals("TRUE", response.getOutput());
+		assertEquals(3, response.getTuples().size());
 	}
+	
 	
 }
 

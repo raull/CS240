@@ -181,6 +181,7 @@ public class ProjectDAO {
 
 			//Execute Query
 			if (stm.executeUpdate() == 1) {
+				field.setProject_id(project.getId());
 				return true;
 			} else {
 				return false;
@@ -212,6 +213,7 @@ public class ProjectDAO {
 
 			//Execute Query
 			if (stm.executeUpdate() == 1) {
+				batch.setProjectId(project.getId());
 				return true;
 			} else {
 				return false;
