@@ -1,5 +1,6 @@
 package shared.communication;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,5 +81,15 @@ public class Search_Response {
 		}
 		
 		return builder.toString();
+	}
+	
+	public void attachURLToImagePath(String url) {
+		ArrayList<String> newTuples = new ArrayList<String>();
+		for (String tuple : tuples) {
+			String[] values = tuple.split(",", -1);
+			values[1] = url + File.separator + values[1];
+			newTuples.add(values[0] + "\n" + values[1] + "\n" + values[2] + "\n" + values[3]);
+		}
+		tuples = newTuples;
 	}
 }

@@ -125,6 +125,7 @@ public class Controller implements IController {
 			getView().setResponse(response.toString());
 			
 		} catch (Exception e) {
+			getView().setResponse("FAILED" + "\n");
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
@@ -134,12 +135,13 @@ public class Controller implements IController {
 		try {
 			ClientCommunicator communicator = new ClientCommunicator(getView().getHost(), getView().getPort());
 			String[] params = getView().getParameterValues();
-			 Get_Projects_Parameter parameter = new Get_Projects_Parameter(params[0], params[1]);
+			Get_Projects_Parameter parameter = new Get_Projects_Parameter(params[0], params[1]);
 			
 			Get_Projects_Response response = communicator.getProjects(parameter);
 			
 			getView().setResponse(response.toString());
 		} catch (Exception e) {
+			getView().setResponse("FAILED" + "\n");
 			System.out.println(e.getLocalizedMessage());
 		}
 		
@@ -155,6 +157,7 @@ public class Controller implements IController {
 			
 			getView().setResponse(response.toString());
 		} catch (Exception e) {
+			getView().setResponse("FAILED" + "\n");
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
@@ -169,6 +172,7 @@ public class Controller implements IController {
 			
 			getView().setResponse(response.toString());
 		} catch (Exception e) {
+			getView().setResponse("FAILED" + "\n");
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
@@ -180,7 +184,7 @@ public class Controller implements IController {
 			String[] params = getView().getParameterValues();
 			GetFields_Parameter parameter;
 			if (params[2].equals("")) {
-				parameter = new GetFields_Parameter(params[0], params[1], 0);
+				parameter = new GetFields_Parameter(params[0], params[1], -1);
 			} else {
 				parameter = new GetFields_Parameter(params[0], params[1], Integer.parseInt(params[2]));
 			}
@@ -190,6 +194,7 @@ public class Controller implements IController {
 			
 			getView().setResponse(response.toString());
 		} catch (Exception e) {
+			getView().setResponse("FAILED" + "\n");
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
@@ -204,6 +209,7 @@ public class Controller implements IController {
 			
 			getView().setResponse(response.toString());
 		} catch (Exception e) {
+			getView().setResponse("FAILED" + "\n");
 			System.out.println(e.getLocalizedMessage());
 		}
 	}
@@ -218,6 +224,7 @@ public class Controller implements IController {
 			
 			getView().setResponse(response.toString());
 		} catch (Exception e) {
+			getView().setResponse("FAILED" + "\n");
 			System.out.println(e.getLocalizedMessage());
 		}
 	}

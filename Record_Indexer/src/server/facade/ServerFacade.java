@@ -112,11 +112,18 @@ public class ServerFacade {
 		
 		try {
 			db.startTransaction();
-			Project project = new Project();
-			project.setId(projectId);
-			if (projectId <= 0) {
+			
+			
+			if (projectId < 0) {
 				allFields = db.getFieldDAO().getAll();
 			} else {
+				Project project = db.getProjectDAO().findById(projectId);
+				
+				//Check for being a valid project
+				if (project == null) {
+					db.endTransaction(false);
+					return null;
+				}
 				allFields = db.getProjectDAO().getAllFieldsForProject(project);
 			}
 			db.endTransaction(true);
@@ -165,7 +172,8 @@ public class ServerFacade {
 		}	
 	}
 	
-	public static boolean submitBatch(List<Value> values, int batchId, User user) throws ServerException {
+	public static boolean submitBatch(String[] records, int batchId, User user) throws ServerException {
+		
 		Database db = new Database();
 		
 		try {
@@ -173,12 +181,31 @@ public class ServerFacade {
 			//First Get the batch
 			Batch batch = db.getBatchDAO().findById(batchId);
 			Project project = db.getProjectDAO().findById(batch.getProjectId());
+			List<Field> fields = db.getProjectDAO().getAllFieldsForProject(project);
+			
+			//Check that the amount of records to insert is no more than the allowed amount
+			if (records.length != project.getRecordsPerBatch()) {
+				db.endTransaction(false);
+				return false;
+			}
+			
 			//Insert values into the batch
-			for (Value value : values) {
+			
+			for (int i = 0; i < records.length; i++) {
+				String[] contents = records[i].split(",",-1);
 				
-				if(!db.getValueDAO().insertNewValue(value) || !db.getBatchDAO().insertValueIntoBatch(value, batch)) {
+				//Check that the records has the same amount of columns as the project
+				if (fields.size() != contents.length) {
 					db.endTransaction(false);
 					return false;
+				}
+				
+				for (int j = 0; j < contents.length; j++) {
+					Value newValue = new Value(contents[j], i+1, j+1);
+					if(!db.getValueDAO().insertNewValue(newValue) || !db.getBatchDAO().insertValueIntoBatch(newValue, batch)) {
+						db.endTransaction(false);
+						return false;
+					}
 				}
 			}
 			

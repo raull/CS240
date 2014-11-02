@@ -32,8 +32,15 @@ public class GetFieldsHandler implements HttpHandler {
 			if (user != null) {
 				//If user is valid then make the request				
 				List<Field> allFields = ServerFacade.getFields(param.getProjectId());
-				result.setFields(allFields);
-				result.setOutput("TRUE");
+				
+				//Check if valid request
+				if (allFields != null) {
+					result.setFields(allFields);
+					result.setOutput("TRUE");
+				} else {
+					result.setOutput("FAILED");
+				}
+				
 				
 			} else {
 				result.setOutput("FAILED");

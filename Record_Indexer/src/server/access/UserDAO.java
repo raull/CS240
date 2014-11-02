@@ -54,9 +54,8 @@ public class UserDAO {
 				String email = result.getString(6);
 				int recordsCount = result.getInt(7);
 				int batchId = result.getInt(8);
-				User newUser = new User(username, password, firstName, lastName, email);
+				User newUser = new User(username, password, firstName, lastName, email, recordsCount);
 				newUser.setId(result.getInt(1));
-				newUser.setRecordCount(recordsCount);
 				newUser.setCurrentBatchId(batchId);
 				
 				userList.add(newUser);
@@ -101,9 +100,8 @@ public class UserDAO {
 				int recordsCount = result.getInt(7);
 				int batchId = result.getInt(8);
 				
-				user = new User(username, password, firstName, lastName, email);
+				user = new User(username, password, firstName, lastName, email, recordsCount);
 				user.setId(userId);
-				user.setRecordCount(recordsCount);
 				user.setCurrentBatchId(batchId);
 			}
 			
@@ -145,9 +143,8 @@ public class UserDAO {
 				int recordsCount = result.getInt(7);
 				int batchId = result.getInt(8);
 				
-				user = new User(usernameString, password, firstName, lastName, email);
+				user = new User(usernameString, password, firstName, lastName, email, recordsCount);
 				user.setId(id);
-				user.setRecordCount(recordsCount);
 				user.setCurrentBatchId(batchId);
 			}
 			
@@ -171,13 +168,14 @@ public class UserDAO {
 				
 		try {
 			//Set up Query
-			String sql = "INSERT INTO user (username, password, firstname, lastname, email) VALUES (?,?,?,?,?)";
+			String sql = "INSERT INTO user (username, password, firstname, lastname, email, records_count) VALUES (?,?,?,?,?,?)";
 			stm = db.getConnection().prepareStatement(sql);
 			stm.setString(1, newUser.getUsername());
 			stm.setString(2, newUser.getPassword());
 			stm.setString(3, newUser.getFirstName());
 			stm.setString(4, newUser.getLastName());
 			stm.setString(5, newUser.getEmail());
+			stm.setInt(6, newUser.getRecordCount());
 			
 			//Execute Query and handle the response to get back the ID
 			if (stm.executeUpdate() == 1) {

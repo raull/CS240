@@ -30,14 +30,14 @@ public class User {
 	
 	//Constructors
 	
-	public User(String username, String password, String firstName, String lastName, String email) {
+	public User(String username, String password, String firstName, String lastName, String email, int recordCount) {
 		this.id = -1;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.recordCount = 0;
+		this.recordCount = recordCount;
 		this.currentBatchId = 0;
 	}
 	

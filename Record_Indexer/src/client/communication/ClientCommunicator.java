@@ -1,5 +1,6 @@
 package client.communication;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -14,7 +15,7 @@ public class ClientCommunicator {
 	
 	private static String SERVER_HOST = "localhost";
 	private static int SERVER_PORT = 8080;
-	private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
+	private static String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
 	private static final String HTTP_POST = "POST";
 
 	private XStream xmlStream;
@@ -27,6 +28,7 @@ public class ClientCommunicator {
 		xmlStream = new XStream(new DomDriver());
 		ClientCommunicator.SERVER_HOST = host;
 		ClientCommunicator.SERVER_PORT = Integer.parseInt(port);
+		URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT;
 	}
 	
 	
@@ -39,8 +41,9 @@ public class ClientCommunicator {
 		if (input == null) {
 			throw new ClientCommunicatorException("Client Error: Input cannot be null");
 		}
-		
-		return (DownloadBatch_Response)doPost("/DownloadBatch", input);
+		DownloadBatch_Response response = (DownloadBatch_Response)doPost("/DownloadBatch", input);
+		response.attachURLToOutput(URL_PREFIX);
+		return response; 
 	}
 	
 	/**
@@ -78,7 +81,9 @@ public class ClientCommunicator {
 		if (input == null) {
 			throw new ClientCommunicatorException("Client Error: Input cannot be null");
 		}
-		return (GetSampleImage_Response)doPost("/GetSampleImage", input);
+		GetSampleImage_Response response = (GetSampleImage_Response)doPost("/GetSampleImage", input);
+		response.setImageURL(URL_PREFIX + File.separator + response.getImageURL());
+		return response;
 	}
 	
 	/**
@@ -99,7 +104,13 @@ public class ClientCommunicator {
 	 * @return An object containing an array of tuples
 	 */
 	public Search_Response search(Search_Input input) throws ClientCommunicatorException {
-		return (Search_Response)doPost("/Search", input);
+		if (input == null) {
+			throw new ClientCommunicatorException("Client Error: Input cannot be null");
+		}
+		
+		Search_Response response = (Search_Response)doPost("/Search", input);
+		response.attachURLToImagePath(URL_PREFIX);
+		return response;
 	}
 	
 	/**

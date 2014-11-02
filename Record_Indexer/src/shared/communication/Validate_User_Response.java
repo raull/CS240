@@ -23,7 +23,7 @@ public class Validate_User_Response {
 	/**
 	 * An message with the error cause
 	 */
-	private String output = "FALSE";
+	private String output = "FAILED";
 	
 	//-----------------Constructors------------------
 	

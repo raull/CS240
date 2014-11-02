@@ -73,8 +73,8 @@ public class UserDAOTest {
 	
 	@Test
 	public void testAdd() throws DatabaseException {
-		User userTest1 = new User("raull", "thepassword", "Raul", "Lopez", "ruffles91@gmail.com");
-		User userTest2 = new User("cinthia91", "anotherpassword", "Cinthia", "Beltran", "cinthia_latina@hotmail.com");
+		User userTest1 = new User("raull", "thepassword", "Raul", "Lopez", "ruffles91@gmail.com",5);
+		User userTest2 = new User("cinthia91", "anotherpassword", "Cinthia", "Beltran", "cinthia_latina@hotmail.com",6);
 		
 		userDAO.insertNewUser(userTest1);
 		userDAO.insertNewUser(userTest2);
@@ -114,8 +114,8 @@ public class UserDAOTest {
 	
 	@Test 
 	public void testGet() throws DatabaseException{
-		User userTest1 = new User("raull", "thepassword", "Raul", "Lopez", "ruffles91@gmail.com");
-		User userTest2 = new User("cinthia91", "anotherpassword", "Cinthia", "Beltran", "cinthia_latina@hotmail.com");
+		User userTest1 = new User("raull", "thepassword", "Raul", "Lopez", "ruffles91@gmail.com", 6);
+		User userTest2 = new User("cinthia91", "anotherpassword", "Cinthia", "Beltran", "cinthia_latina@hotmail.com", 5);
 		
 		userDAO.insertNewUser(userTest1);
 		userDAO.insertNewUser(userTest2);
@@ -130,8 +130,8 @@ public class UserDAOTest {
 	
 	@Test
 	public void testUpdate() throws DatabaseException {
-		User userTest1 = new User("raull91", "lopes", "Raul", "Lopez", "ruffles91@gmail.com");
-		User userTest2 = new User("moyoteg", "password", "Raul", "Lopez", "moyoteg@gmail.com");
+		User userTest1 = new User("raull91", "lopes", "Raul", "Lopez", "ruffles91@gmail.com", 7);
+		User userTest2 = new User("moyoteg", "password", "Raul", "Lopez", "moyoteg@gmail.com", 5);
 		
 		userDAO.insertNewUser(userTest1);
 		userDAO.insertNewUser(userTest2);
@@ -185,9 +185,9 @@ public class UserDAOTest {
 	@Test
 	public void testDelete() throws DatabaseException {
 		
-		User userTest1 = new User("raull91", "lopes", "Raul", "Lopez", "ruffles91@gmail.com");
-		User userTest2 = new User("moyoteg", "password", "Raul", "Lopez", "moyoteg@gmail.com");
-		User userTest3 = new User("cinthia", "password2", "Cinthia", "Beltran", "cinthia_latina@hotmail.com");
+		User userTest1 = new User("raull91", "lopes", "Raul", "Lopez", "ruffles91@gmail.com", 5);
+		User userTest2 = new User("moyoteg", "password", "Raul", "Lopez", "moyoteg@gmail.com", 6);
+		User userTest3 = new User("cinthia", "password2", "Cinthia", "Beltran", "cinthia_latina@hotmail.com", 8);
 		
 		userDAO.insertNewUser(userTest1);
 		userDAO.insertNewUser(userTest2);
@@ -225,14 +225,14 @@ public class UserDAOTest {
 	
 	@Test(expected = DatabaseException.class)
 	public void testInvalidAdd() throws DatabaseException{
-		User invalidUser1 = new User(null, "password", "Raul", "Lopez", "ruffles91@gmail.com");
+		User invalidUser1 = new User(null, "password", "Raul", "Lopez", "ruffles91@gmail.com", 7);
 		userDAO.insertNewUser(invalidUser1);
 		
 	}
 	
 	@Test(expected = DatabaseException.class)
 	public void testInvalidUpdate() throws DatabaseException{
-		User invalidUser1 = new User("raull91", "password", "Raul", "Lopez", "email");
+		User invalidUser1 = new User("raull91", "password", "Raul", "Lopez", "email", 0);
 		userDAO.insertNewUser(invalidUser1);
 		invalidUser1.setEmail(null);
 		userDAO.updateUser(invalidUser1);

@@ -34,7 +34,7 @@ public class ServerUnitTests {
 		//Create an importer
 		DataImporter importer = new DataImporter(db);
 		//Import Data from file
-		importer.importData("/Users/raull/Documents/CS240/record-indexer/Records/Records.xml");
+		importer.importData("../record-indexer/Records/Records.xml");
 	}
 	
 	@Before
@@ -53,8 +53,12 @@ public class ServerUnitTests {
 		
 		assertEquals("Sheila", response.getFirstName());
 		assertEquals("Parker", response.getLastName());
-		assertEquals(0, response.getRecordCount());
 		assertEquals("TRUE", response.getOutput());
+		
+		//Invalid User
+		parameter = new Validate_User_Parameter("sheil", "parker");
+		response = communicator.validateUser(parameter);
+		assertEquals("FALSE", response.getOutput());
 	}
 	
 	@Test
@@ -132,13 +136,19 @@ public class ServerUnitTests {
 		for (Field field : response.getFields()) {
 			assertTrue(field.getProject_id() == projectId);
 		}
+		
+		//Invalid Project Id
+		parameter = new GetFields_Parameter("sheila", "parker", 0);
+		response = communicator.getFields(parameter);
+		assertEquals("FAILED", response.getOutput());
+
 	}
 	
 	@Test 
 	public void getAllFieldsTest() throws ClientCommunicatorException {
 		ClientCommunicator communicator = new ClientCommunicator();
 
-		GetFields_Parameter parameter = new GetFields_Parameter("sheila", "parker", 0);
+		GetFields_Parameter parameter = new GetFields_Parameter("sheila", "parker", -1);
 		GetFields_Response response = communicator.getFields(parameter);
 		
 		assertEquals("TRUE", response.getOutput());
@@ -148,16 +158,31 @@ public class ServerUnitTests {
 	@Test
 	public void submitBatchTest() throws ClientCommunicatorException {
 		ClientCommunicator communicator = new ClientCommunicator();
-
-		SubmitBatch_Parameter parameter = new SubmitBatch_Parameter("sheila", "parker", "Lopez,Raul,Male,23;", 121);
+		
+		//Doesn't own the batch 
+		SubmitBatch_Parameter parameter = new SubmitBatch_Parameter("test1", "test1", "Beltran,Cinthia,Female,23;Gutierrez,Moi,Male,27;Lopez,Raul,Male,23;Lopez,Raul,Male,23;Villalpando,Martha,Female,43;,,,;,,,;,,,", 121);
 		SubmitBatch_Response response = communicator.submitBatch(parameter);
 		
-		assertEquals("TRUE", response.getOutput());
+		assertEquals("FAILED", response.getOutput());
 		
-		parameter = new SubmitBatch_Parameter("test1", "test1", "Beltran,Cinthia,Female,23;Gutierrez,Moi,Male,27;Lopez,Raul,Male,23", 122);
+		//Missing a Value
+		parameter = new SubmitBatch_Parameter("sheila", "parker", "Beltran,Cinthia,Female;Gutierrez,Moi,Male,27;Lopez,Raul,Male,23;Lopez,Raul,Male,23;Villalpando,Martha,Female,43;,,,;,,,;,,,", 121);
+		response = communicator.submitBatch(parameter);
+		
+		assertEquals("FAILED", response.getOutput());
+		
+		//Missing a Record
+		parameter = new SubmitBatch_Parameter("sheila", "parker", "Beltran,Cinthia,Female,23;Gutierrez,Moi,Male,27;Lopez,Raul,Male,23;Lopez,Raul,Male,23;Villalpando,Martha,Female,43;,,,;,,,", 121);
+		response = communicator.submitBatch(parameter);
+		
+		assertEquals("FAILED", response.getOutput());
+		
+		//Should work
+		parameter = new SubmitBatch_Parameter("sheila", "parker", "Beltran,Cinthia,Female,23;Gutierrez,Moi,Male,27;Lopez,Raul,Male,23;Lopez,Raul,Male,23;Villalpando,Martha,Female,43;,,,;,,,;,,,", 121);
 		response = communicator.submitBatch(parameter);
 		
 		assertEquals("TRUE", response.getOutput());
+		
 	}
 	
 	@Test
@@ -169,6 +194,22 @@ public class ServerUnitTests {
 		
 		assertEquals("TRUE", response.getOutput());
 		assertEquals(3, response.getTuples().size());
+	}
+	
+	// Main Method
+	
+	public static void main(String[] args) {
+		
+		String[] testClasses = new String[] {
+				"server.access.UserDAOTest",
+				"server.access.ProjectDAOTest",
+				"server.access.FieldDAOTest",
+				"server.access.BatchDAOTest",
+				"server.access.ValueDAOTest",
+				"server.ServerUnitTests"
+		};
+
+		org.junit.runner.JUnitCore.main(testClasses);
 	}
 	
 	

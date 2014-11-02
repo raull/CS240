@@ -1,5 +1,7 @@
 package shared.communication;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.modal.Batch;
@@ -120,7 +122,7 @@ public class DownloadBatch_Response {
 				builder.append(field.getxCoord() + "\n");
 				builder.append(field.getWidth() + "\n");
 				if (field.getKnownData() != null && !field.equals("")) {
-					builder.append(field.getKnownData() + "");
+					builder.append(field.getKnownData() + "\n");
 				}
 			}
 		} else {
@@ -128,6 +130,20 @@ public class DownloadBatch_Response {
 		}
 		
 		return builder.toString();
+	}
+	
+	
+	public void attachURLToOutput(String url) {
+		ArrayList<Field> newFields = new ArrayList<Field>();
+		for (Field field : fields) {
+			field.setHelpHtml(url + File.separator + field.getHelpHtml());
+			if (field.getKnownData() != null) {
+				field.setKnownData(url + File.separator + field.getKnownData());
+			}
+			newFields.add(field);
+		}
+		fields = newFields;
+		batch.setFilePath(url + File.separator + batch.getFilePath());
 	}
 	
 }

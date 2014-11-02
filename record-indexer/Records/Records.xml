@@ -6,7 +6,7 @@
       <firstname>Test</firstname>
       <lastname>One</lastname>
       <email>test1@gmail.com</email>
-      <indexedrecords>0</indexedrecords>
+      <indexedrecords>5</indexedrecords>
     </user>
     <user>
       <username>test2</username>
@@ -14,7 +14,7 @@
       <firstname>Test</firstname>
       <lastname>Two</lastname>
       <email>test2@gmail.com</email>
-      <indexedrecords>0</indexedrecords>
+      <indexedrecords>10</indexedrecords>
     </user>
     <user>
       <username>sheila</username>
