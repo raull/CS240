@@ -1,0 +1,39 @@
+package client.search;
+
+import java.awt.Dimension;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JList;
+
+import shared.modal.Project;
+
+
+@SuppressWarnings("serial")
+public class SearchFrame extends JFrame {
+
+	public SearchFrame() {
+		
+		super("Search GUI");
+	
+		this.setSize(new Dimension(400,200));
+		
+		JList<String> list = new JList<String>(new String[]{"Project 1", "Project 2"});
+		list.setSize(100, this.getHeight());
+		
+		this.add(list);
+	}
+	
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					SearchFrame frame = new SearchFrame();	
+					frame.setVisible(true);
+					
+				}
+			}
+		);
+
+	}
+}

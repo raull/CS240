@@ -1,0 +1,88 @@
+package client.search;
+
+import java.awt.Dimension;
+import java.awt.EventQueue;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class SearchFrame extends JFrame {
+
+	public SearchFrame() {
+		
+		super("Search GUI");
+	
+		this.setSize(new Dimension(400,200));
+		this.setMinimumSize(new Dimension(400, 200));
+		this.setMaximumSize(new Dimension(400, 200));
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		//Set Search Input Panel
+		
+		JPanel searchInputPanel = new JPanel();
+		searchInputPanel.setLayout(new BoxLayout(searchInputPanel, BoxLayout.X_AXIS));
+		
+		//Project List
+		JPanel projectPanel = new JPanel();
+		projectPanel.setLayout(new BoxLayout(projectPanel, BoxLayout.Y_AXIS));
+		
+		JList<String> projectList = new JList<String>(new String[]{"Project 1", "Project 2", "Project 3", "Project 4"});		
+		JScrollPane projectScrollPane = new JScrollPane(projectList);
+		projectScrollPane.setSize(200, this.getHeight());
+		
+		projectPanel.add(new JLabel("Select Project"));
+		projectPanel.add(projectScrollPane);
+		searchInputPanel.add(projectPanel);
+		
+		//Fields List
+		JPanel fieldPanel = new JPanel();
+		fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
+		
+		JList<String> fieldList = new JList<String>(new String[]{"Field 1", "Field 2"});		
+		JScrollPane fieldScrollPane = new JScrollPane(fieldList);
+		fieldScrollPane.setSize(200, this.getHeight());
+		
+		fieldPanel.add(new JLabel("Select Fields"));
+		fieldPanel.add(fieldScrollPane);
+		searchInputPanel.add(fieldPanel);
+		
+		// Word list
+		JPanel wordPanel = new JPanel();
+		wordPanel.setLayout(new BoxLayout(wordPanel, BoxLayout.Y_AXIS));
+		
+		JTextField wordsField = new JTextField(20);
+		JButton searchButton = new JButton("Search");
+		
+		wordPanel.add(new JLabel("Words (Comma separated)"));
+		wordPanel.add(wordsField);
+		searchInputPanel.add(wordPanel);
+		
+		
+		
+		this.add(searchInputPanel);
+		
+		//Set Login Dialog
+		LoginDialog loginDialog = new LoginDialog(this, true);
+		loginDialog.setVisible(true);
+	}
+	
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					SearchFrame frame = new SearchFrame();	
+					frame.setVisible(true);
+					
+				}
+			}
+		);
+
+	}
+}

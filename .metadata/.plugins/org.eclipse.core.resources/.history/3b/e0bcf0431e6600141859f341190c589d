@@ -1,0 +1,16 @@
+package client.search;
+
+import java.awt.GridLayout;
+
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+
+@SuppressWarnings("serial")
+public class LoginDialog extends JDialog {
+	
+	public LoginDialog() {
+		this.setLayout(new GridLayout(4, 2, 0, 10));
+		this.add(new JLabel("Username"));
+		
+	}
+}

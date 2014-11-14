@@ -1,0 +1,75 @@
+package client.search;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class LoginDialog extends JDialog {
+	
+	private JButton loginButton;
+	private JButton cancelButton;
+	
+	public LoginDialog() {
+		this.setSize(new Dimension(350, 170));
+		this.setLayout(new BorderLayout());
+		
+		//Set the Panel for buttons
+		JPanel buttonPanel = new JPanel();
+		this.loginButton = new JButton("Login");
+		this.cancelButton = new JButton("Cancel");
+		buttonPanel.add(loginButton);
+		buttonPanel.add(cancelButton);
+		
+		this.add(buttonPanel, BorderLayout.SOUTH);
+		
+		//Set the inputs panel
+		JPanel inputPanel = new JPanel();
+		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+		this.add(inputPanel, BorderLayout.CENTER);
+		
+		//Set Server Panel
+		JPanel serverInfoPanel = new JPanel();
+		JPanel hostPanel = new JPanel();
+		JPanel portPanel = new JPanel();
+		
+		hostPanel.add(new JLabel("Host"));
+		JTextField portField = new JTextField(15);
+		hostPanel.add(portField);
+		serverInfoPanel.add(hostPanel, BorderLayout.WEST);
+		
+		portPanel.add(new JLabel("Port"));
+		JTextField hostField = new JTextField(5);
+		portPanel.add(hostField);
+		serverInfoPanel.add(portPanel, BorderLayout.EAST);
+		
+		inputPanel.add(serverInfoPanel);
+		
+		//Set Username Panel
+		JPanel usernamePanel = new JPanel();
+		
+		usernamePanel.add(new JLabel("Username"), BorderLayout.WEST);
+		JTextField userNameField = new JTextField(20);
+		usernamePanel.add(userNameField, BorderLayout.EAST);
+		
+		inputPanel.add(usernamePanel);
+		
+		//Set Password Panel
+		JPanel passwordPanel = new JPanel();
+		
+		passwordPanel.add(new JLabel("Password"), BorderLayout.WEST);
+		JTextField passwordField = new JTextField(20);
+		passwordPanel.add(passwordField, BorderLayout.EAST);
+		
+		
+		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+	}
+}

@@ -1,0 +1,14 @@
+package client.search;
+
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
+public class SearchPanel extends JPanel {
+
+	public SearchPanel() {
+		
+		super();
+		
+	}
+	
+}

@@ -1,0 +1,54 @@
+package client.search;
+
+@SuppressWarnings("serial")
+public class SearchFrame extends JFrame {
+
+	public SearchFrame() {
+		
+		super("Search GUI");
+	
+		this.setSize(new Dimension(400,200));
+		this.setMinimumSize(new Dimension(400, 200));
+		this.setMaximumSize(new Dimension(400, 200));
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		//Set Search Input Panel
+		
+		JPanel searchInputPanel = new JPanel();
+		searchInputPanel.setLayout(new BoxLayout(searchInputPanel, BoxLayout.X_AXIS));
+		
+		//Project List
+		JList<String> projectList = new JList<String>(new String[]{"Project 1", "Project 2"});		
+		JScrollPane projectScrollPane = new JScrollPane(projectList);
+		projectScrollPane.setSize(200, this.getHeight());
+		
+		searchInputPanel.add(projectScrollPane);
+		
+		//Fields List
+		JList<String> fieldList = new JList<String>(new String[]{"Field 1", "Field 2"});		
+		JScrollPane fieldScrollPane = new JScrollPane(fieldList);
+		fieldScrollPane.setSize(200, this.getHeight());
+		
+		searchInputPanel.add(fieldScrollPane);
+		
+		
+		this.add(searchInputPanel);
+		
+		//Set Login Dialog
+		LoginDialog loginDialog = new LoginDialog(this, true);
+		loginDialog.setVisible(true);
+	}
+	
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					SearchFrame frame = new SearchFrame();	
+					frame.setVisible(true);
+					
+				}
+			}
+		);
+
+	}
+}

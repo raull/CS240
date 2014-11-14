@@ -1,0 +1,130 @@
+package client.search;
+
+import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+@SuppressWarnings("serial")
+public class SearchFrame extends JFrame {
+
+	private LoginDialog loginDialog;
+	private SearchController controller;
+	
+	private JList<String> projectList;
+	private JList<String> fieldList;
+	
+	public SearchFrame(final SearchController controller) {
+		
+		super("Search GUI");
+	
+		this.controller = controller;
+		
+		this.setSize(new Dimension(400,200));
+		this.setMinimumSize(new Dimension(400, 200));
+		this.setMaximumSize(new Dimension(400, 200));
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		
+		//Set Search Input Panel
+		
+		JPanel searchInputPanel = new JPanel();
+		searchInputPanel.setLayout(new BoxLayout(searchInputPanel, BoxLayout.X_AXIS));
+		
+		//Project List
+		JPanel projectPanel = new JPanel();
+		projectPanel.setLayout(new BoxLayout(projectPanel, BoxLayout.Y_AXIS));
+		
+		projectList = new JList<String>(new String[]{});
+		projectList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		projectList.addListSelectionListener( new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				
+				controller.projectListValueChanged(projectList.getSelectedIndex());
+			}
+		});
+		JScrollPane projectScrollPane = new JScrollPane(projectList);
+		projectScrollPane.setSize(200, this.getHeight());
+		
+		projectPanel.add(new JLabel("Select Project"));
+		projectPanel.add(projectScrollPane);
+		searchInputPanel.add(projectPanel);
+		
+		//Fields List
+		JPanel fieldPanel = new JPanel();
+		fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.Y_AXIS));
+		
+		fieldList = new JList<String>(new String[]{"Field 1", "Field 2"});
+		fieldList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		JScrollPane fieldScrollPane = new JScrollPane(fieldList);
+		fieldScrollPane.setSize(200, this.getHeight());
+		
+		fieldPanel.add(new JLabel("Select Fields"));
+		fieldPanel.add(fieldScrollPane);
+		searchInputPanel.add(fieldPanel);
+		
+		// Word list
+		JPanel wordPanel = new JPanel();
+		wordPanel.setLayout(new BoxLayout(wordPanel, BoxLayout.Y_AXIS));
+		
+		JTextField wordsField = new JTextField(20);
+		JButton searchButton = new JButton("Search");
+		
+		wordPanel.add(new JLabel("Words (Comma separated)"));
+		wordPanel.add(wordsField);
+		wordPanel.add(searchButton);
+		searchInputPanel.add(wordPanel);
+		
+		
+		
+		this.add(searchInputPanel);
+		
+	}
+	
+	public void loginSuccesfull() {
+		this.loginDialog.setVisible(false);
+		this.loginDialog = null;
+		JOptionPane.showMessageDialog(this, "Welcome");
+	}
+	
+	public void loginFailed(String message) {
+		JOptionPane.showMessageDialog(this.loginDialog, message, "Login Failed", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void loginButtonPressed(String username, String password, String host, String port) {
+		System.out.println("Login pressed on Dialog");
+		controller.loginUser(username, password, host, port);
+	}
+	
+	public void presedLoginDialog() {
+		if (loginDialog == null) {
+			loginDialog = new LoginDialog(this, true);
+			loginDialog.setVisible(true);
+		}
+	}
+	
+	public void updateProjects(String[] projects) {
+		projectList.setListData(projects);
+	}
+	
+	public void updateFields(String[] fields) {
+		fieldList.setListData(fields);
+	}
+	
+	//Getters and Setters
+	public void setController(SearchController controller) {
+		this.controller = controller;
+	}
+}

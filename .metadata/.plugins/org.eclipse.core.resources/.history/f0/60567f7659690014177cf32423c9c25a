@@ -1,0 +1,42 @@
+package client.search;
+
+import shared.communication.Validate_User_Parameter;
+import shared.communication.Validate_User_Response;
+import client.communication.ClientCommunicator;
+
+public class SearchController {
+	
+	private ClientCommunicator clientCommunicator;
+	private String username;
+	private String password;
+	private SearchFrame view;
+	
+	public SearchController(SearchFrame view) {
+		this.view = view;
+		view.setController(this);
+	}
+	
+	public void loginUser(String username, String password, String host, String port) {
+		
+		try {
+			//Start Client Communicator
+			this.clientCommunicator = new ClientCommunicator(host, port);
+			
+			//Validate User
+			Validate_User_Parameter param = new Validate_User_Parameter(username, password);
+			Validate_User_Response response = clientCommunicator.validateUser(param);
+			if (response.getOutput().equals("FALSE")) {
+				view.loginFailed("Wrong username and password");
+			} else if (response.getOutput().equals("FAILED")) {
+				view.loginFailed("Error: please try again later");
+			} else {
+				this.username = username;
+				this.password = password;
+				
+				view.loginSuccesfull();
+			}
+		} catch (Exception e) {
+			view.loginFailed("Error: please try again later");
+		}
+	}
+}

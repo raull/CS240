@@ -1,0 +1,48 @@
+package client.search;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class LoginDialog extends JDialog {
+	
+	private JButton loginButton;
+	private JButton cancelButton;
+	
+	public LoginDialog() {
+		this.setSize(new Dimension(600, 100));
+		this.setLayout(new BorderLayout());
+		
+		//Set the Panel for buttons
+		JPanel buttonPanel = new JPanel();
+		this.loginButton = new JButton("Login");
+		this.cancelButton = new JButton("Cancel");
+		buttonPanel.add(loginButton);
+		buttonPanel.add(cancelButton);
+		
+		this.add(buttonPanel, BorderLayout.SOUTH);
+		
+		//Set the inputs panel
+		JPanel inputPanel = new JPanel();
+		inputPanel.setLayout(new GridLayout(3, 2));
+		this.add(inputPanel, BorderLayout.CENTER);
+		
+		//Set username Panel
+		inputPanel.add(new JLabel("Username"));
+		JTextField userNameField = new JTextField();
+		userNameField.setSize(100, 20);
+		inputPanel.add(userNameField);
+		
+		
+		
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+	}
+}
