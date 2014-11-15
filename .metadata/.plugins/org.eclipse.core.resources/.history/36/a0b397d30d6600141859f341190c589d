@@ -1,7 +1,0 @@
-package client.search;
-
-import javax.swing.JPanel;
-
-public class SearchPanel extends JPanel {
-
-}
