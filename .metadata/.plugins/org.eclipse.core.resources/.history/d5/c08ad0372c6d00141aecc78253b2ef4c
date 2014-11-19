@@ -1,0 +1,66 @@
+package client.login;
+
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+@SuppressWarnings("serial")
+public class LoginDialog extends JDialog{
+	
+	private JTextField usernameField;
+	private JPasswordField passwordField;
+	private JButton loginButton;
+	private JButton cancelButton;
+	
+	public LoginDialog(Frame owner) {
+		super(owner, true);
+		
+		this.setupGUI();
+	}
+	
+	
+	private void setupGUI() {
+		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.setSize(new Dimension(320, 100));
+		this.setMaximumSize(this.getSize());
+		this.setMinimumSize(this.getSize());
+		this.setLocationRelativeTo(null);
+		
+		//Set JPanel for username
+		JPanel usernamePanel = new JPanel();
+		usernamePanel.setPreferredSize(new Dimension(this.getSize().width, 20));
+		usernamePanel.add(new JLabel("Username"));
+		
+		usernameField = new JTextField(20);
+		usernamePanel.add(usernameField);
+		
+		//Set JPanel for password
+		JPanel passwordPanel = new JPanel();
+		passwordPanel.setPreferredSize(new Dimension(this.getSize().width, 20));
+		passwordPanel.add(new JLabel("Password"));
+		
+		passwordField = new JPasswordField(20);
+		passwordPanel.add(passwordField);
+		
+		this.add(usernamePanel);
+		this.add(passwordPanel);
+		
+		//Window closing
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+		    public void windowClosing(WindowEvent windowEvent) {
+		        System.exit(0);
+		    }
+		});
+		
+	}
+}

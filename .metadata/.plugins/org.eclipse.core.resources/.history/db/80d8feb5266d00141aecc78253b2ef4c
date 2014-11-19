@@ -1,0 +1,13 @@
+package client.login;
+
+import java.awt.Frame;
+
+import javax.swing.JDialog;
+
+public class LoginDialog extends JDialog{
+	
+	public LoginDialog(Frame owner) {
+		super(owner, true);
+	}
+	
+}

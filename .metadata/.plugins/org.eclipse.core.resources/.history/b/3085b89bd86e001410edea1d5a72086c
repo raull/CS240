@@ -1,0 +1,19 @@
+package client;
+
+import javax.swing.JFrame;
+
+import client.login.LoginDialog;
+
+@SuppressWarnings("serial")
+public class RecordIndexerFrame extends JFrame {
+		
+	public RecordIndexerFrame() {
+		super();
+		
+	}
+	
+	public void setupGUI() {
+		
+	}
+	
+}

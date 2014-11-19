@@ -1,0 +1,26 @@
+package client.facade;
+
+import client.RecordIndexerFrame;
+import client.communication.ClientCommunicator;
+import client.login.LoginDialog;
+import shared.modal.User;
+
+public class ClientFacade {
+
+	private ClientCommunicator communicator;
+	private LoginDialog loginDialog;
+	private RecordIndexerFrame mainFrame;
+	
+	
+	//Constructor 
+	
+	public ClientFacade(LoginDialog loginDialog, RecordIndexerFrame mainFrame) {
+		this.loginDialog = loginDialog;
+		this.mainFrame = mainFrame;
+	}
+	
+	public static User validateUser(String username, String password) {
+		
+		return null;
+	}
+}

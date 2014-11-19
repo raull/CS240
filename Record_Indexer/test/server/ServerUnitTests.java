@@ -19,8 +19,8 @@ import shared.communication.SubmitBatch_Response;
 import shared.communication.Validate_User_Parameter;
 import shared.communication.Validate_User_Response;
 import shared.modal.Field;
-import client.ClientCommunicatorException;
 import client.communication.ClientCommunicator;
+import client.communication.ClientCommunicatorException;
 import static org.junit.Assert.* ;
 
 public class ServerUnitTests {

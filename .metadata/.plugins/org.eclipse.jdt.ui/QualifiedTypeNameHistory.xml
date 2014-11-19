@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.sun.net.httpserver.HttpHandler"/>
-<fullyQualifiedTypeName name="server.handler.SearchHandler"/>
-<fullyQualifiedTypeName name="org.junit.Test"/>
-<fullyQualifiedTypeName name="client.ClientCommunicatorException"/>
-<fullyQualifiedTypeName name="shared.communication.GetSampleImage_Response"/>
 <fullyQualifiedTypeName name="com.sun.java.util.jar.pack.Package.File"/>
 <fullyQualifiedTypeName name="shared.communication.DownloadBatch_Response"/>
 <fullyQualifiedTypeName name="java.io.File"/>
@@ -14,17 +9,11 @@
 <fullyQualifiedTypeName name="sun.org.mozilla.javascript.internal.ast.NewExpression"/>
 <fullyQualifiedTypeName name="javax.swing.Box"/>
 <fullyQualifiedTypeName name="java.awt.GridLayout"/>
-<fullyQualifiedTypeName name="javax.swing.JPasswordField"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
-<fullyQualifiedTypeName name="java.awt.Frame"/>
 <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
-<fullyQualifiedTypeName name="javax.swing.JButton"/>
 <fullyQualifiedTypeName name="shared.communication.Validate_User_Parameter"/>
 <fullyQualifiedTypeName name="shared.communication.Validate_User_Response"/>
-<fullyQualifiedTypeName name="client.communication.ClientCommunicator"/>
 <fullyQualifiedTypeName name="sun.security.krb5.internal.HostAddress"/>
-<fullyQualifiedTypeName name="javax.swing.JTextField"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="client.search.SearchController"/>
 <fullyQualifiedTypeName name="client.search.SearchFrame"/>
 <fullyQualifiedTypeName name="client.search.LoginDialog"/>
@@ -38,7 +27,6 @@
 <fullyQualifiedTypeName name="shared.communication.GetFields_Parameter"/>
 <fullyQualifiedTypeName name="shared.communication.GetFields_Response"/>
 <fullyQualifiedTypeName name="javax.swing.JTextArea"/>
-<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="shared.communication.Search_Input"/>
 <fullyQualifiedTypeName name="shared.modal.Project"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
@@ -46,18 +34,30 @@
 <fullyQualifiedTypeName name="shared.communication.Search_Response"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="javax.swing.JList"/>
-<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
 <fullyQualifiedTypeName name="javax.swing.ListSelectionModel"/>
 <fullyQualifiedTypeName name="com.thoughtworks.xstream.core.util.Fields"/>
 <fullyQualifiedTypeName name="javax.swing.event.ListSelectionListener"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="java.net.URL"/>
-<fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
+<fullyQualifiedTypeName name="javax.swing.JDialog"/>
+<fullyQualifiedTypeName name="java.awt.Frame"/>
+<fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
+<fullyQualifiedTypeName name="javax.swing.JTextField"/>
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
+<fullyQualifiedTypeName name="javax.swing.JPasswordField"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="java.awt.Dimension"/>
+<fullyQualifiedTypeName name="javax.swing.JButton"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="client.login.LoginDialog"/>
+<fullyQualifiedTypeName name="client.RecordIndexerFrame"/>
+<fullyQualifiedTypeName name="client.communication.ClientCommunicator"/>
+<fullyQualifiedTypeName name="client.facade.ClientFacade"/>
+<fullyQualifiedTypeName name="shared.modal.User"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 </qualifiedTypeNameHistroy>

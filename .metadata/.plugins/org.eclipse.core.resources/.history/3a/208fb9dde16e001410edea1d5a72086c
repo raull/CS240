@@ -1,0 +1,22 @@
+package client;
+
+import javax.swing.JFrame;
+
+
+@SuppressWarnings("serial")
+public class RecordIndexerFrame extends JFrame {
+		
+	public RecordIndexerFrame() {
+		super();
+		
+	}
+	
+	public void setupGUI() {
+		
+		this.setLocationRelativeTo(null);
+
+	}
+	
+	//Getters and Setters
+	
+}

@@ -1,0 +1,13 @@
+package client.facade;
+
+import client.communication.ClientCommunicator;
+import shared.modal.User;
+
+public class ClientFacade {
+
+	public static User validateUser(String username, String password) {
+		 ClientCommunicator communicator = new ClientCommunicator(host, port)
+		
+		return null;
+	}
+}
