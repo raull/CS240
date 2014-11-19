@@ -1,0 +1,12 @@
+package client.main.menu;
+
+import javax.swing.JMenuBar;
+
+@SuppressWarnings("serial")
+public class FileMenuBar extends JMenuBar {
+	
+	public FileMenuBar() {
+		super();
+	}
+	
+}

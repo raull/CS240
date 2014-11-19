@@ -1,0 +1,48 @@
+package client;
+
+import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+
+
+@SuppressWarnings("serial")
+public class RecordIndexerFrame extends JFrame {
+		
+	public RecordIndexerFrame() {
+		super();
+		
+		setupGUI();
+	}
+	
+	public void setupGUI() {
+		
+		this.setSize(new Dimension(800, 700));
+		this.setLocationRelativeTo(null);
+		
+		JPanel topPanel = new JPanel();
+		topPanel.setMinimumSize(new Dimension(800, 200));
+		
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setMinimumSize(new Dimension(800, 200));
+		
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, topPanel, bottomPanel);
+		splitPane.setDividerLocation(this.getSize().height/2);
+		splitPane.setOneTouchExpandable(true);
+		this.add(splitPane);
+		
+		//Window closing
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+		    public void windowClosing(WindowEvent windowEvent) {
+		        System.exit(0);
+		    }
+		});
+	}
+	
+	//Getters and Setters
+	
+}

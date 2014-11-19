@@ -1,0 +1,62 @@
+package client.main.menu;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+@SuppressWarnings("serial")
+public class FileMenuBar extends JMenuBar {
+	
+	private JMenuItem downloadBatchItem = new JMenuItem("Download Batch");
+	private JMenuItem logoutItem = new JMenuItem("Logout");
+	private JMenuItem exitItem = new JMenuItem("Exit");
+	
+	private ArrayList<FileMenuBarListener> listeners = new ArrayList<FileMenuBarListener>();
+	
+	public FileMenuBar() {
+		super();
+		setBar();
+	}
+	
+	private void setBar() {
+		JMenu fileMenu = new JMenu("File");
+		
+		downloadBatchItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Download Batch Pressed");
+			}
+		});
+		logoutItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Logout Pressed");
+			}
+		});
+		exitItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Exit Pressed");
+			}
+		});
+		
+		
+		fileMenu.add(downloadBatchItem);
+		fileMenu.add(logoutItem);
+		fileMenu.add(exitItem);
+		this.add(fileMenu);
+
+	}
+	
+	public void enableDownloadBatchItem(Boolean enable) {
+		downloadBatchItem.setEnabled(enable);
+	}
+	
+}

@@ -1,0 +1,23 @@
+package client.main.menu;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+@SuppressWarnings("serial")
+public class FileMenuBar extends JMenuBar {
+	
+	public FileMenuBar() {
+		super();
+		
+		setBar();
+	}
+	
+	private void setBar() {
+		JMenu fileMenu = new JMenu("File");
+		
+		JMenuItem downloadBatchItem = new JMenuItem("Download Batch");
+		fileMenu.add(downloadBatchItem);
+	}
+	
+}

@@ -8,6 +8,7 @@ import shared.modal.User;
 import client.communication.ClientCommunicator;
 import client.facade.ClientFacade;
 import client.login.*;
+import client.main.MainFrame;
 
 
 public class ClientGUI {
@@ -19,7 +20,7 @@ public class ClientGUI {
 					final String host = "localhost";
 					final String port = "8080";
 					
-					final RecordIndexerFrame mainFrame = new RecordIndexerFrame();
+					final MainFrame mainFrame = new MainFrame();
 					final LoginDialog loginDialog = new LoginDialog(mainFrame);
 					loginDialog.addLoginListener(new LoginListener() {
 						
@@ -29,7 +30,7 @@ public class ClientGUI {
 							
 							String welcomeMessage = "Welcome " + user.getFirstName() + " " 
 									+ user.getLastName() + "\nYou have " + user.getRecordCount() + " record indexed";
-							JOptionPane.showConfirmDialog(mainFrame, welcomeMessage, "Welcome", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(mainFrame, welcomeMessage, "Welcome", JOptionPane.PLAIN_MESSAGE);
 							mainFrame.setVisible(true);
 						}
 					});

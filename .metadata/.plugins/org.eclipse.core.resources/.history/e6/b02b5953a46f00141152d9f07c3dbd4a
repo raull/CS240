@@ -1,0 +1,11 @@
+package client.main.menu;
+
+import javax.swing.JMenuBar;
+
+public class FileMenuBar extends JMenuBar {
+	
+	public FileMenuBar() {
+		super();
+	}
+	
+}
