@@ -1,0 +1,59 @@
+package client.batch.download;
+
+import java.awt.Dimension;
+import java.awt.Frame;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
+public class DownloadBatchDialog extends JDialog {
+	
+	private JComboBox<String> projectList;
+	
+	public DownloadBatchDialog(Frame owner) {
+		super(owner, true);
+		
+		this.setTitle("Download Batch");
+		this.setupGUI();
+	}
+	
+	
+	private void setupGUI() {
+		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.setSize(new Dimension(350, 100));
+		this.setMaximumSize(this.getSize());
+		this.setMinimumSize(this.getSize());
+		this.setLocationRelativeTo(null);
+		
+		//Set up Projects Panel
+		
+		JPanel projectPanel = new JPanel();
+		projectPanel.setPreferredSize(new Dimension(this.getContentPane().getSize().width, 20));
+		projectPanel.add(new JLabel("Project: "));
+		
+		projectList = new JComboBox<String>(new String[]{"Project 1", "Project 2"});
+		projectPanel.add(projectList);
+		
+		JButton sampleButton = new JButton("View Sample Image");
+		projectPanel.add(sampleButton);
+		
+		//Set up buttons panel
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setPreferredSize(new Dimension(this.getContentPane().getSize().width, 20));
+		
+		JButton cancelButton = new JButton("Cancel");
+		JButton downloadButton = new JButton("Download");
+		
+		buttonPanel.add(cancelButton);
+		buttonPanel.add(downloadButton);
+		
+		this.getContentPane().add(projectPanel);
+		this.getContentPane().add(buttonPanel);
+	}
+}

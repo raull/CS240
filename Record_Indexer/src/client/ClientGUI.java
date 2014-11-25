@@ -9,6 +9,7 @@ import client.communication.ClientCommunicator;
 import client.facade.ClientFacade;
 import client.login.*;
 import client.main.MainFrame;
+import client.main.MainFrameListener;
 
 
 public class ClientGUI {
@@ -22,6 +23,15 @@ public class ClientGUI {
 					
 					final MainFrame mainFrame = new MainFrame();
 					final LoginDialog loginDialog = new LoginDialog(mainFrame);
+
+					mainFrame.addMainFrameListener(new MainFrameListener() {
+						
+						@Override
+						public void logoutPressed() {
+							mainFrame.setVisible(false);
+							loginDialog.setVisible(true);
+						}
+					});
 					loginDialog.addLoginListener(new LoginListener() {
 						
 						@Override

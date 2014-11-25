@@ -1,0 +1,18 @@
+package client.batch.state;
+
+public class Cell {
+	
+	private int row;
+	private int column;
+	private String value;
+	
+	public Cell(int column, int row, String value) {
+		this.row = row;
+		this.column = column;
+		this.value = value;
+	}
+	
+	//Getters and Setters
+	
+	
+}

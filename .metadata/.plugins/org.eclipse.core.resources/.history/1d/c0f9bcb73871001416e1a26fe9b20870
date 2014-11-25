@@ -1,0 +1,5 @@
+package client.batch.state;
+
+public class Cell {
+
+}

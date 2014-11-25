@@ -1,0 +1,7 @@
+package client.batch.image;
+
+import javax.swing.JComponent;
+
+public class BatchImageComponent extends JComponent {
+
+}

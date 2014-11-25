@@ -1,0 +1,35 @@
+package client.batch.state;
+
+import java.util.ArrayList;
+
+public class BatchState {
+	
+	private ArrayList<BatchStateListener> listeners = new ArrayList<BatchStateListener>();
+	private String[][] values;
+	private Cell selectedCell;
+	
+	private static BatchState instance = null;
+	
+	public static BatchState singleton() {
+		if (instance == null) {
+			return new BatchState();
+		} else {
+			return instance;
+		}
+	}
+	
+	
+	//Getters and Setters
+	public static void setValues(String[][] values) {
+		BatchState.singleton().values = values;
+	}
+	
+	public static void setValue(Cell cell) {
+		BatchState.singleton().values[cell.getColumn()][cell.getRow()] = cell.getValue();
+	}
+	
+	public static String getValue(int column, int row) {
+		return BatchState.singleton().values[column][row];
+	}
+	
+}

@@ -8,8 +8,8 @@
 	<section name="DialogBounds_SuperInterfaceSelectionDialog">
 		<item value="356" key="DIALOG_WIDTH"/>
 		<item value="18" key="DIALOG_Y_ORIGIN"/>
-		<item value="456" key="DIALOG_HEIGHT"/>
 		<item value="90" key="DIALOG_X_ORIGIN"/>
+		<item value="456" key="DIALOG_HEIGHT"/>
 		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="RefactoringWizard.preview">
@@ -32,8 +32,8 @@
 		<item value="true" key="expanded0"/>
 	</section>
 	<section name="SourceActionDialog.methods">
-		<item value="true" key="Comments"/>
 		<item value="1" key="VisibilityModifier"/>
+		<item value="true" key="Comments"/>
 		<item value="1" key="InsertPosition.v2"/>
 		<item value="false" key="SynchronizedModifier"/>
 		<item value="false" key="FinalModifier"/>
@@ -58,35 +58,35 @@
 		<item value="/Users/raull/Documents/CS240/Record_Indexer/javadoc.xml" key="antpath"/>
 		<item value="true" key="fromStandard"/>
 		<section name="projects">
-			<section name="Exam_Prep">
-				<item value="/Users/raull/Documents/CS240/Exam_Prep/doc" key="destdir"/>
-				<item value="" key="href"/>
-				<item value="/Users/raull/Documents/CS240/Exam_Prep/javadoc.xml" key="antpath"/>
-			</section>
 			<section name="Project_1">
 				<item value="/Users/raull/Documents/CS240/Project_1/doc" key="destdir"/>
-				<item value="" key="href"/>
 				<item value="/Users/raull/Documents/CS240/Project_1/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+			<section name="Exam_Prep">
+				<item value="/Users/raull/Documents/CS240/Exam_Prep/doc" key="destdir"/>
+				<item value="/Users/raull/Documents/CS240/Exam_Prep/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
 			</section>
 			<section name="Project_4">
 				<item value="/Users/raull/Documents/CS240/Project_4/doc" key="destdir"/>
-				<item value="" key="href"/>
 				<item value="/Users/raull/Documents/CS240/Project_4/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
 			</section>
 			<section name="Project_3">
 				<item value="/Users/raull/Documents/CS240/Project_3/doc" key="destdir"/>
-				<item value="" key="href"/>
 				<item value="/Users/raull/Documents/CS240/Project_3/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
 			</section>
 			<section name="Project_2">
 				<item value="/Users/raull/Documents/CS240/Project_2/doc" key="destdir"/>
-				<item value="" key="href"/>
 				<item value="/Users/raull/Documents/CS240/Project_2/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
 			</section>
 			<section name="Record_Indexer">
 				<item value="/Users/raull/Documents/CS240/Record_Indexer/doc" key="destdir"/>
-				<item value="" key="href"/>
 				<item value="/Users/raull/Documents/CS240/Record_Indexer/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
 			</section>
 		</section>
 	</section>
@@ -103,8 +103,8 @@
 		<section name="DialogBoundsSettings">
 			<item value="269" key="DIALOG_WIDTH"/>
 			<item value="0" key="DIALOG_Y_ORIGIN"/>
-			<item value="-32" key="DIALOG_X_ORIGIN"/>
 			<item value="432" key="DIALOG_HEIGHT"/>
+			<item value="-32" key="DIALOG_X_ORIGIN"/>
 			<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 		</section>
 	</section>
@@ -122,22 +122,22 @@
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="520" key="DIALOG_WIDTH"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
-		<item value="639" key="DIALOG_HEIGHT"/>
 		<item value="376" key="DIALOG_X_ORIGIN"/>
+		<item value="639" key="DIALOG_HEIGHT"/>
 		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="false" key="updateQualifiedNames"/>
+		<item value="*" key="patterns"/>
+		<item value="1" key="updateSimilarElementsMatchStrategy"/>
+		<item value="false" key="updateTextualMatches"/>
+		<item value="true" key="updateSimilarElements"/>
+	</section>
+	<section name="RenameInformationPopup">
 	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
 		<item value="true" key="create_unimplemented"/>
-	</section>
-	<section name="RenameInformationPopup">
-	</section>
-	<section name="org.eclipse.ltk.ui.refactoring.settings">
-		<item value="*" key="patterns"/>
-		<item value="false" key="updateQualifiedNames"/>
-		<item value="1" key="updateSimilarElementsMatchStrategy"/>
-		<item value="false" key="updateTextualMatches"/>
-		<item value="true" key="updateSimilarElements"/>
 	</section>
 	<section name="AddGetterSetterDialog">
 		<item value="false" key="RemoveFinal"/>
@@ -146,8 +146,8 @@
 	<section name="JavadocWizardDialog">
 		<item value="600" key="DIALOG_WIDTH"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
-		<item value="582" key="DIALOG_HEIGHT"/>
 		<item value="340" key="DIALOG_X_ORIGIN"/>
+		<item value="582" key="DIALOG_HEIGHT"/>
 		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
 	</section>
 </section>

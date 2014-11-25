@@ -1,0 +1,9 @@
+package client.batch.image;
+
+import javax.swing.JComponent;
+
+@SuppressWarnings("serial")
+
+public class BatchImageComponent extends JComponent {
+
+}
