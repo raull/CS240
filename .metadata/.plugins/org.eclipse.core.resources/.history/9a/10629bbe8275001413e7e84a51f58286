@@ -23,7 +23,6 @@ public class BatchImageComponent extends JComponent {
 	private double scale;
 	
 	private DrawingImage drawingImage;
-	private DrawingRect selectionRect;
 	
 	//Mouse event Instance Fields
 	private int xDragStart;
@@ -50,7 +49,6 @@ public class BatchImageComponent extends JComponent {
 		
 		batchImage = image;
 		drawingImage = new DrawingImage(image, new Rectangle2D.Double(0, 0, 700, 500));
-		selectionRect = new DrawingRect(new Rectangle2D.Double(0, 0, 0, 0), new Color(50,50,50,50));
 		
 		this.setBackground(new Color(100, 100, 100));
 				
@@ -59,7 +57,6 @@ public class BatchImageComponent extends JComponent {
 		this.addMouseWheelListener(mouseAdapter);
 		
 		shapes.add(drawingImage);
-		shapes.add(selectionRect);
 	}
 	
 	
@@ -98,9 +95,7 @@ public class BatchImageComponent extends JComponent {
 		yDragStart = 0;
 	}
 	
-	///////////////////////
-	//Getters and Setters//
-	///////////////////////
+	//Getters and Setters
 	
 	public void setImage(Image image) {
 		this.batchImage = image;
@@ -263,32 +258,4 @@ public class BatchImageComponent extends JComponent {
 			return rect.getBounds2D();
 		}
 	}
-	
-	class DrawingRect implements DrawingShape {
-
-		private Rectangle2D rect;
-		private Color color;
-		
-		public DrawingRect(Rectangle2D rect, Color color) {
-			this.rect = rect;
-			this.color = color;
-		}
-
-		@Override
-		public boolean contains(Graphics2D g2, double x, double y) {
-			return rect.contains(x, y);
-		}
-
-		@Override
-		public void draw(Graphics2D g2) {
-			g2.setColor(color);
-			g2.fill(rect);
-		}
-		
-		@Override
-		public Rectangle2D getBounds(Graphics2D g2) {
-			return rect.getBounds2D();
-		}
-	}
-
 }

@@ -98,9 +98,7 @@ public class BatchImageComponent extends JComponent {
 		yDragStart = 0;
 	}
 	
-	///////////////////////
-	//Getters and Setters//
-	///////////////////////
+	//Getters and Setters
 	
 	public void setImage(Image image) {
 		this.batchImage = image;
