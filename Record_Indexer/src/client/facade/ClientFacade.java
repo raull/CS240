@@ -116,4 +116,12 @@ public class ClientFacade {
 		ClientFacade.communicator = communicator;
 	}
 	
+	public static String getUsername() {
+		return ClientFacade.username;
+	}
+	
+	public static String getPassword() {
+		return ClientFacade.password;
+	}
+	
 }

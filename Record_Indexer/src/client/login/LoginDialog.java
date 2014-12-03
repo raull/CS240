@@ -18,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import shared.modal.User;
+import client.batch.state.BatchState;
 import client.facade.ClientFacade;
 
 @SuppressWarnings("serial")
@@ -77,6 +78,7 @@ public class LoginDialog extends JDialog{
 						loginFailed("Wrong Username and Password combination");
 					} else {
 						for (LoginListener loginListener : listeners) {
+							BatchState.load(user.getUsername());
 							loginListener.userLoggedIn(user);
 						}
 					}

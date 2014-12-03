@@ -1,5 +1,7 @@
 package shared.modal;
 
+import java.io.Serializable;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -10,7 +12,8 @@ import shared.IndexerData;
  * @author Raul Lopez Villalpando, 2014
  *
  */
-public class Field {
+@SuppressWarnings("serial")
+public class Field implements Serializable{
 	
 	/** The id of the Field represented in the Database*/
 	private int id;

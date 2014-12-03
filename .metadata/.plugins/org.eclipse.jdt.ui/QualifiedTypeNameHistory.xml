@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="shared.communication.GetFields_Response"/>
-<fullyQualifiedTypeName name="javax.swing.JTextArea"/>
-<fullyQualifiedTypeName name="shared.communication.Search_Input"/>
-<fullyQualifiedTypeName name="shared.modal.Project"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="shared.modal.Field"/>
 <fullyQualifiedTypeName name="shared.communication.Search_Response"/>
@@ -12,7 +8,6 @@
 <fullyQualifiedTypeName name="com.thoughtworks.xstream.core.util.Fields"/>
 <fullyQualifiedTypeName name="javax.swing.event.ListSelectionListener"/>
 <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
-<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
 <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
 <fullyQualifiedTypeName name="javax.swing.JDialog"/>
 <fullyQualifiedTypeName name="java.awt.Frame"/>
@@ -38,11 +33,7 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="client.batch.image.BatchImageComponent.DrawingShape"/>
 <fullyQualifiedTypeName name="client.batch.image.BatchImageComponent.DrawingImage"/>
-<fullyQualifiedTypeName name="java.awt.geom.Rectangle2D"/>
-<fullyQualifiedTypeName name="java.awt.geom.Rectangle2D.Double"/>
-<fullyQualifiedTypeName name="java.awt.Image"/>
 <fullyQualifiedTypeName name="java.net.URL"/>
-<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
 <fullyQualifiedTypeName name="java.lang.Override"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseEvent"/>
@@ -50,14 +41,23 @@
 <fullyQualifiedTypeName name="java.awt.geom.Point2D"/>
 <fullyQualifiedTypeName name="java.awt.geom.Point2D.Double"/>
 <fullyQualifiedTypeName name="java.awt.event.MouseWheelEvent"/>
-<fullyQualifiedTypeName name="java.awt.geom.AffineTransform"/>
-<fullyQualifiedTypeName name="java.awt.Dimension"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.awt.Color"/>
-<fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="javax.swing.JButton"/>
 <fullyQualifiedTypeName name="javax.swing.BoxLayout"/>
 <fullyQualifiedTypeName name="java.awt.Component"/>
 <fullyQualifiedTypeName name="client.batch.image.BatchImageComponent"/>
+<fullyQualifiedTypeName name="client.batch.image.BatchImageComponent.DrawingRect"/>
+<fullyQualifiedTypeName name="java.awt.geom.Rectangle2D"/>
+<fullyQualifiedTypeName name="java.awt.geom.Rectangle2D.Double"/>
+<fullyQualifiedTypeName name="java.awt.Dimension"/>
+<fullyQualifiedTypeName name="java.awt.geom.AffineTransform"/>
+<fullyQualifiedTypeName name="java.awt.Image"/>
+<fullyQualifiedTypeName name="image.editor.ImageEditor"/>
+<fullyQualifiedTypeName name="image.editor.Pixel"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="javax.swing.JTabbedPane"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>

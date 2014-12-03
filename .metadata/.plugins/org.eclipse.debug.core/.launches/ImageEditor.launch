@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/Project_1/src/ImageEditor.java"/>
+<listEntry value="/Project_1/src/image/editor/ImageEditor.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="ImageEditor"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="image.editor.ImageEditor"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="cs_logo.ppm cs_logo3.ppm emboss"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Project_1"/>
 </launchConfiguration>

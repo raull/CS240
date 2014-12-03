@@ -1,6 +1,10 @@
 package client.batch.image;
 
+import image.editor.ImageEditor;
+import image.editor.Pixel;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -10,6 +14,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -17,14 +22,14 @@ import javax.swing.JComponent;
 @SuppressWarnings("serial")
 public class BatchImageComponent extends JComponent {
 	
-	private Image batchImage;
+	private BufferedImage batchImage;
 	private ArrayList<DrawingShape> shapes = new ArrayList<DrawingShape>();
 	
 	private double scale;
 	
 	private DrawingImage drawingImage;
 	private DrawingRect selectionRect;
-	
+		
 	//Mouse event Instance Fields
 	private int xDragStart;
 	private int yDragStart;
@@ -32,25 +37,37 @@ public class BatchImageComponent extends JComponent {
 	private int deltaX;
 	private int deltaY;
 	
-	private int worldOriginX;
-	private int worldOriginY;
+	private int w_center_X;
+	private int w_center_Y;
+	
+	private int panelCenterX;
+	private int panelCenterY;
 	
 	private int xDragOriginStart;
 	private int yDragOriginStart;
 		
 	private boolean isDragging = false;
-	
-	public BatchImageComponent(Image image) {
+		
+	public BatchImageComponent(BufferedImage image , Dimension dimension) {
+		
+		super();
 		
 		scale = 1;
-		worldOriginX = 0;
-		worldOriginY = 0;
 		
 		resetDrag();
 		
 		batchImage = image;
-		drawingImage = new DrawingImage(image, new Rectangle2D.Double(0, 0, 700, 500));
+		
+		double aspectRatio = (double)image.getHeight()/(double)image.getWidth();
+				
+		drawingImage = new DrawingImage(image, new Rectangle2D.Double(0, 0, dimension.getWidth(), dimension.getWidth()*aspectRatio));
 		selectionRect = new DrawingRect(new Rectangle2D.Double(0, 0, 0, 0), new Color(50,50,50,50));
+		
+		w_center_X = (int)drawingImage.rect.getWidth()/2;
+		w_center_Y = (int)drawingImage.rect.getHeight()/2;
+		
+		panelCenterX = (int)dimension.width/2;
+		panelCenterY = (int)dimension.height/2;
 		
 		this.setBackground(new Color(100, 100, 100));
 				
@@ -71,9 +88,10 @@ public class BatchImageComponent extends JComponent {
 		Graphics2D g2 = (Graphics2D)g;
 		drawBackground(g2);
 		
+		g2.translate(panelCenterX, panelCenterY);
 		g2.scale(scale, scale);
-		g2.translate(-worldOriginX, -worldOriginY);
-		
+		g2.translate(-w_center_X, -w_center_Y);
+
 		drawShapes(g2);
 		
 	}
@@ -98,11 +116,32 @@ public class BatchImageComponent extends JComponent {
 		yDragStart = 0;
 	}
 	
+	public void invertImage() {
+		
+		BufferedImage image = (BufferedImage)drawingImage.image;
+		
+		int width = image.getWidth();
+		int height = image.getHeight();
+						
+		for (int i = image.getMinY(); i < height; i++) {
+			for (int j = image.getMinX(); j < width; j++) {
+				int pixel = image.getRGB(j, i);
+				Color rgbColor = new Color(pixel); 
+				Pixel newPixel = new Pixel(rgbColor.getRed(), rgbColor.getGreen(), rgbColor.getBlue());
+				ImageEditor.invertPixel(newPixel, 255);
+				rgbColor = new Color(newPixel.red, newPixel.green, newPixel.blue);
+				image.setRGB(j, i, rgbColor.getRGB());
+			}
+		}
+		
+		repaint();
+	}
+	
 	///////////////////////
 	//Getters and Setters//
 	///////////////////////
 	
-	public void setImage(Image image) {
+	public void setImage(BufferedImage image) {
 		this.batchImage = image;
 	}
 	
@@ -135,19 +174,23 @@ public class BatchImageComponent extends JComponent {
 			int deviceX = e.getX();
 			int deviceY = e.getY();
 			
-			AffineTransform transform = new AffineTransform();
-			transform.scale(scale, scale);
-			transform.translate(-worldOriginX, -worldOriginY);
 			
 			Point2D devicePoint = new Point2D.Double(deviceX, deviceY);
 			Point2D worldPoint = new Point2D.Double();
+			
+			AffineTransform transform = new AffineTransform();
+			
+			transform.translate(panelCenterX, panelCenterY);
+			transform.scale(scale, scale);
+			transform.translate(-w_center_X, -w_center_Y);
+			
 			
 			try {
 				transform.inverseTransform(devicePoint, worldPoint);
 			} catch (Exception e2) {
 				return;
 			}
-			
+						
 			Graphics2D g2 = (Graphics2D)getGraphics();
 			
 			int worldX = (int)worldPoint.getX();
@@ -158,16 +201,18 @@ public class BatchImageComponent extends JComponent {
 			
 			for (DrawingShape drawingShape : shapes) {
 				hitShape = drawingShape.contains(g2, worldX, worldY);
+				if (hitShape) {
+					break;
+				}
 			}
 			
 			if (hitShape) {
 				isDragging = true;
 				xDragStart = worldX;
 				yDragStart = worldY;
-				xDragOriginStart = worldOriginX;
-				yDragOriginStart = worldOriginY;
+				xDragOriginStart = w_center_X;
+				yDragOriginStart = w_center_Y;
 				
-				System.out.println("Hit a shape on world Point: " + worldPoint + ", Device Point: " + devicePoint);
 			}
 			
 		}
@@ -180,6 +225,8 @@ public class BatchImageComponent extends JComponent {
 				int deviceY = e.getY();
 				
 				AffineTransform transform = new AffineTransform();
+				
+				transform.translate(panelCenterX, panelCenterY);
 				transform.scale(scale, scale);
 				transform.translate(-xDragOriginStart, -yDragOriginStart);
 				
@@ -200,8 +247,9 @@ public class BatchImageComponent extends JComponent {
 				deltaX = worldX - xDragStart;
 				deltaY = worldY - yDragStart;
 				
-				worldOriginX = xDragOriginStart - deltaX;
-				worldOriginY = yDragOriginStart - deltaY;
+				w_center_X = xDragOriginStart - deltaX;
+				w_center_Y = yDragOriginStart - deltaY;
+				
 				
 				repaint();
 			}
@@ -290,5 +338,5 @@ public class BatchImageComponent extends JComponent {
 			return rect.getBounds2D();
 		}
 	}
-
+	
 }

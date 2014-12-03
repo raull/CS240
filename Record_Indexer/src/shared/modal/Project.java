@@ -24,7 +24,7 @@ public class Project {
 	/** The height of each record in the project*/
 	private int recordHeight;
 	/** The list of batches of the project*/
-	private ArrayList<Batch> batches = new ArrayList<Batch>();
+	private transient ArrayList<Batch> batches = new ArrayList<Batch>();
 	/** The list of fields in each batch*/
 	private ArrayList<Field> fields = new ArrayList<Field>();
 	

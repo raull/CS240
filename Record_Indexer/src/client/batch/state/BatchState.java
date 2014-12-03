@@ -1,23 +1,37 @@
 package client.batch.state;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import client.facade.ClientFacade;
 import shared.modal.Batch;
 import shared.modal.Project;
 
 public class BatchState {
 	
-	private ArrayList<BatchStateListener> listeners = new ArrayList<BatchStateListener>();
-	private String[][] values;
+	private transient ArrayList<BatchStateListener> listeners = new ArrayList<BatchStateListener>();
+	
+	private transient String[][] values;
 	private Cell selectedCell;
 	private Project project;
 	private Batch batch;
 		
-	private static BatchState instance = null;
+	private transient static BatchState instance = null;
+	
+	private static XStream stream = new XStream(new DomDriver());
+	
+	private BatchState() {
+		
+	}
 	
 	public static BatchState singleton() {
 		if (instance == null) {
-			return new BatchState();
+			instance = new BatchState();
+			return instance;
 		} else {
 			return instance;
 		}
@@ -26,6 +40,42 @@ public class BatchState {
 	//Listeners
 	public static void addBatchStateListener(BatchStateListener listener) {
 		BatchState.singleton().listeners.add(listener);
+	}
+	
+	//Methods
+	public static void save() {
+		try {
+			String path = "user_state/" + ClientFacade.getUsername() + ".xml";
+			FileOutputStream fileOutput = new FileOutputStream(path);
+			stream.toXML(BatchState.singleton(), fileOutput);
+			fileOutput.close();
+			
+		} catch (Exception e) {
+			
+		}
+		
+	}
+	
+	public static void load(String username) {
+		BatchState state = null;
+		try {
+			String path = "user_state/" + ClientFacade.getUsername() + ".xml";
+			FileInputStream fileIn = new FileInputStream(path);
+	        state = (BatchState)stream.fromXML(fileIn);
+	        fileIn.close();
+	        
+	        System.out.println("Loaded Batch: " + state.batch);
+	        
+	        state.listeners = BatchState.singleton().listeners;
+	        instance = state;
+	        
+	        for (BatchStateListener listener : BatchState.singleton().listeners) {
+				listener.newBatchDownloaded(BatchState.getBatch(), BatchState.getProject());
+			}
+	        
+		} catch (Exception e) {
+			
+		}
 	}
 	
 	//Getters and Setters

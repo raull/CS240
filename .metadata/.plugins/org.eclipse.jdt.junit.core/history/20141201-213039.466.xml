@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="test" project="Record_Indexer" tests="62" started="62" failures="0" errors="0" ignored="0">
+  <testsuite name="server.ServerUnitTests" time="16.812">
+    <testcase name="validateUserTest" classname="server.ServerUnitTests" time="1.181"/>
+    <testcase name="invalidUserTest" classname="server.ServerUnitTests" time="1.024"/>
+    <testcase name="invalidInputUserTest" classname="server.ServerUnitTests" time="0.007"/>
+    <testcase name="getProjectsTest" classname="server.ServerUnitTests" time="1.031"/>
+    <testcase name="getProjectsInvalidTest" classname="server.ServerUnitTests" time="0.004"/>
+    <testcase name="getSampleImageTest" classname="server.ServerUnitTests" time="2.05"/>
+    <testcase name="downloadBatchTest" classname="server.ServerUnitTests" time="2.107"/>
+    <testcase name="getFieldsFromProjectTest" classname="server.ServerUnitTests" time="3.066"/>
+    <testcase name="getAllFieldsTest" classname="server.ServerUnitTests" time="1.044"/>
+    <testcase name="submitBatchTest" classname="server.ServerUnitTests" time="4.197"/>
+    <testcase name="searchTest" classname="server.ServerUnitTests" time="1.101"/>
+  </testsuite>
+  <testsuite name="server.access.BatchDAOTest" time="0.335">
+    <testcase name="testGetAll" classname="server.access.BatchDAOTest" time="0.041"/>
+    <testcase name="testAdd" classname="server.access.BatchDAOTest" time="0.03"/>
+    <testcase name="testAddingValue" classname="server.access.BatchDAOTest" time="0.038"/>
+    <testcase name="testGet" classname="server.access.BatchDAOTest" time="0.031"/>
+    <testcase name="testUpdate" classname="server.access.BatchDAOTest" time="0.036"/>
+    <testcase name="testDelete" classname="server.access.BatchDAOTest" time="0.036"/>
+    <testcase name="testInvalidFilePathAdd" classname="server.access.BatchDAOTest" time="0.031"/>
+    <testcase name="testInvalidFilePathUpdate" classname="server.access.BatchDAOTest" time="0.039"/>
+    <testcase name="testEmptyFilePathAdd" classname="server.access.BatchDAOTest" time="0.023"/>
+    <testcase name="testEmptyFilePathUpdate" classname="server.access.BatchDAOTest" time="0.029"/>
+  </testsuite>
+  <testsuite name="server.access.ValueDAOTest" time="0.238">
+    <testcase name="testGetAll" classname="server.access.ValueDAOTest" time="0.037"/>
+    <testcase name="testAdd" classname="server.access.ValueDAOTest" time="0.025"/>
+    <testcase name="testGet" classname="server.access.ValueDAOTest" time="0.035"/>
+    <testcase name="testUpdate" classname="server.access.ValueDAOTest" time="0.043"/>
+    <testcase name="testDelete" classname="server.access.ValueDAOTest" time="0.041"/>
+    <testcase name="testNegativeRowNumberAdd" classname="server.access.ValueDAOTest" time="0.025"/>
+    <testcase name="testNegativeRowNumberUpdate" classname="server.access.ValueDAOTest" time="0.031"/>
+  </testsuite>
+  <testsuite name="server.access.FieldDAOTest" time="0.368">
+    <testcase name="testGetAll" classname="server.access.FieldDAOTest" time="0.023"/>
+    <testcase name="testAdd" classname="server.access.FieldDAOTest" time="0.043"/>
+    <testcase name="testGet" classname="server.access.FieldDAOTest" time="0.044"/>
+    <testcase name="testUpdate" classname="server.access.FieldDAOTest" time="0.048"/>
+    <testcase name="testDelete" classname="server.access.FieldDAOTest" time="0.047"/>
+    <testcase name="testInvalidTiTleAdd" classname="server.access.FieldDAOTest" time="0.035"/>
+    <testcase name="testNegativeXCoordAdd" classname="server.access.FieldDAOTest" time="0.027"/>
+    <testcase name="testNegativeColumnNumberAdd" classname="server.access.FieldDAOTest" time="0.028"/>
+    <testcase name="testNegativeWidthAdd" classname="server.access.FieldDAOTest" time="0.034"/>
+    <testcase name="testInvalidHelpHTMLUpdate" classname="server.access.FieldDAOTest" time="0.039"/>
+  </testsuite>
+  <testsuite name="server.access.UserDAOTest" time="0.259">
+    <testcase name="testInvalidAdd" classname="server.access.UserDAOTest" time="0.026"/>
+    <testcase name="testInvalidUpdate" classname="server.access.UserDAOTest" time="0.025"/>
+    <testcase name="testGetAll" classname="server.access.UserDAOTest" time="0.039"/>
+    <testcase name="testAdd" classname="server.access.UserDAOTest" time="0.036"/>
+    <testcase name="testGet" classname="server.access.UserDAOTest" time="0.042"/>
+    <testcase name="testUpdate" classname="server.access.UserDAOTest" time="0.043"/>
+    <testcase name="testDelete" classname="server.access.UserDAOTest" time="0.048"/>
+  </testsuite>
+  <testsuite name="server.access.ProjectDAOTest" time="0.492">
+    <testcase name="testAddingField" classname="server.access.ProjectDAOTest" time="0.047"/>
+    <testcase name="testAddingBatch" classname="server.access.ProjectDAOTest" time="0.044"/>
+    <testcase name="testEmptyTitleAdd" classname="server.access.ProjectDAOTest" time="0.028"/>
+    <testcase name="testInvalidTitleAdd" classname="server.access.ProjectDAOTest" time="0.018"/>
+    <testcase name="testNegativeRecordsPerBatchAdd" classname="server.access.ProjectDAOTest" time="0.026"/>
+    <testcase name="testNegativeFirstCoordinateAdd" classname="server.access.ProjectDAOTest" time="0.022"/>
+    <testcase name="testNegativeRecordHeightAdd" classname="server.access.ProjectDAOTest" time="0.018"/>
+    <testcase name="testEmptyTitleUpdate" classname="server.access.ProjectDAOTest" time="0.022"/>
+    <testcase name="testInvalidTitleUpdate" classname="server.access.ProjectDAOTest" time="0.035"/>
+    <testcase name="testNegativeRecordsPerBatchUpdate" classname="server.access.ProjectDAOTest" time="0.025"/>
+    <testcase name="testNegativeFirstCoordinateUpdate" classname="server.access.ProjectDAOTest" time="0.028"/>
+    <testcase name="testNegativeRecordHeightUpdate" classname="server.access.ProjectDAOTest" time="0.036"/>
+    <testcase name="testGetAll" classname="server.access.ProjectDAOTest" time="0.026"/>
+    <testcase name="testAdd" classname="server.access.ProjectDAOTest" time="0.022"/>
+    <testcase name="testGet" classname="server.access.ProjectDAOTest" time="0.027"/>
+    <testcase name="testUpdate" classname="server.access.ProjectDAOTest" time="0.038"/>
+    <testcase name="testDelete" classname="server.access.ProjectDAOTest" time="0.03"/>
+  </testsuite>
+</testrun>

@@ -21,7 +21,7 @@ public class Batch {
 	/** The status of the batch represented as an integer, -1 = not started, 0 = started, 1 = completed */
 	private int status;
 	/** The values on this batch */
-	private ArrayList<Value> values = new ArrayList<Value>();
+	private transient ArrayList<Value> values = new ArrayList<Value>();
 	/** The project id that the batch belongs to*/
 	private int projectId;
 	

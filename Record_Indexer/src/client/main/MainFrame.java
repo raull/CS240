@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 
 import shared.modal.Batch;
 import shared.modal.Project;
@@ -35,6 +37,8 @@ public class MainFrame extends JFrame {
 	private ArrayList<MainFrameListener> listeners = new ArrayList<MainFrameListener>();
 	private BatchImageComponent imageComponent;
 	
+	private JTabbedPane inputTabbedPane;
+	
 	public MainFrame() {
 		super();
 		setupGUI();
@@ -51,8 +55,13 @@ public class MainFrame extends JFrame {
 		//Set Button Bar
 		setButtonBar();
 		
+		//Set TabPane
+		setTabPane();
+		
 		//Set JSpliPanes
 		setSpliPanes();
+		
+
 				
 		//Set Download Batch Dialog
 		downloadBatchDialog.addDownloadBatchDialogListener(new DownloadBatchDialogListener() {
@@ -82,12 +91,16 @@ public class MainFrame extends JFrame {
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
 		topPanel.setPreferredSize(this.getSize());
-
+		
+		System.out.println("Main Frame Size: " + this.getSize());
+		
 		try {
 
 			URL url = new URL("http://localhost:8080/images/1890_image0.png");
-			imageComponent = new BatchImageComponent(ImageIO.read(url));
+			BufferedImage batchImage = ImageIO.read(url);
+			imageComponent = new BatchImageComponent(batchImage, this.getSize());
 			imageComponent.setPreferredSize(topPanel.getSize());
+			
 			
 			topPanel.add(imageComponent);
 
@@ -101,7 +114,7 @@ public class MainFrame extends JFrame {
 		JPanel righPanel = new JPanel();
 		righPanel.setBackground(new Color(100, 100, 100));
 		
-		JSplitPane hSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, leftPanel, righPanel);
+		JSplitPane hSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, inputTabbedPane, righPanel);
 		hSplitPane.setDividerLocation(this.getSize().width/2);
 		JSplitPane vSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, topPanel, hSplitPane);
 		vSplitPane.setDividerLocation(this.getSize().height/3 * 2);
@@ -155,8 +168,22 @@ public class MainFrame extends JFrame {
 			}
 		});
 		JButton invertImageButton = new JButton("Invert Image");
+		invertImageButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				imageComponent.invertImage();
+			}
+		});
 		JButton toggleHighlightButton = new JButton("Toggle Highlight");
 		JButton saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BatchState.save();
+			}
+		});
 		JButton submitButton = new JButton("Submit");
 		
 		buttonBarPanel.add(zoomInButton);
@@ -167,6 +194,17 @@ public class MainFrame extends JFrame {
 		buttonBarPanel.add(submitButton);
 		
 		this.getContentPane().add(buttonBarPanel);
+	}
+	
+	private void setTabPane() {
+		inputTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		JPanel tableEntryPanel = new JPanel();
+		inputTabbedPane.addTab("Table Entry", tableEntryPanel);
+		
+		JPanel formEntryPanel = new JPanel();
+		inputTabbedPane.addTab("Form Entry", formEntryPanel);
+		
 	}
 	
 	private void setNewBatch(Project project, Batch batch) {

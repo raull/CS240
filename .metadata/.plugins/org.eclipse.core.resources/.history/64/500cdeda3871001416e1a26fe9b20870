@@ -1,7 +1,0 @@
-package client.batch.state;
-
-public class Cell {
-	
-	private int row;
-	private int column;
-}

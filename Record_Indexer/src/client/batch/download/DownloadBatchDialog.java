@@ -115,6 +115,7 @@ public class DownloadBatchDialog extends JDialog {
 					
 					for (DownloadBatchDialogListener listener : listeners) {
 						listener.newBatchDownloaded(selectedProject, newBatch);
+						DownloadBatchDialog.this.setVisible(false);
 					}
 				} catch (Exception e2) {
 					
