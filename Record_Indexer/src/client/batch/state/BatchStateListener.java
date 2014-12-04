@@ -7,5 +7,5 @@ public interface BatchStateListener {
 	
 	public void selectedCellChanged(Cell newSelectedCell);
 	
-	public void newBatchDownloaded(Batch newBatch, Project newProject);
+	public void newBatchLoaded(Batch newBatch, Project newProject);
 }

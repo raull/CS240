@@ -15,9 +15,18 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
+
+import shared.modal.Batch;
+import shared.modal.Field;
+import shared.modal.Project;
+import client.batch.state.BatchState;
+import client.batch.state.BatchStateListener;
+import client.batch.state.Cell;
 
 @SuppressWarnings("serial")
 public class BatchImageComponent extends JComponent {
@@ -29,7 +38,9 @@ public class BatchImageComponent extends JComponent {
 	
 	private DrawingImage drawingImage;
 	private DrawingRect selectionRect;
-		
+	
+	private Boolean highlight = true;
+	
 	//Mouse event Instance Fields
 	private int xDragStart;
 	private int yDragStart;
@@ -52,19 +63,17 @@ public class BatchImageComponent extends JComponent {
 		
 		super();
 		
-		scale = 1;
+		scale = 0.5;
 		
 		resetDrag();
 		
 		batchImage = image;
-		
-		double aspectRatio = (double)image.getHeight()/(double)image.getWidth();
+						
+		drawingImage = new DrawingImage(image, new Rectangle2D.Double(0, 0, image.getWidth(), image.getHeight()));
+		selectionRect = new DrawingRect(new Rectangle2D.Double(0, 0, 0, 0), new Color(41,153,240,80));
 				
-		drawingImage = new DrawingImage(image, new Rectangle2D.Double(0, 0, dimension.getWidth(), dimension.getWidth()*aspectRatio));
-		selectionRect = new DrawingRect(new Rectangle2D.Double(0, 0, 0, 0), new Color(50,50,50,50));
-		
-		w_center_X = (int)drawingImage.rect.getWidth()/2;
-		w_center_Y = (int)drawingImage.rect.getHeight()/2;
+		w_center_X = (int)drawingImage.rect.getCenterX();
+		w_center_Y = (int)drawingImage.rect.getCenterY();
 		
 		panelCenterX = (int)dimension.width/2;
 		panelCenterY = (int)dimension.height/2;
@@ -77,6 +86,8 @@ public class BatchImageComponent extends JComponent {
 		
 		shapes.add(drawingImage);
 		shapes.add(selectionRect);
+				
+		BatchState.addBatchStateListener(new BatchListener());
 	}
 	
 	
@@ -137,12 +148,64 @@ public class BatchImageComponent extends JComponent {
 		repaint();
 	}
 	
+	public void imageClicked(Point2D point) {
+		int x = (int)point.getX();
+		int y = (int)point.getY();
+		int width = 0;
+		int heigth = BatchState.getProject().getRecordHeight();
+		int drawX = 0;
+		int drawY = 0;
+		Project currentProject = BatchState.getProject();
+		
+		//Determine the row
+		if (y < currentProject.getFirstYCood() || y > currentProject.getFirstYCood() + currentProject.getRecordsPerBatch()*currentProject.getRecordHeight()) {
+			return;
+		} else {
+			int row = (int)((y-currentProject.getFirstYCood())/currentProject.getRecordHeight());
+			drawY = row * currentProject.getRecordHeight() + currentProject.getFirstYCood();
+		}
+		
+		//Determine the row
+		for (Field field : BatchState.getProject().getFields()) {
+			if (field.getxCoord() < x && field.getxCoord() + field.getWidth() > x) {
+				width = field.getWidth();
+				drawX = field.getxCoord();
+			}
+		}
+		
+		Point2D worldPoint = new Point2D.Double(drawX, drawY);
+		Point2D devicePoint = new Point2D.Double();
+		
+		AffineTransform transform = new AffineTransform();
+		
+		transform.translate(panelCenterX, panelCenterY);
+		transform.scale(scale, scale);
+		transform.translate(-w_center_X, -w_center_Y);
+		
+		
+		try {
+			transform.transform(worldPoint, devicePoint);
+		} catch (Exception e2) {
+			return;
+		}
+		
+		selectionRect.rect = new Rectangle2D.Double(drawX, drawY, width, heigth);
+		
+		repaint();
+	}
+	
+	
 	///////////////////////
 	//Getters and Setters//
 	///////////////////////
 	
 	public void setImage(BufferedImage image) {
 		this.batchImage = image;
+		drawingImage.image = image;
+				
+		drawingImage.rect = new Rectangle2D.Double(0, 0, image.getWidth(), image.getHeight());
+		
+		repaint();
 	}
 	
 	public Image getImage() {
@@ -161,12 +224,60 @@ public class BatchImageComponent extends JComponent {
 		return this.scale;
 	}
 	
+	public void toggleHighlight () {
+		highlight = !highlight;
+		BatchState.setHighlight(highlight);
+		repaint();
+	}
+	
 	
 	////////////////
 	//Mouse Events//
 	////////////////
 	
 	private MouseAdapter mouseAdapter = new MouseAdapter() {
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int deviceX = e.getX();
+			int deviceY = e.getY();
+			
+			
+			Point2D devicePoint = new Point2D.Double(deviceX, deviceY);
+			Point2D worldPoint = new Point2D.Double();
+			
+			AffineTransform transform = new AffineTransform();
+			
+			transform.translate(panelCenterX, panelCenterY);
+			transform.scale(scale, scale);
+			transform.translate(-w_center_X, -w_center_Y);
+			
+			
+			try {
+				transform.inverseTransform(devicePoint, worldPoint);
+			} catch (Exception e2) {
+				return;
+			}
+			
+			Graphics2D g2 = (Graphics2D)getGraphics();
+			
+			int worldX = (int)worldPoint.getX();
+			int worldY = (int)worldPoint.getY();
+			
+			
+			boolean hitShape = false;
+			
+			for (DrawingShape drawingShape : shapes) {
+				hitShape = drawingShape.contains(g2, worldX, worldY);
+				if (hitShape) {
+					break;
+				}
+			}
+			
+			if (hitShape) {
+				imageClicked(worldPoint);
+			}
+		}
 		
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -329,6 +440,14 @@ public class BatchImageComponent extends JComponent {
 
 		@Override
 		public void draw(Graphics2D g2) {
+			if (highlight) {
+				Color newColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), 80);
+				color = newColor;
+			} else {
+				Color newColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), 0);
+				color = newColor;
+			}
+			
 			g2.setColor(color);
 			g2.fill(rect);
 		}
@@ -337,6 +456,30 @@ public class BatchImageComponent extends JComponent {
 		public Rectangle2D getBounds(Graphics2D g2) {
 			return rect.getBounds2D();
 		}
+	}
+	
+	////////////////////////
+	//Batch State Listener//
+	////////////////////////
+	
+	class BatchListener implements BatchStateListener {
+
+		@Override
+		public void selectedCellChanged(Cell newSelectedCell) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void newBatchLoaded(Batch newBatch, Project newProject) {
+			try {
+				URL url = new URL(newBatch.getFilePath());
+				BufferedImage batchImage = ImageIO.read(url);
+				setImage(batchImage);
+			} catch (Exception e) {
+			}
+		}
+		
 	}
 	
 }

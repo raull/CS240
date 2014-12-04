@@ -19,6 +19,7 @@ public class BatchState {
 	private Cell selectedCell;
 	private Project project;
 	private Batch batch;
+	private Boolean highlight = true;
 		
 	private transient static BatchState instance = null;
 	
@@ -70,7 +71,7 @@ public class BatchState {
 	        instance = state;
 	        
 	        for (BatchStateListener listener : BatchState.singleton().listeners) {
-				listener.newBatchDownloaded(BatchState.getBatch(), BatchState.getProject());
+				listener.newBatchLoaded(BatchState.getBatch(), BatchState.getProject());
 			}
 	        
 		} catch (Exception e) {
@@ -131,4 +132,11 @@ public class BatchState {
 		BatchState.singleton().batch = batch;
 	}
 	
+	public static void setHighlight(Boolean highlight) {
+		BatchState.singleton().highlight = highlight;
+	}
+	
+	public static Boolean getHighlight() {
+		return BatchState.singleton().highlight;
+	}
 }

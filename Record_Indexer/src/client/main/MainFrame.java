@@ -176,6 +176,13 @@ public class MainFrame extends JFrame {
 			}
 		});
 		JButton toggleHighlightButton = new JButton("Toggle Highlight");
+		toggleHighlightButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				imageComponent.toggleHighlight();
+			}
+		});
 		JButton saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
 			
