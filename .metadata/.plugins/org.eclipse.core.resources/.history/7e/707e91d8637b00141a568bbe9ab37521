@@ -1,0 +1,37 @@
+package client.batch.input;
+
+import javax.swing.table.AbstractTableModel;
+
+import client.batch.state.BatchState;
+
+@SuppressWarnings("serial")
+public class BatchTableModel extends AbstractTableModel {
+
+	@Override
+	public int getRowCount() {
+		if (BatchState.getProject() == null) {
+			return 0;
+		}
+		
+		return BatchState.getProject().getRecordsPerBatch() + 1;
+	}
+
+	@Override
+	public int getColumnCount() {
+		if (BatchState.getProject() == null) {
+			return 0;
+		}
+		
+		return BatchState.getProject().getFields().size();
+	}
+
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		if (rowIndex == 0) {
+			return BatchState.getProject().getFields().get(columnIndex).getTitle();
+		}
+		
+		return "";
+	}
+
+}

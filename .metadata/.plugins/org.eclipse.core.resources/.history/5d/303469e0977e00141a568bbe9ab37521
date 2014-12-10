@@ -1,0 +1,91 @@
+package client.batch.input;
+
+import java.util.ArrayList;
+
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+
+import shared.modal.Batch;
+import shared.modal.Field;
+import shared.modal.Project;
+import client.batch.state.BatchState;
+import client.batch.state.BatchStateListener;
+import client.batch.state.Cell;
+
+@SuppressWarnings("serial")
+public class BatchFormEntryComponent extends JComponent {
+	
+	private JList<String> rowList;
+	private JPanel entryPanel;
+	
+	public BatchFormEntryComponent() {
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		
+		//Set List properties
+		rowList = new JList<String>();
+		rowList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane listScrollPane = new JScrollPane(rowList);
+		
+		//Set Entry Panel properties
+		entryPanel = new JPanel();
+		entryPanel.setLayout(new BoxLayout(entryPanel, BoxLayout.Y_AXIS));
+		JScrollPane entryPanelScrollPane = new JScrollPane(entryPanel);
+		
+		//Add Scroll Panes
+		this.add(listScrollPane);
+		this.add(entryPanelScrollPane);
+		
+		BatchState.addBatchStateListener(new FormEntryBatchStateListener());
+	}
+	
+	private void setupGUI() {
+		//Setup list
+		int rowNum = BatchState.getProject().getRecordsPerBatch();
+		String[] rowTitles = new String[rowNum];
+		for (int i = 0; i < rowNum; i++) {
+			rowTitles[i] = "" + (i+1);
+		}
+		
+		rowList.setListData(rowTitles);
+		
+		//Set up fields
+		
+		ArrayList<Field> fields = BatchState.getProject().getFields();
+		
+		for (Field field : fields) {
+			JPanel fieldPanel = new JPanel();
+			fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.X_AXIS));
+			
+			JLabel fielLabel = new JLabel(field.getTitle());
+			fieldPanel.add(fielLabel);
+			JTextField fieldTextField = new JTextField();
+			fieldPanel.add(fieldTextField);
+			
+			entryPanel.add(fieldPanel);
+		}
+	}
+	
+	
+	private class FormEntryBatchStateListener implements BatchStateListener {
+
+		@Override
+		public void selectedCellChanged(Cell newSelectedCell) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void newBatchLoaded(Batch newBatch, Project newProject) {
+			//Reset UI
+			setupGUI();
+		}
+		
+	}
+
+}

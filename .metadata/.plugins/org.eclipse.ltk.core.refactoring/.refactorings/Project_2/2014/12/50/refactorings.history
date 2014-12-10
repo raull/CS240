@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 5 elements to &apos;Record_Indexer/src/client.spell&apos;&#x0A;- Original project: &apos;Project_2&apos;&#x0A;- Destination element: &apos;Record_Indexer/src/client.spell&apos;&#x0A;- Original elements:&#x0A;     spell.TrieDataStructure.java&#x0A;     spell.Trie.java&#x0A;     spell.SpellCorrector.java&#x0A;     spell.SpellingCorrector.java&#x0A;     spell.StringTransformation.java" description="Copy compilation units" destination="=Record_Indexer/src&lt;client.spell" element1="/src&lt;spell{TrieDataStructure.java" element2="/src&lt;spell{Trie.java" element3="/src&lt;spell{SpellCorrector.java" element4="/src&lt;spell{SpellingCorrector.java" element5="/src&lt;spell{StringTransformation.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1418155514349" units="5" version="1.0"/>
+</session>

@@ -1,0 +1,55 @@
+package client.batch.info;
+
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JEditorPane;
+
+import shared.modal.Batch;
+import shared.modal.Project;
+import client.batch.state.BatchState;
+import client.batch.state.BatchStateListener;
+import client.batch.state.Cell;
+
+@SuppressWarnings("serial")
+public class FieldInfoComponent extends JComponent {
+
+	private JEditorPane htmlViewer;
+	
+	public FieldInfoComponent() {
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		htmlViewer = new JEditorPane();
+		
+		BatchState.addBatchStateListener(new FieldInfoBatchStateListener());
+		
+		this.add(htmlViewer);
+	}
+	
+	public void setURL(String url) {
+		
+	}
+	
+	
+	private class FieldInfoBatchStateListener implements BatchStateListener {
+
+		@Override
+		public void selectedCellChanged(Cell newSelectedCell) {
+			
+			
+		}
+
+		@Override
+		public void newBatchLoaded(Batch newBatch, Project newProject) {
+			// Do nothing
+			
+		}
+
+		@Override
+		public void valueChanged(Cell editedCell, String value) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	
+}

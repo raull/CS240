@@ -4,10 +4,11 @@ import image.editor.ImageEditor;
 import image.editor.Pixel;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -34,12 +35,15 @@ public class BatchImageComponent extends JComponent {
 	private BufferedImage batchImage;
 	private ArrayList<DrawingShape> shapes = new ArrayList<DrawingShape>();
 	
-	private double scale;
+	private Component presenter;
 	
 	private DrawingImage drawingImage;
 	private DrawingRect selectionRect;
 	
+	//State 
 	private Boolean highlight = true;
+	private double scale;
+	private Boolean inverted = false;
 	
 	//Mouse event Instance Fields
 	private int xDragStart;
@@ -51,17 +55,16 @@ public class BatchImageComponent extends JComponent {
 	private int w_center_X;
 	private int w_center_Y;
 	
-	private int panelCenterX;
-	private int panelCenterY;
-	
 	private int xDragOriginStart;
 	private int yDragOriginStart;
 		
 	private boolean isDragging = false;
 		
-	public BatchImageComponent(BufferedImage image , Dimension dimension) {
+	public BatchImageComponent(BufferedImage image , Component presenter) {
 		
 		super();
+		
+		this.presenter = presenter;
 		
 		scale = 0.5;
 		
@@ -75,9 +78,6 @@ public class BatchImageComponent extends JComponent {
 		w_center_X = (int)drawingImage.rect.getCenterX();
 		w_center_Y = (int)drawingImage.rect.getCenterY();
 		
-		panelCenterX = (int)dimension.width/2;
-		panelCenterY = (int)dimension.height/2;
-		
 		this.setBackground(new Color(100, 100, 100));
 				
 		this.addMouseListener(mouseAdapter);
@@ -88,6 +88,7 @@ public class BatchImageComponent extends JComponent {
 		shapes.add(selectionRect);
 				
 		BatchState.addBatchStateListener(new BatchListener());
+		
 	}
 	
 	
@@ -99,12 +100,11 @@ public class BatchImageComponent extends JComponent {
 		Graphics2D g2 = (Graphics2D)g;
 		drawBackground(g2);
 		
-		g2.translate(panelCenterX, panelCenterY);
+		g2.translate(this.getWidth()/2, this.getHeight()/2);
 		g2.scale(scale, scale);
 		g2.translate(-w_center_X, -w_center_Y);
-
-		drawShapes(g2);
 		
+		drawShapes(g2);
 	}
 	
 	private void drawShapes(Graphics2D g2) {
@@ -145,6 +145,9 @@ public class BatchImageComponent extends JComponent {
 			}
 		}
 		
+		inverted = !inverted;
+		BatchState.setInverted(inverted);
+		
 		repaint();
 	}
 	
@@ -155,13 +158,15 @@ public class BatchImageComponent extends JComponent {
 		int heigth = BatchState.getProject().getRecordHeight();
 		int drawX = 0;
 		int drawY = 0;
+		int row = 0;
+		int column = 0;
 		Project currentProject = BatchState.getProject();
 		
 		//Determine the row
 		if (y < currentProject.getFirstYCood() || y > currentProject.getFirstYCood() + currentProject.getRecordsPerBatch()*currentProject.getRecordHeight()) {
 			return;
 		} else {
-			int row = (int)((y-currentProject.getFirstYCood())/currentProject.getRecordHeight());
+			row = (int)((y-currentProject.getFirstYCood())/currentProject.getRecordHeight());
 			drawY = row * currentProject.getRecordHeight() + currentProject.getFirstYCood();
 		}
 		
@@ -170,26 +175,34 @@ public class BatchImageComponent extends JComponent {
 			if (field.getxCoord() < x && field.getxCoord() + field.getWidth() > x) {
 				width = field.getWidth();
 				drawX = field.getxCoord();
+				column = field.getColNumber();
 			}
 		}
 		
-		Point2D worldPoint = new Point2D.Double(drawX, drawY);
-		Point2D devicePoint = new Point2D.Double();
+		selectionRect.rect = new Rectangle2D.Double(drawX, drawY, width, heigth);
+		BatchState.setSelectedCell(new Cell(column, row));
+	}
+	
+	public void setSelectedCell(Cell selectedCell) {
 		
-		AffineTransform transform = new AffineTransform();
+		int drawX = 0;
+		int drawY = selectedCell.getRow() * BatchState.getProject().getRecordHeight()  + BatchState.getProject().getFirstYCood();
+		int width = 0;
+		int height = BatchState.getProject().getRecordHeight();
+		Cell newCell = new Cell(selectedCell.getColumn(), selectedCell.getRow());
 		
-		transform.translate(panelCenterX, panelCenterY);
-		transform.scale(scale, scale);
-		transform.translate(-w_center_X, -w_center_Y);
-		
-		
-		try {
-			transform.transform(worldPoint, devicePoint);
-		} catch (Exception e2) {
-			return;
+		if (newCell.getColumn() > 0) {
+			newCell.setColumn(selectedCell.getColumn() - 1);
 		}
 		
-		selectionRect.rect = new Rectangle2D.Double(drawX, drawY, width, heigth);
+		for (Field field : BatchState.getProject().getFields()) {
+			if (field.getColNumber() == (newCell.getColumn() + 1)) {
+				width = field.getWidth();
+				drawX = field.getxCoord();
+			}
+		}
+		
+		selectionRect.rect = new Rectangle2D.Double(drawX, drawY, width, height);
 		
 		repaint();
 	}
@@ -205,6 +218,14 @@ public class BatchImageComponent extends JComponent {
 				
 		drawingImage.rect = new Rectangle2D.Double(0, 0, image.getWidth(), image.getHeight());
 		
+		if (BatchState.getBatchImageCenter() != null) {
+			w_center_X = BatchState.getBatchImageCenter().x;
+			w_center_Y = BatchState.getBatchImageCenter().y;
+		} else {
+			w_center_X = this.batchImage.getWidth()/2;
+			w_center_Y = this.batchImage.getHeight()/2;
+		}
+		
 		repaint();
 	}
 	
@@ -214,7 +235,7 @@ public class BatchImageComponent extends JComponent {
 	
 	public void setScale(double scale) {
 		
-		if (scale >= .5 && scale <= 3 ) {
+		if (scale >= .2 && scale <= 3 ) {
 			this.scale = scale;
 			this.repaint();
 		}
@@ -248,7 +269,7 @@ public class BatchImageComponent extends JComponent {
 			
 			AffineTransform transform = new AffineTransform();
 			
-			transform.translate(panelCenterX, panelCenterY);
+			transform.translate(getWidth()/2, getHeight()/2);
 			transform.scale(scale, scale);
 			transform.translate(-w_center_X, -w_center_Y);
 			
@@ -291,7 +312,7 @@ public class BatchImageComponent extends JComponent {
 			
 			AffineTransform transform = new AffineTransform();
 			
-			transform.translate(panelCenterX, panelCenterY);
+			transform.translate(getWidth()/2, getHeight()/2);
 			transform.scale(scale, scale);
 			transform.translate(-w_center_X, -w_center_Y);
 			
@@ -337,7 +358,7 @@ public class BatchImageComponent extends JComponent {
 				
 				AffineTransform transform = new AffineTransform();
 				
-				transform.translate(panelCenterX, panelCenterY);
+				transform.translate(getWidth()/2, getHeight()/2);
 				transform.scale(scale, scale);
 				transform.translate(-xDragOriginStart, -yDragOriginStart);
 				
@@ -361,6 +382,7 @@ public class BatchImageComponent extends JComponent {
 				w_center_X = xDragOriginStart - deltaX;
 				w_center_Y = yDragOriginStart - deltaY;
 				
+				BatchState.setBatchImageCenter(new Point(w_center_X, w_center_Y));
 				
 				repaint();
 			}
@@ -375,8 +397,9 @@ public class BatchImageComponent extends JComponent {
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
 			
-			if ((e.getWheelRotation() > 0 && scale <= 3) || e.getWheelRotation() < 0 && scale >= 0.5) {
+			if ((e.getWheelRotation() > 0 && scale <= 3) || e.getWheelRotation() < 0 && scale >= 0.2) {
 				scale += (double)(e.getWheelRotation())/8;
+				BatchState.setScale(scale);
 			}
 			
 			repaint();
@@ -390,13 +413,13 @@ public class BatchImageComponent extends JComponent {
 	//////////////////////////////////////////
 	
 	
-	interface DrawingShape {
+	private interface DrawingShape {
 		boolean contains(Graphics2D g2, double x, double y);
 		void draw(Graphics2D g2);
 		Rectangle2D getBounds(Graphics2D g2);
 	}
 	
-	class DrawingImage implements DrawingShape {
+	private class DrawingImage implements DrawingShape {
 
 		private Image image;
 		private Rectangle2D rect;
@@ -423,7 +446,7 @@ public class BatchImageComponent extends JComponent {
 		}
 	}
 	
-	class DrawingRect implements DrawingShape {
+	private class DrawingRect implements DrawingShape {
 
 		private Rectangle2D rect;
 		private Color color;
@@ -462,12 +485,11 @@ public class BatchImageComponent extends JComponent {
 	//Batch State Listener//
 	////////////////////////
 	
-	class BatchListener implements BatchStateListener {
+	private class BatchListener implements BatchStateListener {
 
 		@Override
 		public void selectedCellChanged(Cell newSelectedCell) {
-			// TODO Auto-generated method stub
-			
+			setSelectedCell(newSelectedCell);
 		}
 
 		@Override
@@ -475,9 +497,21 @@ public class BatchImageComponent extends JComponent {
 			try {
 				URL url = new URL(newBatch.getFilePath());
 				BufferedImage batchImage = ImageIO.read(url);
+				highlight = BatchState.getHighlight();
+				scale = BatchState.getScale();
 				setImage(batchImage);
+				presenter.setLocation(BatchState.getMainFrameLocation());
+				presenter.setSize(BatchState.getMainFrameDimension());
+				if (BatchState.getInverted() != inverted) {
+					invertImage();
+				}
 			} catch (Exception e) {
 			}
+		}
+
+		@Override
+		public void valueChanged(Cell editedCell, String value) {
+			//Do nothing
 		}
 		
 	}

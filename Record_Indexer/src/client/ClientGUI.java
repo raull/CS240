@@ -14,12 +14,22 @@ import client.main.MainFrameListener;
 
 public class ClientGUI {
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					
-					final String host = "localhost";
-					final String port = "8080";
+					String host; 
+					String port; 
+					
+					if (args.length >= 2) {
+						host = args[0];
+						port = args[1];
+					} else {
+						host = "localhost";
+						port = "8080";
+					}
+					
+					
 					
 					final MainFrame mainFrame = new MainFrame();
 					final LoginDialog loginDialog = new LoginDialog(mainFrame);

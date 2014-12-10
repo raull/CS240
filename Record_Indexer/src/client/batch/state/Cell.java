@@ -4,13 +4,14 @@ public class Cell {
 	
 	private int row;
 	private int column;
-	private String value;
 	
-	public Cell(int column, int row, String value) {
+	public Cell(int column, int row) {
 		this.row = row;
 		this.column = column;
-		this.value = value;
 	}
+
+	
+	//Getters and Setters
 
 	/**
 	 * @return the row
@@ -38,23 +39,6 @@ public class Cell {
 	 */
 	public void setColumn(int column) {
 		this.column = column;
-	}
-
-	/**
-	 * @return the value
-	 */
-	public String getValue() {
-		return value;
-	}
-
-	/**
-	 * @param value the value to set
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
-	
-	//Getters and Setters
-	
+	}	
 	
 }

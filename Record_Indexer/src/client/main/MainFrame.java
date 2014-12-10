@@ -24,6 +24,9 @@ import shared.modal.Project;
 import client.batch.download.DownloadBatchDialog;
 import client.batch.download.DownloadBatchDialogListener;
 import client.batch.image.BatchImageComponent;
+import client.batch.info.FieldInfoComponent;
+import client.batch.input.BatchFormEntryComponent;
+import client.batch.input.BatchTableComponent;
 import client.batch.state.BatchState;
 import client.main.menu.FileMenuBar;
 import client.main.menu.FileMenuBarListener;
@@ -36,6 +39,9 @@ public class MainFrame extends JFrame {
 	
 	private ArrayList<MainFrameListener> listeners = new ArrayList<MainFrameListener>();
 	private BatchImageComponent imageComponent;
+	private BatchTableComponent tableComponent;
+	private BatchFormEntryComponent formEntryComponent;
+	private FieldInfoComponent infoComponent;
 	
 	private JTabbedPane inputTabbedPane;
 	
@@ -48,20 +54,6 @@ public class MainFrame extends JFrame {
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.setSize(new Dimension(900, 700));
 		this.setLocationRelativeTo(null);
-		
-		//Set JMenu
-		setFileMenuBar();
-		
-		//Set Button Bar
-		setButtonBar();
-		
-		//Set TabPane
-		setTabPane();
-		
-		//Set JSpliPanes
-		setSpliPanes();
-		
-
 				
 		//Set Download Batch Dialog
 		downloadBatchDialog.addDownloadBatchDialogListener(new DownloadBatchDialogListener() {
@@ -76,9 +68,24 @@ public class MainFrame extends JFrame {
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 		    public void windowClosing(WindowEvent windowEvent) {
+				BatchState.setMainFrameLocation(getLocation());
+				BatchState.setMainFrameDimension(getSize());
+				BatchState.save();
 		        System.exit(0);
 		    }
 		});
+		
+		//Set JMenu
+		setFileMenuBar();
+		
+		//Set Button Bar
+		setButtonBar();
+		
+		//Set TabPane
+		setTabPane();
+		
+		//Set JSpliPanes
+		setSpliPanes();
 	}
 	
 	private void setSpliPanes() {
@@ -91,14 +98,12 @@ public class MainFrame extends JFrame {
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
 		topPanel.setPreferredSize(this.getSize());
-		
-		System.out.println("Main Frame Size: " + this.getSize());
-		
+				
 		try {
 
 			URL url = new URL("http://localhost:8080/images/1890_image0.png");
 			BufferedImage batchImage = ImageIO.read(url);
-			imageComponent = new BatchImageComponent(batchImage, this.getSize());
+			imageComponent = new BatchImageComponent(batchImage, this);
 			imageComponent.setPreferredSize(topPanel.getSize());
 			
 			
@@ -107,14 +112,13 @@ public class MainFrame extends JFrame {
 		} catch (Exception e) {
 			System.out.println("Error loading Image");
 		}
+				
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+		infoComponent = new FieldInfoComponent();
+		rightPanel.add(infoComponent);
 		
-		JPanel leftPanel = new JPanel();
-		leftPanel.setBackground(new Color(100, 100, 100));
-		
-		JPanel righPanel = new JPanel();
-		righPanel.setBackground(new Color(100, 100, 100));
-		
-		JSplitPane hSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, inputTabbedPane, righPanel);
+		JSplitPane hSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, inputTabbedPane, rightPanel);
 		hSplitPane.setDividerLocation(this.getSize().width/2);
 		JSplitPane vSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, topPanel, hSplitPane);
 		vSplitPane.setDividerLocation(this.getSize().height/3 * 2);
@@ -206,10 +210,18 @@ public class MainFrame extends JFrame {
 	private void setTabPane() {
 		inputTabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		
+		//Set up Table Component
 		JPanel tableEntryPanel = new JPanel();
+		tableEntryPanel.setBackground(new Color(255, 255, 255));
+		tableEntryPanel.setLayout(new BoxLayout(tableEntryPanel, BoxLayout.Y_AXIS));
+		tableComponent = new BatchTableComponent();
+		tableEntryPanel.add(tableComponent);
 		inputTabbedPane.addTab("Table Entry", tableEntryPanel);
 		
 		JPanel formEntryPanel = new JPanel();
+		formEntryPanel.setLayout(new BoxLayout(formEntryPanel, BoxLayout.Y_AXIS));
+		formEntryComponent = new BatchFormEntryComponent();
+		formEntryPanel.add(formEntryComponent);
 		inputTabbedPane.addTab("Form Entry", formEntryPanel);
 		
 	}

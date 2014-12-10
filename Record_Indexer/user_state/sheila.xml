@@ -1,4 +1,71 @@
 <client.batch.state.BatchState>
+  <errorCells/>
+  <values>
+    <string-array>
+      <string>Male</string>
+      <string>Female</string>
+      <string>Male</string>
+      <string>Male</string>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+    </string-array>
+    <string-array>
+      <string>13</string>
+      <string>33</string>
+      <string>25</string>
+      <string>98</string>
+      <null/>
+      <null/>
+      <null/>
+      <string></string>
+      <null/>
+      <null/>
+    </string-array>
+    <string-array>
+      <string>Ellison</string>
+      <string>Mccall</string>
+      <string>Livingston</string>
+      <string>Gill</string>
+      <string></string>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+    </string-array>
+    <string-array>
+      <string>Ernesto</string>
+      <string>Stewart</string>
+      <string>Ericka</string>
+      <string>Monty</string>
+      <string></string>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+    </string-array>
+    <string-array>
+      <string>American indian</string>
+      <string>Alaska native</string>
+      <string>American indian</string>
+      <string>Hispanic</string>
+      <string>Asian</string>
+      <string></string>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+    </string-array>
+  </values>
+  <selectedCell>
+    <row>4</row>
+    <column>5</column>
+  </selectedCell>
   <project>
     <id>50</id>
     <title>1900 Census</title>
@@ -63,4 +130,19 @@
     <status>1</status>
     <projectId>50</projectId>
   </batch>
+  <highlight>true</highlight>
+  <inverted>false</inverted>
+  <mainFrameLocation>
+    <x>33</x>
+    <y>23</y>
+  </mainFrameLocation>
+  <batchImageCenter>
+    <x>768</x>
+    <y>445</y>
+  </batchImageCenter>
+  <mainFrameDimension>
+    <width>1175</width>
+    <height>729</height>
+  </mainFrameDimension>
+  <scale>0.375</scale>
 </client.batch.state.BatchState>
