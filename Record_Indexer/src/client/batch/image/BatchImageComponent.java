@@ -4,7 +4,6 @@ import image.editor.ImageEditor;
 import image.editor.Pixel;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -34,9 +33,7 @@ public class BatchImageComponent extends JComponent {
 	
 	private BufferedImage batchImage;
 	private ArrayList<DrawingShape> shapes = new ArrayList<DrawingShape>();
-	
-	private Component presenter;
-	
+		
 	private DrawingImage drawingImage;
 	private DrawingRect selectionRect;
 	
@@ -60,19 +57,17 @@ public class BatchImageComponent extends JComponent {
 		
 	private boolean isDragging = false;
 		
-	public BatchImageComponent(BufferedImage image , Component presenter) {
+	public BatchImageComponent() {
 		
 		super();
-		
-		this.presenter = presenter;
-		
+				
 		scale = 0.5;
 		
 		resetDrag();
 		
-		batchImage = image;
+		batchImage = null;
 						
-		drawingImage = new DrawingImage(image, new Rectangle2D.Double(0, 0, image.getWidth(), image.getHeight()));
+		drawingImage = new DrawingImage(null, new Rectangle2D.Double(0, 0, 100, 100));
 		selectionRect = new DrawingRect(new Rectangle2D.Double(0, 0, 0, 0), new Color(41,153,240,80));
 				
 		w_center_X = (int)drawingImage.rect.getCenterX();
@@ -108,8 +103,10 @@ public class BatchImageComponent extends JComponent {
 	}
 	
 	private void drawShapes(Graphics2D g2) {
-		for (DrawingShape drawingShape : shapes) {
-			drawingShape.draw(g2);
+		if (batchImage != null) {
+			for (DrawingShape drawingShape : shapes) {
+				drawingShape.draw(g2);
+			}
 		}
 	}
 	
@@ -224,6 +221,12 @@ public class BatchImageComponent extends JComponent {
 		} else {
 			w_center_X = this.batchImage.getWidth()/2;
 			w_center_Y = this.batchImage.getHeight()/2;
+		}
+		
+		if (BatchState.getScale() != 0) {
+			scale = BatchState.getScale();
+		} else {
+			scale = 0.5;
 		}
 		
 		repaint();
@@ -495,13 +498,12 @@ public class BatchImageComponent extends JComponent {
 		@Override
 		public void newBatchLoaded(Batch newBatch, Project newProject) {
 			try {
+				System.out.println("Got to this point");
 				URL url = new URL(newBatch.getFilePath());
 				BufferedImage batchImage = ImageIO.read(url);
 				highlight = BatchState.getHighlight();
 				scale = BatchState.getScale();
 				setImage(batchImage);
-				presenter.setLocation(BatchState.getMainFrameLocation());
-				presenter.setSize(BatchState.getMainFrameDimension());
 				if (BatchState.getInverted() != inverted) {
 					invertImage();
 				}

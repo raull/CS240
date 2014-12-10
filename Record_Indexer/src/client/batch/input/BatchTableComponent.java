@@ -23,9 +23,7 @@ public class BatchTableComponent extends JComponent {
 	private JScrollPane scrollPane;
 	private JTable table;
 	private BatchTableModel model;
-	
-	private Cell selectedCell;
-	
+		
 	public BatchTableComponent() {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -38,10 +36,9 @@ public class BatchTableComponent extends JComponent {
 		table.setModel(model);
 		table.setGridColor(new Color(0, 0, 0, 50));
 		table.addMouseListener(new TableSelectionListener());
-		table.setCellSelectionEnabled(false);
-		table.setFocusable(false);
+		table.setCellSelectionEnabled(true);
 		table.setDefaultRenderer(Object.class, new CellRenderer());
-		
+						
 		scrollPane = new JScrollPane(table);
 		this.add(scrollPane);
 				
@@ -52,9 +49,9 @@ public class BatchTableComponent extends JComponent {
 
 		@Override
 		public void selectedCellChanged(Cell newSelectedCell) {
-			selectedCell = newSelectedCell;
-			//table.clearSelection();
-			model.fireTableChanged(null);
+			table.changeSelection(newSelectedCell.getRow(), newSelectedCell.getColumn(), false, false);
+			model.fireTableCellUpdated(newSelectedCell.getRow(), newSelectedCell.getColumn());
+			table.repaint();
 		}
 
 		@Override
@@ -91,17 +88,28 @@ public class BatchTableComponent extends JComponent {
 			
 			Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			
+			//Check if the Cell needs to be red
 			if (column > 0 && BatchState.isCellError(new Cell(column-1, row))) {
 				c.setBackground(new Color(240, 24, 24, 80));
 				return c;
 			}
 			
-			if (selectedCell != null && selectedCell.getRow() == row && selectedCell.getColumn() == column ) {
+			//Check For cases of Cell Selection
+			if (hasFocus || isSelected) {
 				c.setBackground(new Color(41, 153, 240, 80));
-			} else {
+				
+				//Check if it is a new selected Cell
+				if (BatchState.getSelectedCell().getColumn() != column || BatchState.getSelectedCell().getRow() != row) {
+					BatchState.setSelectedCell(new Cell(column, row));
+				}
+
+			}else if(BatchState.getSelectedCell() != null && BatchState.getSelectedCell().getColumn() == column && BatchState.getSelectedCell().getRow() == row) {
+				c.setBackground(new Color(41, 153, 240, 80));
+			}else {
 				c.setBackground(Color.WHITE);
 			}
-						
+			
+			
 			return c;
 		}
 	}

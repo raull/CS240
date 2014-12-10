@@ -7,11 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.net.URL;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +25,8 @@ import client.batch.info.FieldInfoComponent;
 import client.batch.input.BatchFormEntryComponent;
 import client.batch.input.BatchTableComponent;
 import client.batch.state.BatchState;
+import client.batch.state.BatchStateListener;
+import client.batch.state.Cell;
 import client.main.menu.FileMenuBar;
 import client.main.menu.FileMenuBarListener;
 
@@ -43,6 +42,11 @@ public class MainFrame extends JFrame {
 	private BatchFormEntryComponent formEntryComponent;
 	private FieldInfoComponent infoComponent;
 	
+	private JSplitPane hSplitPane;
+	private JSplitPane vSplitPane;
+	
+	private FileMenuBar menuBar;
+	
 	private JTabbedPane inputTabbedPane;
 	
 	public MainFrame() {
@@ -53,8 +57,11 @@ public class MainFrame extends JFrame {
 	public void setupGUI() {
 		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.setSize(new Dimension(900, 700));
+		this.setMinimumSize(new Dimension(600,400));
 		this.setLocationRelativeTo(null);
 				
+		BatchState.addBatchStateListener(new MainFrameBatchStateListener());
+		
 		//Set Download Batch Dialog
 		downloadBatchDialog.addDownloadBatchDialogListener(new DownloadBatchDialogListener() {
 			
@@ -70,6 +77,8 @@ public class MainFrame extends JFrame {
 		    public void windowClosing(WindowEvent windowEvent) {
 				BatchState.setMainFrameLocation(getLocation());
 				BatchState.setMainFrameDimension(getSize());
+				BatchState.setHorizaontalDividerLocation(hSplitPane.getDividerLocation());
+				BatchState.setVerticalDividerLoction(vSplitPane.getDividerLocation());
 				BatchState.save();
 		        System.exit(0);
 		    }
@@ -88,6 +97,11 @@ public class MainFrame extends JFrame {
 		setSpliPanes();
 	}
 	
+	public void setDividerLocations(int vertical, int horizontal) {
+		hSplitPane.setDividerLocation(horizontal);
+		vSplitPane.setDividerLocation(vertical);
+	}
+	
 	private void setSpliPanes() {
 		//Split Panel
 		JPanel splitPanel = new JPanel();
@@ -100,10 +114,7 @@ public class MainFrame extends JFrame {
 		topPanel.setPreferredSize(this.getSize());
 				
 		try {
-
-			URL url = new URL("http://localhost:8080/images/1890_image0.png");
-			BufferedImage batchImage = ImageIO.read(url);
-			imageComponent = new BatchImageComponent(batchImage, this);
+			imageComponent = new BatchImageComponent();
 			imageComponent.setPreferredSize(topPanel.getSize());
 			
 			
@@ -118,17 +129,19 @@ public class MainFrame extends JFrame {
 		infoComponent = new FieldInfoComponent();
 		rightPanel.add(infoComponent);
 		
-		JSplitPane hSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, inputTabbedPane, rightPanel);
+		hSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, inputTabbedPane, rightPanel);
 		hSplitPane.setDividerLocation(this.getSize().width/2);
-		JSplitPane vSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, topPanel, hSplitPane);
+		hSplitPane.setResizeWeight(0.7);
+		vSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, topPanel, hSplitPane);
 		vSplitPane.setDividerLocation(this.getSize().height/3 * 2);
+		vSplitPane.setResizeWeight(0.6);
 		splitPanel.add(vSplitPane);
 		this.getContentPane().add(splitPanel);
 		
 	}
 	
 	private void setFileMenuBar() {
-		FileMenuBar menuBar = new FileMenuBar();
+		menuBar = new FileMenuBar();
 		menuBar.addFileMenuBarListener(new FileMenuBarListener() {
 			
 			@Override
@@ -239,5 +252,37 @@ public class MainFrame extends JFrame {
 	
 	public void addMainFrameListener(MainFrameListener listener) {
 		this.listeners.add(listener);
+	}
+	
+	private class MainFrameBatchStateListener implements BatchStateListener {
+
+		@Override
+		public void selectedCellChanged(Cell newSelectedCell) {
+			//Do nothing
+		}
+
+		@Override
+		public void newBatchLoaded(Batch newBatch, Project newProject) {
+			if (BatchState.getMainFrameLocation() != null) {
+				setLocation(BatchState.getMainFrameLocation());
+			}
+			
+			if (BatchState.getMainFrameDimension() != null) {
+				setSize(BatchState.getMainFrameDimension());
+			}
+			
+			if (BatchState.getHorizontalDividerLocation() != 0 && BatchState.getVerticalDividerLoction() != 0) {
+				setDividerLocations(BatchState.getVerticalDividerLoction(), BatchState.getHorizontalDividerLocation());
+			}
+			
+			menuBar.enableDownloadBatchItem(false);
+			
+		}
+
+		@Override
+		public void valueChanged(Cell editedCell, String value) {
+			//Do nothing
+		}
+		
 	}
 }

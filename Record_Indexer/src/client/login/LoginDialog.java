@@ -44,6 +44,7 @@ public class LoginDialog extends JDialog{
 		this.setSize(new Dimension(350, 130));
 		this.setMaximumSize(this.getSize());
 		this.setMinimumSize(this.getSize());
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		
 		//Set JPanel for username

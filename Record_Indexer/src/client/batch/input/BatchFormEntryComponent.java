@@ -1,6 +1,9 @@
 package client.batch.input;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -43,7 +46,7 @@ public class BatchFormEntryComponent extends JComponent {
 		
 		//Set Entry Panel properties
 		entryPanel = new JPanel();
-		entryPanel.setLayout(new BoxLayout(entryPanel, BoxLayout.Y_AXIS));
+		entryPanel.setLayout(new GridBagLayout());
 		JScrollPane entryPanelScrollPane = new JScrollPane(entryPanel);
 		
 		//Add Scroll Panes
@@ -53,9 +56,27 @@ public class BatchFormEntryComponent extends JComponent {
 		BatchState.addBatchStateListener(new FormEntryBatchStateListener());
 	}
 	
+	@Override
+	protected void paintComponent(Graphics g) {
+		Cell cell = new Cell(BatchState.getSelectedCell().getColumn(), BatchState.getSelectedCell().getRow());
+		
+		if (cell.getColumn() > 0) {
+			cell.setColumn(cell.getColumn() - 1);
+		}
+		
+		textFields.get(cell.getColumn()).requestFocus();
+	}
+	
 	private void setupGUI() {
 		//Setup list
 		int rowNum = BatchState.getProject().getRecordsPerBatch();
+		
+		entryPanel.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridwidth = GridBagConstraints.REMAINDER;
+		constraints.anchor = GridBagConstraints.NORTHWEST;
+		
 		String[] rowTitles = new String[rowNum];
 		for (int i = 0; i < rowNum; i++) {
 			rowTitles[i] = "" + (i+1);
@@ -71,9 +92,9 @@ public class BatchFormEntryComponent extends JComponent {
 			JPanel fieldPanel = new JPanel();
 			fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.X_AXIS));
 			
-			JLabel fielLabel = new JLabel(field.getTitle());
-			fieldPanel.add(fielLabel);
-			JTextField fieldTextField = new JTextField();
+			JLabel fieldLabel = new JLabel(field.getTitle());
+			fieldPanel.add(fieldLabel);
+			JTextField fieldTextField = new JTextField(20);
 			fieldTextField.addFocusListener(new FormEntryFocusListener(field.getColNumber() - 1));
 			fieldTextField.addKeyListener(new KeyAdapter() {
 				
@@ -96,7 +117,7 @@ public class BatchFormEntryComponent extends JComponent {
 			textFields.add(fieldTextField);
 			fieldPanel.add(fieldTextField);
 			
-			entryPanel.add(fieldPanel);
+			entryPanel.add(fieldPanel, constraints);
 		}
 	}
 	

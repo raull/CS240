@@ -46,6 +46,7 @@ public class DownloadBatchDialog extends JDialog {
 		this.setSize(new Dimension(400, 100));
 		this.setMaximumSize(this.getSize());
 		this.setMinimumSize(this.getSize());
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
@@ -112,11 +113,13 @@ public class DownloadBatchDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Batch newBatch = ClientFacade.downloadBatch(selectedProject);
-					
+										
 					for (DownloadBatchDialogListener listener : listeners) {
 						listener.newBatchDownloaded(selectedProject, newBatch);
-						DownloadBatchDialog.this.setVisible(false);
 					}
+					
+					DownloadBatchDialog.this.setVisible(false);
+
 				} catch (Exception e2) {
 					
 				}

@@ -1,0 +1,111 @@
+package client.batch.input;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+
+import shared.modal.Batch;
+import shared.modal.Project;
+import client.batch.state.BatchState;
+import client.batch.state.BatchStateListener;
+import client.batch.state.Cell;
+
+@SuppressWarnings("serial")
+public class BatchTableComponent extends JComponent {
+	
+	private JScrollPane scrollPane;
+	private JTable table;
+	private BatchTableModel model;
+	
+	private Cell selectedCell;
+	
+	public BatchTableComponent() {
+		super();
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setupGUI();
+	}
+	
+	private void setupGUI() {
+		model = new BatchTableModel();
+		table = new JTable();
+		table.setModel(model);
+		table.setGridColor(new Color(0, 0, 0, 50));
+		table.addMouseListener(new TableSelectionListener());
+		table.setRowSelectionAllowed(false);
+		table.setSelectionBackground(new Color(41, 153, 240, 80));
+		table.setDefaultRenderer(Object.class, new CellRenderer());
+		
+		scrollPane = new JScrollPane(table);
+		this.add(scrollPane);
+				
+		BatchState.addBatchStateListener(new BatchStateTableListener());
+	}
+	
+	private class BatchStateTableListener implements BatchStateListener {
+
+		@Override
+		public void selectedCellChanged(Cell newSelectedCell) {
+			selectedCell = newSelectedCell;
+			//table.clearSelection();
+			model.fireTableChanged(null);
+		}
+
+		@Override
+		public void newBatchLoaded(Batch newBatch, Project newProject) {
+			model.fireTableStructureChanged();
+			
+		}
+
+		@Override
+		public void valueChanged(Cell editedCell, String value) {
+			model.fireTableChanged(null);;	
+		}
+		
+	}
+	
+	private class TableSelectionListener extends MouseAdapter {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int row = table.rowAtPoint(e.getPoint());
+			int column = table.columnAtPoint(e.getPoint());
+			
+			Cell newCell = new Cell(column, row);
+			
+			BatchState.setSelectedCell(newCell);
+		}
+	}
+	
+	private class CellRenderer extends DefaultTableCellRenderer {
+		
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+			
+			Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			
+			if (column > 0 && BatchState.isCellError(new Cell(column-1, row))) {
+				c.setBackground(new Color(240, 24, 24, 80));
+				return c;
+			}
+			
+			if (selectedCell != null && selectedCell.getRow() == row && selectedCell.getColumn() == column ) {
+				c.setBackground(new Color(41, 153, 240, 80));
+			} else {
+				c.setBackground(Color.WHITE);
+			}
+			
+						
+			return c;
+		}
+	}
+	
+	
+}

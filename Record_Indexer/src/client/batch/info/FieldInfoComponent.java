@@ -6,6 +6,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
 
 import shared.modal.Batch;
+import shared.modal.Field;
 import shared.modal.Project;
 import client.batch.state.BatchState;
 import client.batch.state.BatchStateListener;
@@ -44,11 +45,17 @@ public class FieldInfoComponent extends JComponent {
 			
 			Cell cell = new Cell(newSelectedCell.getColumn(), newSelectedCell.getRow());
 			
-			if (cell.getColumn() > 0) {
-				cell.setColumn(cell.getColumn() - 1);
+			if (cell.getColumn() == 0) {
+				cell.setColumn(cell.getColumn() + 1);
 			}
 			
-			setURL(BatchState.getProject().getFields().get(cell.getColumn()).getHelpHtml());
+			for (Field field : BatchState.getProject().getFields()) {
+				if (field.getColNumber() == cell.getColumn()) {
+					String html =  field.getHelpHtml();
+					setURL(html);
+					break;
+				}
+			}
 		}
 
 		@Override

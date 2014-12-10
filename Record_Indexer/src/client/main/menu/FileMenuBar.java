@@ -69,4 +69,9 @@ public class FileMenuBar extends JMenuBar {
 		this.listeners.add(listener);
 	}
 	
+	public void setEnableDownloadBatch(Boolean enable) {
+		this.downloadBatchItem.setEnabled(enable);
+	}
+	
+	
 }

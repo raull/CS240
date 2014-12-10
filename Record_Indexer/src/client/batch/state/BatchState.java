@@ -34,6 +34,9 @@ public class BatchState {
 	private Point batchImageCenter;
 	private Dimension mainFrameDimension;
 	private double scale;
+	
+	private int hDividerLocation;
+	private int vDividerLoction;
 		
 	private transient static BatchState instance = null;
 	
@@ -87,6 +90,9 @@ public class BatchState {
 	        for (BatchStateListener listener : BatchState.singleton().listeners) {
 				listener.newBatchLoaded(BatchState.getBatch(), BatchState.getProject());
 			}
+	        
+	        //Select it by default
+	        BatchState.setSelectedCell(new Cell(1, 0));
 	        
 		} catch (Exception e) {
 			
@@ -166,6 +172,12 @@ public class BatchState {
 	 */
 	public static void setBatch(Batch batch) {
 		BatchState.singleton().batch = batch;
+		
+		//System.out.println("Listeners Size: " + BatchState.singleton().listeners.size());
+		
+		for (BatchStateListener listener : BatchState.singleton().listeners) {
+			listener.newBatchLoaded(BatchState.getBatch(), BatchState.getProject());
+		}
 	}
 	
 	public static void setHighlight(Boolean highlight) {
@@ -278,5 +290,33 @@ public class BatchState {
 		if (removeIndex >= 0) {
 			BatchState.singleton().errorCells.remove(removeIndex);
 		}
+	}
+
+	/**
+	 * @return the hDividerLocation
+	 */
+	public static int getHorizontalDividerLocation() {
+		return BatchState.singleton().hDividerLocation;
+	}
+
+	/**
+	 * @param hDividerLocation the hDividerLocation to set
+	 */
+	public static void setHorizaontalDividerLocation(int hDividerLocation) {
+		BatchState.singleton().hDividerLocation = hDividerLocation;
+	}
+
+	/**
+	 * @return the vDividerLoction
+	 */
+	public static int getVerticalDividerLoction() {
+		return BatchState.singleton().vDividerLoction;
+	}
+
+	/**
+	 * @param vDividerLoction the vDividerLoction to set
+	 */
+	public static void setVerticalDividerLoction(int vDividerLoction) {
+		BatchState.singleton().vDividerLoction = vDividerLoction;
 	}
 }
