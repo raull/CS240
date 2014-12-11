@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import org.ibex.nestedvm.util.Seekable;
+
 import shared.modal.Batch;
 import shared.modal.Project;
 import client.batch.state.BatchState;

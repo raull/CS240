@@ -34,7 +34,7 @@ public class BatchState {
 	private Point batchImageCenter;
 	private Dimension mainFrameDimension;
 	private double scale;
-		
+	
 	private int hDividerLocation;
 	private int vDividerLoction;
 		

@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -49,14 +48,6 @@ public class BatchTableComponent extends JComponent {
 		BatchState.addBatchStateListener(new BatchStateTableListener());
 	}
 	
-	private void showPopupMenu(int x, int y) {
-		popupMenu = new JPopupMenu();
-		JMenuItem suggestionItem = new JMenuItem("See Suggestions");
-		popupMenu.add(suggestionItem);
-		
-		popupMenu.show(this, x, y);
-	}
-	
 	private class BatchStateTableListener implements BatchStateListener {
 
 		@Override
@@ -92,8 +83,6 @@ public class BatchTableComponent extends JComponent {
 			//Check if it has an error
 			if (e.getButton() == MouseEvent.BUTTON3 && BatchState.isCellError(new Cell(column - 1, row))) {
 				System.out.println("Right Button Clicked");
-				
-				showPopupMenu(e.getX(), e.getY());
 			}
 			
 			BatchState.setSelectedCell(newCell);

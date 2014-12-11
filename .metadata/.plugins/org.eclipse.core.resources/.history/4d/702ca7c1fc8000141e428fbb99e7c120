@@ -34,7 +34,7 @@ public class BatchState {
 	private Point batchImageCenter;
 	private Dimension mainFrameDimension;
 	private double scale;
-		
+	
 	private int hDividerLocation;
 	private int vDividerLoction;
 		
@@ -244,10 +244,6 @@ public class BatchState {
 		for (Field field : fields) {
 			if (field.getColNumber() == cell.getColumn() + 1) {
 				try {
-					if (field.getKnownData() == null) {
-						return null;
-					}
-					
 					URL url = new URL(field.getKnownData());
 					String path = "Records" + url.getPath();
 					File dictionary = new File(path);

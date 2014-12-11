@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import org.ibex.nestedvm.util.Seekable;
+
 import shared.modal.Batch;
 import shared.modal.Project;
 import client.batch.state.BatchState;
@@ -50,11 +52,7 @@ public class BatchTableComponent extends JComponent {
 	}
 	
 	private void showPopupMenu(int x, int y) {
-		popupMenu = new JPopupMenu();
-		JMenuItem suggestionItem = new JMenuItem("See Suggestions");
-		popupMenu.add(suggestionItem);
 		
-		popupMenu.show(this, x, y);
 	}
 	
 	private class BatchStateTableListener implements BatchStateListener {
