@@ -1,0 +1,63 @@
+package client.spell.suggestion;
+
+import java.awt.Dimension;
+import java.util.ArrayList;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.JPanel;
+
+import client.batch.state.BatchState;
+import client.batch.state.Cell;
+
+@SuppressWarnings("serial")
+public class SuggestionDialog extends JDialog {
+
+	JList<String> suggestionList = new JList<String>();
+	Cell currentCell;
+	String word;
+	
+	public SuggestionDialog(Cell cell, String value) {
+		
+		currentCell = cell;
+		word = value;
+		
+		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.setSize(new Dimension(300, 400));
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		
+		setModal(true);
+		
+		setupGUI();
+	}
+	
+	private void setupGUI() {
+		//Set up suggestion List
+		ArrayList<String> suggestions = (ArrayList<String>)BatchState.checkValue(word, this.currentCell);
+		
+		String[] suggestionArray = new String[suggestions.size()];
+		
+		for (int i = 0; i < suggestions.size(); i++) {
+			suggestionArray[i] = suggestions.get(i);
+		}
+		
+		suggestionList.setListData(suggestionArray);
+		this.add(suggestionList);
+		
+		//Setup Buttons
+		JPanel buttonPanel = new JPanel();
+		JButton cancelButton = new JButton("Cancel");
+		JButton useButton = new JButton("Use Suggestion");
+		
+		buttonPanel.add(cancelButton);
+		buttonPanel.add(useButton);
+		
+		this.add(buttonPanel);
+		
+		useButton.setEnabled(false);
+		
+	}
+}

@@ -2,7 +2,6 @@ package client.batch.state;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URL;
@@ -22,8 +21,9 @@ public class BatchState {
 	
 	private transient ArrayList<BatchStateListener> listeners = new ArrayList<BatchStateListener>();
 	
+	//State values to save
 	private ArrayList<Cell> errorCells = new ArrayList<Cell>();
-	
+
 	private String[][] values;
 	private Cell selectedCell;
 	private Project project;
@@ -37,9 +37,11 @@ public class BatchState {
 		
 	private int hDividerLocation;
 	private int vDividerLoction;
-		
+			
+	//Singleton Instance
 	private transient static BatchState instance = null;
 	
+	//Serializer
 	private static XStream stream = new XStream(new DomDriver());
 	
 	private BatchState() {
@@ -54,6 +56,7 @@ public class BatchState {
 			return instance;
 		}
 	}
+	
 	
 	//Listeners
 	public static void addBatchStateListener(BatchStateListener listener) {
@@ -74,6 +77,7 @@ public class BatchState {
 		
 	}
 	
+	//Load state from memory
 	public static void load(String username) {
 		BatchState state = null;
 		try {
@@ -99,15 +103,32 @@ public class BatchState {
 		}
 	}
 	
+	//Restart Batch State parameters when a batch has been submitted
+	public static void restart() {
+		BatchState.setBatchSize(0, 0);
+		BatchState.setProject(null);
+		BatchState.setBatch(null);
+		BatchState.singleton().errorCells = new ArrayList<Cell>();
+		BatchState.save();
+	}
+	
 	//Getters and Setters
 	public static void setBatchSize(int numColumns, int numRows) {
 		BatchState.singleton().values = new String[numColumns][numRows];
 	}
 	
+	public static String[][] getAllValues() {
+		return BatchState.singleton().values;
+	}
+	
+	public static void setAllValues(String[][] values) {
+		BatchState.singleton().values = values;
+	}
 	
 	public static String getValue(int column, int row) {
 		String value = BatchState.singleton().values[column][row];
 		
+		//Return an empty string in case of null
 		if (value == null) {
 			return "";
 		}
@@ -116,9 +137,14 @@ public class BatchState {
 	}
 	
 	public static void setValue(int column, int row, String value) {
+		if (BatchState.getBatch() == null) {
+			return;
+		}
+				
 		BatchState.singleton().values[column][row] = value;
 		ArrayList<String> suggestions = null;
 		
+		//Check For spelling corrections
 		if (!value.isEmpty()) {
 			suggestions = (ArrayList<String>)BatchState.checkValue(value, new Cell(column, row));
 		}
@@ -141,6 +167,7 @@ public class BatchState {
 	public static void setSelectedCell(Cell selectedCell) {
 		BatchState.singleton().selectedCell = selectedCell;
 		
+		//Notify listeners for synchronization
 		for (BatchStateListener listener : BatchState.singleton().listeners ) {
 			listener.selectedCellChanged(selectedCell);
 		}
@@ -172,12 +199,13 @@ public class BatchState {
 	 */
 	public static void setBatch(Batch batch) {
 		BatchState.singleton().batch = batch;
-		
-		//System.out.println("Listeners Size: " + BatchState.singleton().listeners.size());
-		
+				
+		//Notify listeners that a Batch has been either loaded or downloaded
 		for (BatchStateListener listener : BatchState.singleton().listeners) {
 			listener.newBatchLoaded(BatchState.getBatch(), BatchState.getProject());
 		}
+		
+		BatchState.setSelectedCell(new Cell(1, 0));
 	}
 	
 	public static void setHighlight(Boolean highlight) {
@@ -228,6 +256,7 @@ public class BatchState {
 		return BatchState.singleton().batchImageCenter;
 	}
 	
+	//Add a unique error cell
 	private static void addErrorCell(Cell errorCell) {
 		Boolean alreadyExists = isCellError(errorCell);
 		
@@ -236,7 +265,8 @@ public class BatchState {
 		}
 	}
 	
-	private static List<String> checkValue(String value, Cell cell) {
+	//Perform spell check on the specified cell and value
+	public static List<String> checkValue(String value, Cell cell) {
 		
 		SpellingCorrector corrector = new SpellingCorrector();
 		ArrayList<Field> fields = BatchState.getProject().getFields();
@@ -246,13 +276,11 @@ public class BatchState {
 				try {
 					if (field.getKnownData() == null) {
 						return null;
-					}
+					} 
 					
 					URL url = new URL(field.getKnownData());
-					String path = "Records" + url.getPath();
-					File dictionary = new File(path);
 					
-					corrector.useDictionary(dictionary);
+					corrector.useDictionary(url);
 				} catch (Exception e) {
 					System.out.println("Error loading Dictionary: " + e.getLocalizedMessage());
 				}
@@ -270,6 +298,7 @@ public class BatchState {
 		
 	}
 	
+	//Return if the cell has a spell error or not
 	public static Boolean isCellError(Cell errorCell) {
 		Boolean alreadyExists = false;
 		for (Cell cell : BatchState.singleton().errorCells) {
@@ -282,6 +311,7 @@ public class BatchState {
 		return alreadyExists;
 	}
 	
+	//remove cell error, if it is not an erro cell nothing will happen
 	private static void removeCellError(Cell errorCell) {
 		ArrayList<Cell> cells = BatchState.singleton().errorCells;
 		int removeIndex = -1;

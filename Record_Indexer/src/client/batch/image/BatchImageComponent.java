@@ -61,10 +61,12 @@ public class BatchImageComponent extends JComponent {
 		
 		super();
 				
+		//Set Defaults
 		scale = 0.5;
 		
 		resetDrag();
 		
+		//Draw Emty placeholders
 		batchImage = null;
 						
 		drawingImage = new DrawingImage(null, new Rectangle2D.Double(0, 0, 100, 100));
@@ -75,6 +77,7 @@ public class BatchImageComponent extends JComponent {
 		
 		this.setBackground(new Color(100, 100, 100));
 				
+		//Set Up listeners
 		this.addMouseListener(mouseAdapter);
 		this.addMouseMotionListener(mouseAdapter);
 		this.addMouseWheelListener(mouseAdapter);
@@ -86,7 +89,7 @@ public class BatchImageComponent extends JComponent {
 		
 	}
 	
-	
+	//Custom implementation of the paintComponent
 	@Override
 	protected void paintComponent(Graphics g) {
 		
@@ -95,6 +98,7 @@ public class BatchImageComponent extends JComponent {
 		Graphics2D g2 = (Graphics2D)g;
 		drawBackground(g2);
 		
+		//Update the graphics context
 		g2.translate(this.getWidth()/2, this.getHeight()/2);
 		g2.scale(scale, scale);
 		g2.translate(-w_center_X, -w_center_Y);
@@ -103,6 +107,7 @@ public class BatchImageComponent extends JComponent {
 	}
 	
 	private void drawShapes(Graphics2D g2) {
+		//Do not draw shapes if there is no image
 		if (batchImage != null) {
 			for (DrawingShape drawingShape : shapes) {
 				drawingShape.draw(g2);
@@ -116,6 +121,7 @@ public class BatchImageComponent extends JComponent {
 		
 	}
 	
+	//Restart Drag Parameters
 	private void resetDrag() {
 		isDragging = false;
 		deltaX = 0;
@@ -136,19 +142,27 @@ public class BatchImageComponent extends JComponent {
 				int pixel = image.getRGB(j, i);
 				Color rgbColor = new Color(pixel); 
 				Pixel newPixel = new Pixel(rgbColor.getRed(), rgbColor.getGreen(), rgbColor.getBlue());
+				
 				ImageEditor.invertPixel(newPixel, 255);
+				
 				rgbColor = new Color(newPixel.red, newPixel.green, newPixel.blue);
 				image.setRGB(j, i, rgbColor.getRGB());
 			}
 		}
 		
+		//Toggle inverting instance field
 		inverted = !inverted;
 		BatchState.setInverted(inverted);
 		
 		repaint();
 	}
 	
+	//Handles the click to determine what row and column was selected on the image
 	public void imageClicked(Point2D point) {
+		if (BatchState.getBatch() == null) {
+			return;
+		}
+		
 		int x = (int)point.getX();
 		int y = (int)point.getY();
 		int width = 0;
@@ -167,7 +181,7 @@ public class BatchImageComponent extends JComponent {
 			drawY = row * currentProject.getRecordHeight() + currentProject.getFirstYCood();
 		}
 		
-		//Determine the row
+		//Determine the column
 		for (Field field : BatchState.getProject().getFields()) {
 			if (field.getxCoord() < x && field.getxCoord() + field.getWidth() > x) {
 				width = field.getWidth();
@@ -182,26 +196,30 @@ public class BatchImageComponent extends JComponent {
 	
 	public void setSelectedCell(Cell selectedCell) {
 		
-		int drawX = 0;
-		int drawY = selectedCell.getRow() * BatchState.getProject().getRecordHeight()  + BatchState.getProject().getFirstYCood();
-		int width = 0;
-		int height = BatchState.getProject().getRecordHeight();
-		Cell newCell = new Cell(selectedCell.getColumn(), selectedCell.getRow());
-		
-		if (newCell.getColumn() > 0) {
-			newCell.setColumn(selectedCell.getColumn() - 1);
-		}
-		
-		for (Field field : BatchState.getProject().getFields()) {
-			if (field.getColNumber() == (newCell.getColumn() + 1)) {
-				width = field.getWidth();
-				drawX = field.getxCoord();
+		//Just in Case it has submitted a batch
+		if (BatchState.getBatch() != null) {
+			int drawX = 0;
+			int drawY = selectedCell.getRow() * BatchState.getProject().getRecordHeight()  + BatchState.getProject().getFirstYCood();
+			int width = 0;
+			int height = BatchState.getProject().getRecordHeight();
+			Cell newCell = new Cell(selectedCell.getColumn(), selectedCell.getRow());
+			
+			if (newCell.getColumn() > 0) {
+				newCell.setColumn(selectedCell.getColumn() - 1);
 			}
+			
+			for (Field field : BatchState.getProject().getFields()) {
+				if (field.getColNumber() == (newCell.getColumn() + 1)) {
+					width = field.getWidth();
+					drawX = field.getxCoord();
+				}
+			}
+			
+			selectionRect.rect = new Rectangle2D.Double(drawX, drawY, width, height);
+			
+			repaint();
 		}
 		
-		selectionRect.rect = new Rectangle2D.Double(drawX, drawY, width, height);
-		
-		repaint();
 	}
 	
 	
@@ -266,7 +284,7 @@ public class BatchImageComponent extends JComponent {
 			int deviceX = e.getX();
 			int deviceY = e.getY();
 			
-			
+			//Apply transformations to jeep up to date in the Affine Transform
 			Point2D devicePoint = new Point2D.Double(deviceX, deviceY);
 			Point2D worldPoint = new Point2D.Double();
 			
@@ -276,7 +294,7 @@ public class BatchImageComponent extends JComponent {
 			transform.scale(scale, scale);
 			transform.translate(-w_center_X, -w_center_Y);
 			
-			
+			//Transform to world coordinates
 			try {
 				transform.inverseTransform(devicePoint, worldPoint);
 			} catch (Exception e2) {
@@ -288,7 +306,7 @@ public class BatchImageComponent extends JComponent {
 			int worldX = (int)worldPoint.getX();
 			int worldY = (int)worldPoint.getY();
 			
-			
+			//Determine if any of the shapes was clicked so we can handle the click
 			boolean hitShape = false;
 			
 			for (DrawingShape drawingShape : shapes) {
@@ -309,7 +327,7 @@ public class BatchImageComponent extends JComponent {
 			int deviceX = e.getX();
 			int deviceY = e.getY();
 			
-			
+			//Update Transform
 			Point2D devicePoint = new Point2D.Double(deviceX, deviceY);
 			Point2D worldPoint = new Point2D.Double();
 			
@@ -319,7 +337,7 @@ public class BatchImageComponent extends JComponent {
 			transform.scale(scale, scale);
 			transform.translate(-w_center_X, -w_center_Y);
 			
-			
+			//To world Coordinates
 			try {
 				transform.inverseTransform(devicePoint, worldPoint);
 			} catch (Exception e2) {
@@ -331,7 +349,7 @@ public class BatchImageComponent extends JComponent {
 			int worldX = (int)worldPoint.getX();
 			int worldY = (int)worldPoint.getY();
 			
-			
+			//DEtermine if a shape was clicked so a drag is allowed
 			boolean hitShape = false;
 			
 			for (DrawingShape drawingShape : shapes) {
@@ -374,7 +392,8 @@ public class BatchImageComponent extends JComponent {
 				} catch (Exception e2) {
 					return;
 				}
-								
+				
+				//Update coordinates for image
 				int worldX = (int)worldPoint.getX();
 				int worldY = (int)worldPoint.getY();
 				
@@ -400,6 +419,7 @@ public class BatchImageComponent extends JComponent {
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
 			
+			//Only allow a threshold of scalng (Max and Min)
 			if ((e.getWheelRotation() > 0 && scale <= 3) || e.getWheelRotation() < 0 && scale >= 0.2) {
 				scale += (double)(e.getWheelRotation())/8;
 				BatchState.setScale(scale);
@@ -498,15 +518,25 @@ public class BatchImageComponent extends JComponent {
 		@Override
 		public void newBatchLoaded(Batch newBatch, Project newProject) {
 			try {
-				System.out.println("Got to this point");
-				URL url = new URL(newBatch.getFilePath());
-				BufferedImage batchImage = ImageIO.read(url);
-				highlight = BatchState.getHighlight();
-				scale = BatchState.getScale();
-				setImage(batchImage);
-				if (BatchState.getInverted() != inverted) {
-					invertImage();
+				
+				if (newBatch == null) {
+					//Erase the image
+					drawingImage.rect = new Rectangle2D.Double(0, 0, 0, 0);
+					batchImage = null;
+					repaint();
+				} else {
+					//Retrieve new Image
+					System.out.println("Got to this point");
+					URL url = new URL(newBatch.getFilePath());
+					BufferedImage batchImage = ImageIO.read(url);
+					highlight = BatchState.getHighlight();
+					scale = BatchState.getScale();
+					setImage(batchImage);
+					if (BatchState.getInverted() != inverted) {
+						invertImage();
+					}
 				}
+				
 			} catch (Exception e) {
 			}
 		}

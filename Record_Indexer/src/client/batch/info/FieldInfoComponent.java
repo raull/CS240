@@ -19,16 +19,28 @@ public class FieldInfoComponent extends JComponent {
 	
 	public FieldInfoComponent() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		setupGUI();
+		
+		BatchState.addBatchStateListener(new FieldInfoBatchStateListener());
+		
+		
+	}
+	
+	//Set up a JeditPane for HTML display
+	private void setupGUI() {
+		this.removeAll();
+		
 		htmlViewer = new JEditorPane();
 		htmlViewer.setContentType("text/html");
 		
 		JScrollPane scrollPane = new JScrollPane(htmlViewer);
-		
-		BatchState.addBatchStateListener(new FieldInfoBatchStateListener());
-		
 		this.add(scrollPane);
+
 	}
 	
+	
+	//Update the HTML Page
 	public void setURL(String url) {
 		try {
 			htmlViewer.setPage(url);
@@ -43,24 +55,37 @@ public class FieldInfoComponent extends JComponent {
 		@Override
 		public void selectedCellChanged(Cell newSelectedCell) {
 			
-			Cell cell = new Cell(newSelectedCell.getColumn(), newSelectedCell.getRow());
-			
-			if (cell.getColumn() == 0) {
-				cell.setColumn(cell.getColumn() + 1);
-			}
-			
-			for (Field field : BatchState.getProject().getFields()) {
-				if (field.getColNumber() == cell.getColumn()) {
-					String html =  field.getHelpHtml();
-					setURL(html);
-					break;
+			//Error checking
+			if (BatchState.getBatch() != null) {
+				Cell cell = new Cell(newSelectedCell.getColumn(), newSelectedCell.getRow());
+				
+				
+				//Determine the field
+				if (cell.getColumn() == 0) {
+					cell.setColumn(cell.getColumn() + 1);
 				}
+				
+				for (Field field : BatchState.getProject().getFields()) {
+					if (field.getColNumber() == cell.getColumn()) {
+						//Update HTML
+						String html =  field.getHelpHtml();
+						setURL(html);
+						break;
+					}
+				}
+			} else {
+				htmlViewer = new JEditorPane();
 			}
+			
+			
 		}
 
 		@Override
 		public void newBatchLoaded(Batch newBatch, Project newProject) {
-			// Do nothing
+			
+			//Reset the GUI
+			setupGUI();
+			repaint();
 			
 		}
 

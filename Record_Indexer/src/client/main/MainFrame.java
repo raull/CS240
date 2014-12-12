@@ -27,6 +27,7 @@ import client.batch.input.BatchTableComponent;
 import client.batch.state.BatchState;
 import client.batch.state.BatchStateListener;
 import client.batch.state.Cell;
+import client.facade.ClientFacade;
 import client.main.menu.FileMenuBar;
 import client.main.menu.FileMenuBarListener;
 
@@ -48,6 +49,8 @@ public class MainFrame extends JFrame {
 	private FileMenuBar menuBar;
 	
 	private JTabbedPane inputTabbedPane;
+	
+	private JButton submitButton;
 	
 	public MainFrame() {
 		super();
@@ -97,6 +100,7 @@ public class MainFrame extends JFrame {
 		setSpliPanes();
 	}
 	
+	//This restores the position of the dividers
 	public void setDividerLocations(int vertical, int horizontal) {
 		hSplitPane.setDividerLocation(horizontal);
 		vSplitPane.setDividerLocation(vertical);
@@ -129,6 +133,7 @@ public class MainFrame extends JFrame {
 		infoComponent = new FieldInfoComponent();
 		rightPanel.add(infoComponent);
 		
+		//Add everything to the Split Panes
 		hSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, inputTabbedPane, rightPanel);
 		hSplitPane.setDividerLocation(this.getSize().width/2);
 		hSplitPane.setResizeWeight(0.7);
@@ -140,6 +145,7 @@ public class MainFrame extends JFrame {
 		
 	}
 	
+	//Sets the File Menu GUI with listeners
 	private void setFileMenuBar() {
 		menuBar = new FileMenuBar();
 		menuBar.addFileMenuBarListener(new FileMenuBarListener() {
@@ -165,9 +171,11 @@ public class MainFrame extends JFrame {
 		this.setJMenuBar(menuBar);
 	}
 	
+	//Sets the Bat of Buttons at the top of the Image Component
 	private void setButtonBar() {
 		JPanel buttonBarPanel= new JPanel();
 		
+		//Set the buttons and the action listener for each one
 		JButton zoomInButton = new JButton("Zoom In");
 		zoomInButton.addActionListener(new ActionListener() {
 			
@@ -208,7 +216,30 @@ public class MainFrame extends JFrame {
 				BatchState.save();
 			}
 		});
-		JButton submitButton = new JButton("Submit");
+		submitButton = new JButton("Submit");
+		submitButton.setEnabled(false);
+		submitButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Boolean submmited = false;
+				try {
+					submmited = ClientFacade.submitBatch(BatchState.getAllValues());
+					
+				} catch (Exception e2) {
+					System.out.println(e2.getLocalizedMessage());
+				}
+				
+				if (submmited) {
+					//Clean Up after submitting
+					BatchState.restart();
+					submitButton.setEnabled(false);
+					menuBar.enableDownloadBatchItem(true);
+					repaint();
+				}
+			}
+		});
 		
 		buttonBarPanel.add(zoomInButton);
 		buttonBarPanel.add(zoomOutButton);
@@ -227,18 +258,20 @@ public class MainFrame extends JFrame {
 		JPanel tableEntryPanel = new JPanel();
 		tableEntryPanel.setBackground(new Color(255, 255, 255));
 		tableEntryPanel.setLayout(new BoxLayout(tableEntryPanel, BoxLayout.Y_AXIS));
-		tableComponent = new BatchTableComponent();
+		tableComponent = new BatchTableComponent(this);
 		tableEntryPanel.add(tableComponent);
 		inputTabbedPane.addTab("Table Entry", tableEntryPanel);
 		
+		//Set Up Form Entry Component
 		JPanel formEntryPanel = new JPanel();
 		formEntryPanel.setLayout(new BoxLayout(formEntryPanel, BoxLayout.Y_AXIS));
-		formEntryComponent = new BatchFormEntryComponent();
+		formEntryComponent = new BatchFormEntryComponent(this);
 		formEntryPanel.add(formEntryComponent);
 		inputTabbedPane.addTab("Form Entry", formEntryPanel);
 		
 	}
 	
+	//This sets the Newly Downloaded Batch to the BatchState
 	private void setNewBatch(Project project, Batch batch) {
 		System.out.println("New Batch Downloaded: " + batch + "\nFrom Project: " + project);
 		
@@ -263,6 +296,9 @@ public class MainFrame extends JFrame {
 
 		@Override
 		public void newBatchLoaded(Batch newBatch, Project newProject) {
+			
+			//Clean Up to restore information when loaded a State from memory
+			
 			if (BatchState.getMainFrameLocation() != null) {
 				setLocation(BatchState.getMainFrameLocation());
 			}
@@ -275,7 +311,10 @@ public class MainFrame extends JFrame {
 				setDividerLocations(BatchState.getVerticalDividerLoction(), BatchState.getHorizontalDividerLocation());
 			}
 			
-			menuBar.enableDownloadBatchItem(false);
+			if (BatchState.getBatch() != null) {
+				menuBar.enableDownloadBatchItem(false);
+				submitButton.setEnabled(true);
+			}
 			
 		}
 

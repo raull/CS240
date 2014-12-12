@@ -79,6 +79,7 @@ public class DownloadBatchDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					//Retrive Sample Image
 					String path = ClientFacade.getSampleImage(selectedProject);
 					URL url = new URL(path);
 					Image image = (ImageIO.read(url));
@@ -86,13 +87,13 @@ public class DownloadBatchDialog extends JDialog {
 					presentSampleImage(image);
 					
 				} catch (Exception e2) {
-					// TODO: handle exception
+					System.out.println(e2.getLocalizedMessage());
 				}
 			}
 		});
 		projectPanel.add(sampleButton);
 		
-		//Set up buttons panel
+		//Set up buttons panel with listeners
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setPreferredSize(new Dimension(this.getContentPane().getSize().width, 20));
@@ -113,13 +114,13 @@ public class DownloadBatchDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Batch newBatch = ClientFacade.downloadBatch(selectedProject);
-										
+								
+					DownloadBatchDialog.this.setVisible(false);
+					
 					for (DownloadBatchDialogListener listener : listeners) {
 						listener.newBatchDownloaded(selectedProject, newBatch);
 					}
 					
-					DownloadBatchDialog.this.setVisible(false);
-
 				} catch (Exception e2) {
 					
 				}
@@ -135,6 +136,7 @@ public class DownloadBatchDialog extends JDialog {
 		this.getContentPane().add(buttonPanel);
 	}
 	
+	//Method to present a Dialog with a sample image in it
 	private void presentSampleImage(Image image) {
 		image = image.getScaledInstance(700, -1, 0);
 		JLabel imageIcon = new JLabel(new ImageIcon(image));

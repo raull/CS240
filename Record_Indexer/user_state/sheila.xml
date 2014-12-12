@@ -1,15 +1,20 @@
 <client.batch.state.BatchState>
-  <errorCells>
-    <client.batch.state.Cell>
-      <row>2</row>
-      <column>2</column>
-    </client.batch.state.Cell>
-  </errorCells>
+  <errorCells/>
   <values>
     <string-array>
-      <string>Staples</string>
-      <string>Travis</string>
-      <string></string>
+      <string>Downs</string>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+      <null/>
+    </string-array>
+    <string-array>
+      <string>Hanna</string>
+      <null/>
+      <null/>
       <null/>
       <null/>
       <null/>
@@ -19,17 +24,7 @@
     <string-array>
       <null/>
       <null/>
-      <string>Leta</string>
       <null/>
-      <null/>
-      <null/>
-      <null/>
-      <null/>
-    </string-array>
-    <string-array>
-      <null/>
-      <null/>
-      <string>Female</string>
       <null/>
       <null/>
       <null/>
@@ -37,7 +32,7 @@
       <null/>
     </string-array>
     <string-array>
-      <string>46</string>
+      <null/>
       <null/>
       <null/>
       <null/>
@@ -48,8 +43,8 @@
     </string-array>
   </values>
   <selectedCell>
-    <row>2</row>
-    <column>3</column>
+    <row>0</row>
+    <column>2</column>
   </selectedCell>
   <project>
     <id>49</id>
@@ -100,26 +95,22 @@
     </fields>
   </project>
   <batch>
-    <id>122</id>
-    <filePath>http://localhost:8080/images/1890_image1.png</filePath>
+    <id>123</id>
+    <filePath>http://localhost:8080/images/1890_image2.png</filePath>
     <status>1</status>
     <projectId>49</projectId>
   </batch>
   <highlight>true</highlight>
   <inverted>false</inverted>
   <mainFrameLocation>
-    <x>127</x>
+    <x>262</x>
     <y>23</y>
   </mainFrameLocation>
-  <batchImageCenter>
-    <x>430</x>
-    <y>373</y>
-  </batchImageCenter>
   <mainFrameDimension>
-    <width>1008</width>
-    <height>712</height>
+    <width>900</width>
+    <height>700</height>
   </mainFrameDimension>
-  <scale>0.625</scale>
-  <hDividerLocation>524</hDividerLocation>
-  <vDividerLoction>470</vDividerLoction>
+  <scale>0.0</scale>
+  <hDividerLocation>450</hDividerLocation>
+  <vDividerLoction>466</vDividerLoction>
 </client.batch.state.BatchState>

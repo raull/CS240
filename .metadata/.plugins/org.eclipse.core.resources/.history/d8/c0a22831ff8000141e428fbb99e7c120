@@ -1,0 +1,7 @@
+package client.spell.suggestion;
+
+import javax.swing.JDialog;
+
+public class SuggestionDialog extends JDialog {
+
+}

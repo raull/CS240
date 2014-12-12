@@ -1,23 +1,31 @@
 package client.batch.input;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -27,6 +35,7 @@ import shared.modal.Project;
 import client.batch.state.BatchState;
 import client.batch.state.BatchStateListener;
 import client.batch.state.Cell;
+import client.spell.suggestion.SuggestionDialog;
 
 @SuppressWarnings("serial")
 public class BatchFormEntryComponent extends JComponent {
@@ -35,8 +44,50 @@ public class BatchFormEntryComponent extends JComponent {
 	private JPanel entryPanel;
 	private ArrayList<JTextField> textFields = new ArrayList<JTextField>();
 	
-	public BatchFormEntryComponent() {
+	private JPopupMenu popupMenu;
+	
+	private Frame owner;
+	
+	public BatchFormEntryComponent(Frame owner) {
+		super();
+		
+		this.owner = owner;
+		
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		
+		BatchState.addBatchStateListener(new FormEntryBatchStateListener());
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		
+		if (BatchState.getSelectedCell() == null || BatchState.getBatch() == null) {
+			return;
+		}
+		
+		Cell cell = new Cell(BatchState.getSelectedCell().getColumn(), BatchState.getSelectedCell().getRow());
+		//Reset the focus of the textfield when component shows up again
+		if (cell.getColumn() > 0) {
+			cell.setColumn(cell.getColumn() - 1);
+		}
+		
+		textFields.get(cell.getColumn()).requestFocus();
+	}
+	
+	private void setupGUI() {
+		
+		this.removeAll();
+		textFields = new ArrayList<JTextField>();
+		
+		//Setup list
+		
+		int rowNum = 0;
+		ArrayList<Field> fields = new ArrayList<Field>();
+
+		if (BatchState.getBatch() != null) {
+			rowNum = BatchState.getProject().getRecordsPerBatch();
+			fields = BatchState.getProject().getFields();
+		}
 		
 		//Set List properties
 		rowList = new JList<String>();
@@ -52,25 +103,7 @@ public class BatchFormEntryComponent extends JComponent {
 		//Add Scroll Panes
 		this.add(listScrollPane);
 		this.add(entryPanelScrollPane);
-		
-		BatchState.addBatchStateListener(new FormEntryBatchStateListener());
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		Cell cell = new Cell(BatchState.getSelectedCell().getColumn(), BatchState.getSelectedCell().getRow());
-		
-		if (cell.getColumn() > 0) {
-			cell.setColumn(cell.getColumn() - 1);
-		}
-		
-		textFields.get(cell.getColumn()).requestFocus();
-	}
-	
-	private void setupGUI() {
-		//Setup list
-		int rowNum = BatchState.getProject().getRecordsPerBatch();
-		
+				
 		entryPanel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -84,10 +117,8 @@ public class BatchFormEntryComponent extends JComponent {
 		
 		rowList.setListData(rowTitles);
 		
-		//Set up fields
-		
-		ArrayList<Field> fields = BatchState.getProject().getFields();
-		
+		//Set up fields their listeners
+				
 		for (Field field : fields) {
 			JPanel fieldPanel = new JPanel();
 			fieldPanel.setLayout(new BoxLayout(fieldPanel, BoxLayout.X_AXIS));
@@ -104,6 +135,7 @@ public class BatchFormEntryComponent extends JComponent {
 	                	
 	                	JTextField textField = (JTextField)e.getSource();
 	                	
+	                	//Navigate through Text Fields with The TAB Key
 	                    if (e.getModifiers() > 0) {
 	                        textField.transferFocusBackward();
 	                    } else {
@@ -114,6 +146,25 @@ public class BatchFormEntryComponent extends JComponent {
 	            }
 				
 			});
+			fieldTextField.addMouseListener(new MouseAdapter() {
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getButton() == MouseEvent.BUTTON3) {
+						JTextField textFieldClicked = (JTextField)e.getSource();
+						
+						//Determine which Text Field got cliked
+						for (int i = 0; i < textFields.size(); i++) {
+							if(textFieldClicked == textFields.get(i)) {
+								//Convert event to Parent
+								MouseEvent e2 = SwingUtilities.convertMouseEvent(e.getComponent(), e, entryPanel);
+								showPopupMenu(e2.getX(), e2.getY(), new Cell(i, rowList.getSelectedIndex()));
+							}
+						}
+					}
+				}
+				
+			});
 			textFields.add(fieldTextField);
 			fieldPanel.add(fieldTextField);
 			
@@ -121,12 +172,35 @@ public class BatchFormEntryComponent extends JComponent {
 		}
 	}
 	
+	//Display Suggestion Pop Up Menu
+	private void showPopupMenu(int x, int y, final Cell cell) {
+		popupMenu = new JPopupMenu();
+		JMenuItem suggestionItem = new JMenuItem("See Suggestions");
+		suggestionItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SuggestionDialog suggestionDialog = new SuggestionDialog(cell, BatchState.getValue(cell.getColumn(), cell.getRow()), owner);
+				suggestionDialog.setVisible(true);
+			}
+		});
+		popupMenu.add(suggestionItem);
+		
+		popupMenu.show(this, x, y);
+	}
+	
 	
 	private class FormEntryBatchStateListener implements BatchStateListener {
 
 		@Override
 		public void selectedCellChanged(Cell newSelectedCell) {
+			
+			if (BatchState.getBatch() == null) {
+				return;
+			}
+			
 			Cell selectedCell = new Cell(newSelectedCell.getColumn(), newSelectedCell.getRow());
+			//Map it to the correct cell
 			rowList.setSelectedIndex(selectedCell.getRow());
 			if (selectedCell.getColumn() > 0) {
 				selectedCell.setColumn(selectedCell.getColumn() - 1);
@@ -142,7 +216,7 @@ public class BatchFormEntryComponent extends JComponent {
 
 		@Override
 		public void valueChanged(Cell editedCell, String value) {
-			
+			//Determine TExtfiled to set the value
 			Cell cell = new Cell(editedCell.getColumn(), editedCell.getRow());
 			
 			if (cell.getRow() == rowList.getSelectedIndex()) {

@@ -1,6 +1,7 @@
 package client.spell;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,11 +31,11 @@ public class SpellingCorrector implements SpellCorrector{
 	/**
 	 * Tells this <code>SpellCorrector</code> to use the given file as its dictionary
 	 * for generating suggestions. 
-	 * @param dictionaryFile File containing the words to be used
+	 * @param dictionaryURL URL containing the words to be used
 	 * @throws IOException If the file cannot be read
 	 */
-	public void useDictionary(File dictionaryFile) throws IOException {
-		Scanner scanner = new Scanner(dictionaryFile);
+	public void useDictionary(URL dictionaryURL) throws IOException {
+		Scanner scanner = new Scanner(dictionaryURL.openStream());
 		scanner.useDelimiter(",");
 		
 		while (scanner.hasNext()) {
@@ -125,26 +126,24 @@ public class SpellingCorrector implements SpellCorrector{
 			}
 		}
 		
-		if (foundWordsArrayList.size() <= 0) {
-			//Do a distance 2 transformation from all of the Distance 1 transformations
-			for (String editedWord : transformedWordsArrayList) {
-				ArrayList<String> curTransformedWordsArrayList = new ArrayList<String>();
-				curTransformedWordsArrayList.addAll(StringTransformation.allTransformationsFromString(editedWord));
+		//Do a distance 2 transformation from all of the Distance 1 transformations
+		for (String editedWord : transformedWordsArrayList) {
+			ArrayList<String> curTransformedWordsArrayList = new ArrayList<String>();
+			curTransformedWordsArrayList.addAll(StringTransformation.allTransformationsFromString(editedWord));
+			
+			for (int i = 0; i < curTransformedWordsArrayList.size(); i++) {
+				TrieDataStructure.TrieNode curNode = this.dictionaryTrieDataStructure.find(curTransformedWordsArrayList.get(i));
 				
-				for (int i = 0; i < curTransformedWordsArrayList.size(); i++) {
-					TrieDataStructure.TrieNode curNode = this.dictionaryTrieDataStructure.find(curTransformedWordsArrayList.get(i));
-					
-					if(curNode != null) {
-						foundWordsArrayList.add(curNode);
-					}
+				if(curNode != null) {
+					foundWordsArrayList.add(curNode);
 				}
 			}
-			
-			if (foundWordsArrayList.size() <= 0) {
-				throw new NoSimilarWordFoundException();
-			}
-
 		}
+		
+		if (foundWordsArrayList.size() <= 0) {
+			throw new NoSimilarWordFoundException();
+		}
+
 		
 		ArrayList<String> suggestions = new ArrayList<String>();
 		for (TrieDataStructure.TrieNode node : foundWordsArrayList) {

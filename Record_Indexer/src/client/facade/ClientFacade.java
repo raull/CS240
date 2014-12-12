@@ -4,6 +4,7 @@ package client.facade;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.batch.state.BatchState;
 import client.communication.ClientCommunicator;
 import client.communication.ClientCommunicatorException;
 import shared.communication.DownloadBatch_Parameter;
@@ -12,6 +13,8 @@ import shared.communication.GetSampleImage_Parameter;
 import shared.communication.GetSampleImage_Response;
 import shared.communication.Get_Projects_Parameter;
 import shared.communication.Get_Projects_Response;
+import shared.communication.SubmitBatch_Parameter;
+import shared.communication.SubmitBatch_Response;
 import shared.communication.Validate_User_Parameter;
 import shared.communication.Validate_User_Response;
 import shared.modal.Batch;
@@ -103,6 +106,47 @@ public class ClientFacade {
 				ArrayList<Field> fields = (ArrayList<Field>)response.getFields();
 				project.setFields(fields);
 				return response.getBatch();
+			}
+			
+		} catch (ClientCommunicatorException e) {
+			throw e;
+		}
+	}
+	
+	public static Boolean submitBatch(String[][] values) throws ClientCommunicatorException{
+		try {
+			
+			StringBuilder builder = new StringBuilder();
+			
+			//Construct the values String
+			
+			for (int i = 0; i < values[0].length; i++) {
+				for (int j = 0; j < values.length; j++) {
+					
+					//Check for null
+					if (values[j][i] == null) {
+						builder.append("");
+					}else {
+						builder.append(values[j][i]);
+					}
+					
+					//Check for the last index to not put a comma
+					if (j != values.length - 1) {
+						builder.append(",");
+					}
+				}
+				builder.append(";");
+			}
+			
+			System.out.println("Values to submit: \n" + builder.toString());
+			
+			SubmitBatch_Parameter parameter = new SubmitBatch_Parameter(ClientFacade.username, ClientFacade.password, builder.toString(), BatchState.getBatch().getId());
+			SubmitBatch_Response response = communicator.submitBatch(parameter);
+			
+			if (response.getOutput().equals("FAILED")) {
+				throw new ClientCommunicatorException("Failed to Submit Batch, Plese try again later");
+			} else {
+				return true;
 			}
 			
 		} catch (ClientCommunicatorException e) {

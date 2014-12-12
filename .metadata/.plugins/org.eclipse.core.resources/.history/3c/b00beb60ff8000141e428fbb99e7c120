@@ -1,0 +1,8 @@
+package client.spell.suggestion;
+
+import javax.swing.JDialog;
+
+@SuppressWarnings("serial")
+public class SuggestionDialog extends JDialog {
+
+}

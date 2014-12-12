@@ -1,0 +1,38 @@
+package client.spell.suggestion;
+
+import java.awt.Dimension;
+import java.util.ArrayList;
+
+import javax.swing.BoxLayout;
+import javax.swing.JDialog;
+import javax.swing.JList;
+
+import client.batch.state.BatchState;
+import client.batch.state.Cell;
+
+@SuppressWarnings("serial")
+public class SuggestionDialog extends JDialog {
+
+	JList<String> suggestionList = new JList<String>();
+	Cell currentCell;
+	String word;
+	
+	public SuggestionDialog(Cell cell, String value) {
+		
+		currentCell = cell;
+		word = value;
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setSize(new Dimension(90, 100));
+		this.setResizable(false);
+		
+		setupGUI();
+	}
+	
+	private void setupGUI() {
+		ArrayList<String> suggestions = (ArrayList<String>)BatchState.checkValue(word, this.currentCell);
+		
+		
+		
+	}
+}

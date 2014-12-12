@@ -1,0 +1,313 @@
+package client.main;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
+
+import shared.modal.Batch;
+import shared.modal.Project;
+import client.batch.download.DownloadBatchDialog;
+import client.batch.download.DownloadBatchDialogListener;
+import client.batch.image.BatchImageComponent;
+import client.batch.info.FieldInfoComponent;
+import client.batch.input.BatchFormEntryComponent;
+import client.batch.input.BatchTableComponent;
+import client.batch.state.BatchState;
+import client.batch.state.BatchStateListener;
+import client.batch.state.Cell;
+import client.facade.ClientFacade;
+import client.main.menu.FileMenuBar;
+import client.main.menu.FileMenuBarListener;
+
+
+@SuppressWarnings("serial")
+public class MainFrame extends JFrame {
+		
+	private DownloadBatchDialog downloadBatchDialog = new DownloadBatchDialog(this);
+	
+	private ArrayList<MainFrameListener> listeners = new ArrayList<MainFrameListener>();
+	private BatchImageComponent imageComponent;
+	private BatchTableComponent tableComponent;
+	private BatchFormEntryComponent formEntryComponent;
+	private FieldInfoComponent infoComponent;
+	
+	private JSplitPane hSplitPane;
+	private JSplitPane vSplitPane;
+	
+	private FileMenuBar menuBar;
+	
+	private JTabbedPane inputTabbedPane;
+	
+	private JButton submitButton;
+	
+	public MainFrame() {
+		super();
+		setupGUI();
+	}
+	
+	public void setupGUI() {
+		this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.setSize(new Dimension(900, 700));
+		this.setMinimumSize(new Dimension(600,400));
+		this.setLocationRelativeTo(null);
+				
+		BatchState.addBatchStateListener(new MainFrameBatchStateListener());
+		
+		//Set Download Batch Dialog
+		downloadBatchDialog.addDownloadBatchDialogListener(new DownloadBatchDialogListener() {
+			
+			@Override
+			public void newBatchDownloaded(Project project, Batch batch) {
+				setNewBatch(project, batch);
+			}
+		});
+		
+		//Window closing
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+		    public void windowClosing(WindowEvent windowEvent) {
+				BatchState.setMainFrameLocation(getLocation());
+				BatchState.setMainFrameDimension(getSize());
+				BatchState.setHorizaontalDividerLocation(hSplitPane.getDividerLocation());
+				BatchState.setVerticalDividerLoction(vSplitPane.getDividerLocation());
+				BatchState.save();
+		        System.exit(0);
+		    }
+		});
+		
+		//Set JMenu
+		setFileMenuBar();
+		
+		//Set Button Bar
+		setButtonBar();
+		
+		//Set TabPane
+		setTabPane();
+		
+		//Set JSpliPanes
+		setSpliPanes();
+	}
+	
+	public void setDividerLocations(int vertical, int horizontal) {
+		hSplitPane.setDividerLocation(horizontal);
+		vSplitPane.setDividerLocation(vertical);
+	}
+	
+	private void setSpliPanes() {
+		//Split Panel
+		JPanel splitPanel = new JPanel();
+		splitPanel.setLayout(new BoxLayout(splitPanel, BoxLayout.Y_AXIS));
+		splitPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		//Set top panel
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+		topPanel.setPreferredSize(this.getSize());
+				
+		try {
+			imageComponent = new BatchImageComponent();
+			imageComponent.setPreferredSize(topPanel.getSize());
+			
+			
+			topPanel.add(imageComponent);
+
+		} catch (Exception e) {
+			System.out.println("Error loading Image");
+		}
+				
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+		infoComponent = new FieldInfoComponent();
+		rightPanel.add(infoComponent);
+		
+		hSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, inputTabbedPane, rightPanel);
+		hSplitPane.setDividerLocation(this.getSize().width/2);
+		hSplitPane.setResizeWeight(0.7);
+		vSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, topPanel, hSplitPane);
+		vSplitPane.setDividerLocation(this.getSize().height/3 * 2);
+		vSplitPane.setResizeWeight(0.6);
+		splitPanel.add(vSplitPane);
+		this.getContentPane().add(splitPanel);
+		
+	}
+	
+	private void setFileMenuBar() {
+		menuBar = new FileMenuBar();
+		menuBar.addFileMenuBarListener(new FileMenuBarListener() {
+			
+			@Override
+			public void logoutItemPressed() {
+				for (MainFrameListener mainFrameListener : listeners) {
+					mainFrameListener.logoutPressed();
+				}
+			}
+			
+			@Override
+			public void exitItemPressed() {
+				System.exit(0);
+			}
+			
+			@Override
+			public void downloadBatchItemPressed() {
+				downloadBatchDialog.setVisible(true);
+			}
+		});
+		
+		this.setJMenuBar(menuBar);
+	}
+	
+	private void setButtonBar() {
+		JPanel buttonBarPanel= new JPanel();
+		
+		JButton zoomInButton = new JButton("Zoom In");
+		zoomInButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				imageComponent.setScale(imageComponent.getScale() + 0.25);
+			}
+		});
+		JButton zoomOutButton = new JButton("Zoom Out");
+		zoomOutButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				imageComponent.setScale(imageComponent.getScale() - 0.25);
+			}
+		});
+		JButton invertImageButton = new JButton("Invert Image");
+		invertImageButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				imageComponent.invertImage();
+			}
+		});
+		JButton toggleHighlightButton = new JButton("Toggle Highlight");
+		toggleHighlightButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				imageComponent.toggleHighlight();
+			}
+		});
+		JButton saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BatchState.save();
+			}
+		});
+		submitButton = new JButton("Submit");
+		submitButton.setEnabled(false);
+		submitButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Boolean submmited = ClientFacade.submitBatch(BatchState.getAllValues());
+					if (submmited) {
+						BatchState.setBatchSize(0, 0);
+						BatchState.setProject(null);
+						BatchState.setBatch(null);
+						submitButton.setEnabled(false);
+						menuBar.enableDownloadBatchItem(true);
+					}
+				} catch (Exception e2) {
+					System.out.println(e2.getLocalizedMessage());
+				}
+			}
+		});
+		
+		buttonBarPanel.add(zoomInButton);
+		buttonBarPanel.add(zoomOutButton);
+		buttonBarPanel.add(invertImageButton);
+		buttonBarPanel.add(toggleHighlightButton);
+		buttonBarPanel.add(saveButton);
+		buttonBarPanel.add(submitButton);
+		
+		this.getContentPane().add(buttonBarPanel);
+	}
+	
+	private void setTabPane() {
+		inputTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		//Set up Table Component
+		JPanel tableEntryPanel = new JPanel();
+		tableEntryPanel.setBackground(new Color(255, 255, 255));
+		tableEntryPanel.setLayout(new BoxLayout(tableEntryPanel, BoxLayout.Y_AXIS));
+		tableComponent = new BatchTableComponent(this);
+		tableEntryPanel.add(tableComponent);
+		inputTabbedPane.addTab("Table Entry", tableEntryPanel);
+		
+		JPanel formEntryPanel = new JPanel();
+		formEntryPanel.setLayout(new BoxLayout(formEntryPanel, BoxLayout.Y_AXIS));
+		formEntryComponent = new BatchFormEntryComponent(this);
+		formEntryPanel.add(formEntryComponent);
+		inputTabbedPane.addTab("Form Entry", formEntryPanel);
+		
+	}
+	
+	private void setNewBatch(Project project, Batch batch) {
+		System.out.println("New Batch Downloaded: " + batch + "\nFrom Project: " + project);
+		
+		BatchState.setBatchSize(project.getFields().size(), project.getRecordsPerBatch());
+		BatchState.setProject(project);
+		BatchState.setBatch(batch);
+		
+	}	
+	
+	//Listener
+	
+	public void addMainFrameListener(MainFrameListener listener) {
+		this.listeners.add(listener);
+	}
+	
+	private class MainFrameBatchStateListener implements BatchStateListener {
+
+		@Override
+		public void selectedCellChanged(Cell newSelectedCell) {
+			//Do nothing
+		}
+
+		@Override
+		public void newBatchLoaded(Batch newBatch, Project newProject) {
+			if (BatchState.getMainFrameLocation() != null) {
+				setLocation(BatchState.getMainFrameLocation());
+			}
+			
+			if (BatchState.getMainFrameDimension() != null) {
+				setSize(BatchState.getMainFrameDimension());
+			}
+			
+			if (BatchState.getHorizontalDividerLocation() != 0 && BatchState.getVerticalDividerLoction() != 0) {
+				setDividerLocations(BatchState.getVerticalDividerLoction(), BatchState.getHorizontalDividerLocation());
+			}
+			
+			if (BatchState.getBatch() != null) {
+				menuBar.enableDownloadBatchItem(false);
+				submitButton.setEnabled(true);
+			}
+			
+		}
+
+		@Override
+		public void valueChanged(Cell editedCell, String value) {
+			//Do nothing
+		}
+		
+	}
+}

@@ -1,0 +1,27 @@
+package client.spell.suggestion;
+
+import javax.swing.BoxLayout;
+import javax.swing.JDialog;
+import javax.swing.JList;
+
+import client.batch.state.Cell;
+
+@SuppressWarnings("serial")
+public class SuggestionDialog extends JDialog {
+
+	JList<String> suggestionList;
+	Cell currentCell;
+	
+	public SuggestionDialog(Cell cell) {
+		
+		currentCell = cell;
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		setupGUI();
+	}
+	
+	private void setupGUI() {
+		
+	}
+}

@@ -1,0 +1,18 @@
+package client.spell.suggestion;
+
+import javax.swing.BoxLayout;
+import javax.swing.JDialog;
+
+@SuppressWarnings("serial")
+public class SuggestionDialog extends JDialog {
+
+	public SuggestionDialog() {
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		setupGUI();
+	}
+	
+	private void setupGUI() {
+		
+	}
+}

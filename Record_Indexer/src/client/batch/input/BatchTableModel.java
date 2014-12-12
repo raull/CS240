@@ -24,12 +24,14 @@ public class BatchTableModel extends AbstractTableModel {
 			return 0;
 		}
 		
+		//Add an extra column for the row count column
 		return BatchState.getProject().getFields().size() + 1;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		
+		//Determine if the column is the row column, otherwise get the value from Batch State
 		if (columnIndex == 0) {
 			return "" + (rowIndex + 1);
 		} else {
@@ -47,11 +49,13 @@ public class BatchTableModel extends AbstractTableModel {
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		String value = (String)aValue;
 		
+		//Decrement one because of the row count column
 		BatchState.setValue(columnIndex -1, rowIndex, value);
 	}
 	
 	@Override
 	public String getColumnName(int column) {
+		//Determine if it is the Row count column or a Field
 		if (column == 0) {
 			return "Record #";
 		} else {
@@ -66,6 +70,7 @@ public class BatchTableModel extends AbstractTableModel {
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		//Do not edit for row count column
 		if (columnIndex == 0) {
 			return false;
 		}

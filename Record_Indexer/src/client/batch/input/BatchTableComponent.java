@@ -2,6 +2,9 @@ package client.batch.input;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,6 +21,7 @@ import shared.modal.Project;
 import client.batch.state.BatchState;
 import client.batch.state.BatchStateListener;
 import client.batch.state.Cell;
+import client.spell.suggestion.SuggestionDialog;
 
 @SuppressWarnings("serial")
 public class BatchTableComponent extends JComponent {
@@ -27,9 +31,13 @@ public class BatchTableComponent extends JComponent {
 	private BatchTableModel model;
 	
 	private JPopupMenu popupMenu;
+	
+	private Frame owner;
 		
-	public BatchTableComponent() {
+	public BatchTableComponent(Frame owner) {
 		super();
+		this.owner = owner;
+		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setupGUI();
 	}
@@ -49,9 +57,17 @@ public class BatchTableComponent extends JComponent {
 		BatchState.addBatchStateListener(new BatchStateTableListener());
 	}
 	
-	private void showPopupMenu(int x, int y) {
+	private void showPopupMenu(int x, int y, final Cell cell) {
 		popupMenu = new JPopupMenu();
 		JMenuItem suggestionItem = new JMenuItem("See Suggestions");
+		suggestionItem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SuggestionDialog suggestionDialog = new SuggestionDialog(cell, BatchState.getValue(cell.getColumn(), cell.getRow()), owner);
+				suggestionDialog.setVisible(true);
+			}
+		});
 		popupMenu.add(suggestionItem);
 		
 		popupMenu.show(this, x, y);
@@ -61,6 +77,7 @@ public class BatchTableComponent extends JComponent {
 
 		@Override
 		public void selectedCellChanged(Cell newSelectedCell) {
+			//Refresh JTable
 			table.changeSelection(newSelectedCell.getRow(), newSelectedCell.getColumn(), false, false);
 			model.fireTableCellUpdated(newSelectedCell.getRow(), newSelectedCell.getColumn());
 			table.repaint();
@@ -68,12 +85,14 @@ public class BatchTableComponent extends JComponent {
 
 		@Override
 		public void newBatchLoaded(Batch newBatch, Project newProject) {
+			//Refresh JTable
 			model.fireTableStructureChanged();
 			
 		}
 
 		@Override
 		public void valueChanged(Cell editedCell, String value) {
+			//Refresh JTable
 			model.fireTableChanged(null);;	
 		}
 		
@@ -93,7 +112,7 @@ public class BatchTableComponent extends JComponent {
 			if (e.getButton() == MouseEvent.BUTTON3 && BatchState.isCellError(new Cell(column - 1, row))) {
 				System.out.println("Right Button Clicked");
 				
-				showPopupMenu(e.getX(), e.getY());
+				showPopupMenu(e.getX(), e.getY(), new Cell(column - 1, row));
 			}
 			
 			BatchState.setSelectedCell(newCell);
@@ -119,7 +138,7 @@ public class BatchTableComponent extends JComponent {
 				c.setBackground(new Color(41, 153, 240, 80));
 				
 				//Check if it is a new selected Cell
-				if (BatchState.getSelectedCell().getColumn() != column || BatchState.getSelectedCell().getRow() != row) {
+				if (BatchState.getSelectedCell() != null && (BatchState.getSelectedCell().getColumn() != column || BatchState.getSelectedCell().getRow() != row)) {
 					BatchState.setSelectedCell(new Cell(column, row));
 				}
 
